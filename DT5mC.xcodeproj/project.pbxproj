@@ -1,0 +1,406 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		231D5B2E2AA2168300D0AC48 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 231D5B2D2AA2168300D0AC48 /* Credits.rtf */; };
+		2347F8322AB455C100BEFF25 /* CrsrImgEraser.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 2347F8312AB455C100BEFF25 /* CrsrImgEraser.pdf */; };
+		2347F8342AB45CCA00BEFF25 /* CrsrImgBrush.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 2347F8332AB45CCA00BEFF25 /* CrsrImgBrush.pdf */; };
+		23488E192A6A78390065C127 /* MainMenu2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23488E172A6A78390065C127 /* MainMenu2.xib */; };
+		2379C5ED2A6A652700884B2A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2379C5EC2A6A652700884B2A /* Assets.xcassets */; };
+		2379C5F22A6A652700884B2A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2379C5F12A6A652700884B2A /* main.m */; };
+		2379C6062A6A65F000884B2A /* MyAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = 2379C5FD2A6A65EF00884B2A /* MyAgent.m */; };
+		2379C6072A6A65F000884B2A /* SldAndStepper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2379C5FF2A6A65EF00884B2A /* SldAndStepper.m */; };
+		2379C6082A6A65F000884B2A /* Controller2.m in Sources */ = {isa = PBXBuildFile; fileRef = 2379C6022A6A65EF00884B2A /* Controller2.m */; };
+		239596A92AB3ED3500C09B31 /* DataCompress.m in Sources */ = {isa = PBXBuildFile; fileRef = 239596A82AB3ED3500C09B31 /* DataCompress.m */; };
+		23D974B72A8F36C800E81570 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23D974B62A8F36C800E81570 /* MetalKit.framework */; };
+		23D974BA2A8F3C9800E81570 /* Display.m in Sources */ = {isa = PBXBuildFile; fileRef = 23D974B82A8F3C9700E81570 /* Display.m */; };
+		23E5BA992A905A87003A0A79 /* MyShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 23E5BA982A905A87003A0A79 /* MyShaders.metal */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		231D5B2C2AA1925D00D0AC48 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		231D5B2D2AA2168300D0AC48 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
+		2347F8312AB455C100BEFF25 /* CrsrImgEraser.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = CrsrImgEraser.pdf; sourceTree = "<group>"; };
+		2347F8332AB45CCA00BEFF25 /* CrsrImgBrush.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = CrsrImgBrush.pdf; sourceTree = "<group>"; };
+		23488E182A6A78390065C127 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu2.xib; sourceTree = "<group>"; };
+		23488E1A2A6A79180065C127 /* Communication.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Communication.h; sourceTree = "<group>"; };
+		2379C5E62A6A652600884B2A /* DT5mC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DT5mC.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2379C5EC2A6A652700884B2A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2379C5F12A6A652700884B2A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		2379C5F32A6A652700884B2A /* DT5mC.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DT5mC.entitlements; sourceTree = "<group>"; };
+		2379C5F92A6A65EE00884B2A /* MyAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAgent.h; sourceTree = "<group>"; };
+		2379C5FB2A6A65EF00884B2A /* SldAndStepper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SldAndStepper.h; sourceTree = "<group>"; };
+		2379C5FD2A6A65EF00884B2A /* MyAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAgent.m; sourceTree = "<group>"; };
+		2379C5FF2A6A65EF00884B2A /* SldAndStepper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SldAndStepper.m; sourceTree = "<group>"; };
+		2379C6012A6A65EF00884B2A /* Controller2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Controller2.h; sourceTree = "<group>"; };
+		2379C6022A6A65EF00884B2A /* Controller2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Controller2.m; sourceTree = "<group>"; };
+		239596A72AB3ED3500C09B31 /* DataCompress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataCompress.h; sourceTree = "<group>"; };
+		239596A82AB3ED3500C09B31 /* DataCompress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataCompress.m; sourceTree = "<group>"; };
+		23D974B62A8F36C800E81570 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
+		23D974B82A8F3C9700E81570 /* Display.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Display.m; sourceTree = "<group>"; };
+		23D974B92A8F3C9700E81570 /* Display.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Display.h; sourceTree = "<group>"; };
+		23E5BA982A905A87003A0A79 /* MyShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = MyShaders.metal; sourceTree = "<group>"; };
+		23E5BA9A2A905AC0003A0A79 /* VecTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VecTypes.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2379C5E32A6A652600884B2A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				23D974B72A8F36C800E81570 /* MetalKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2379C5DD2A6A652600884B2A = {
+			isa = PBXGroup;
+			children = (
+				2379C5E82A6A652600884B2A /* DT5mC */,
+				2379C5E72A6A652600884B2A /* Products */,
+				23D974B52A8F36C800E81570 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		2379C5E72A6A652600884B2A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2379C5E62A6A652600884B2A /* DT5mC.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2379C5E82A6A652600884B2A /* DT5mC */ = {
+			isa = PBXGroup;
+			children = (
+				231D5B2C2AA1925D00D0AC48 /* Info.plist */,
+				23488E1A2A6A79180065C127 /* Communication.h */,
+				2379C6012A6A65EF00884B2A /* Controller2.h */,
+				2379C6022A6A65EF00884B2A /* Controller2.m */,
+				23D974B92A8F3C9700E81570 /* Display.h */,
+				23D974B82A8F3C9700E81570 /* Display.m */,
+				2379C5F92A6A65EE00884B2A /* MyAgent.h */,
+				2379C5FD2A6A65EF00884B2A /* MyAgent.m */,
+				2379C5FB2A6A65EF00884B2A /* SldAndStepper.h */,
+				2379C5FF2A6A65EF00884B2A /* SldAndStepper.m */,
+				239596A72AB3ED3500C09B31 /* DataCompress.h */,
+				239596A82AB3ED3500C09B31 /* DataCompress.m */,
+				23E5BA9A2A905AC0003A0A79 /* VecTypes.h */,
+				23E5BA982A905A87003A0A79 /* MyShaders.metal */,
+				2379C5EC2A6A652700884B2A /* Assets.xcassets */,
+				2347F8332AB45CCA00BEFF25 /* CrsrImgBrush.pdf */,
+				2347F8312AB455C100BEFF25 /* CrsrImgEraser.pdf */,
+				23488E172A6A78390065C127 /* MainMenu2.xib */,
+				231D5B2D2AA2168300D0AC48 /* Credits.rtf */,
+				2379C5F12A6A652700884B2A /* main.m */,
+				2379C5F32A6A652700884B2A /* DT5mC.entitlements */,
+			);
+			path = DT5mC;
+			sourceTree = "<group>";
+		};
+		23D974B52A8F36C800E81570 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				23D974B62A8F36C800E81570 /* MetalKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2379C5E52A6A652600884B2A /* DT5mC */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2379C5F62A6A652700884B2A /* Build configuration list for PBXNativeTarget "DT5mC" */;
+			buildPhases = (
+				2379C5E22A6A652600884B2A /* Sources */,
+				2379C5E32A6A652600884B2A /* Frameworks */,
+				2379C5E42A6A652600884B2A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DT5mC;
+			productName = DT5mC;
+			productReference = 2379C5E62A6A652600884B2A /* DT5mC.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2379C5DE2A6A652600884B2A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					2379C5E52A6A652600884B2A = {
+						CreatedOnToolsVersion = 14.3.1;
+					};
+				};
+			};
+			buildConfigurationList = 2379C5E12A6A652600884B2A /* Build configuration list for PBXProject "DT5mC" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 2379C5DD2A6A652600884B2A;
+			productRefGroup = 2379C5E72A6A652600884B2A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2379C5E52A6A652600884B2A /* DT5mC */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2379C5E42A6A652600884B2A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				231D5B2E2AA2168300D0AC48 /* Credits.rtf in Resources */,
+				2347F8342AB45CCA00BEFF25 /* CrsrImgBrush.pdf in Resources */,
+				23488E192A6A78390065C127 /* MainMenu2.xib in Resources */,
+				2347F8322AB455C100BEFF25 /* CrsrImgEraser.pdf in Resources */,
+				2379C5ED2A6A652700884B2A /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2379C5E22A6A652600884B2A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				23E5BA992A905A87003A0A79 /* MyShaders.metal in Sources */,
+				2379C5F22A6A652700884B2A /* main.m in Sources */,
+				2379C6072A6A65F000884B2A /* SldAndStepper.m in Sources */,
+				23D974BA2A8F3C9800E81570 /* Display.m in Sources */,
+				2379C6082A6A65F000884B2A /* Controller2.m in Sources */,
+				2379C6062A6A65F000884B2A /* MyAgent.m in Sources */,
+				239596A92AB3ED3500C09B31 /* DataCompress.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		23488E172A6A78390065C127 /* MainMenu2.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				23488E182A6A78390065C127 /* Base */,
+			);
+			name = MainMenu2.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		2379C5F42A6A652700884B2A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		2379C5F52A6A652700884B2A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		2379C5F72A6A652700884B2A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = DT5mC/DT5mC.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = 726X5Z9867;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				IBC_WARNINGS = NO;
+				INFOPLIST_FILE = DT5mC/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "© Tatsuo Unemi, 2008-2023.";
+				INFOPLIST_KEY_NSMainNibFile = MainMenu2;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = jp.ac.soka.unemi.DT5mC;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Debug;
+		};
+		2379C5F82A6A652700884B2A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = DT5mC/DT5mC.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = 726X5Z9867;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				IBC_WARNINGS = NO;
+				INFOPLIST_FILE = DT5mC/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "© Tatsuo Unemi, 2008-2023.";
+				INFOPLIST_KEY_NSMainNibFile = MainMenu2;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = jp.ac.soka.unemi.DT5mC;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2379C5E12A6A652600884B2A /* Build configuration list for PBXProject "DT5mC" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2379C5F42A6A652700884B2A /* Debug */,
+				2379C5F52A6A652700884B2A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2379C5F62A6A652700884B2A /* Build configuration list for PBXNativeTarget "DT5mC" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2379C5F72A6A652700884B2A /* Debug */,
+				2379C5F82A6A652700884B2A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2379C5DE2A6A652600884B2A /* Project object */;
+}
