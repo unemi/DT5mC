@@ -6,8 +6,8 @@ that works together with another software for camera image processing developed 
 
 In 2023, the code was revised to be adaptable to 4K 60Hz projector and 16:9 camera image utilising GPU power.
 
-### Machine requierment
+### Machine requirement
 This software runs on Apple's Mach computer equipped with Apple Silicon CPU/GPU.
-macOS 12.0 or later operating system is requiered.
+macOS 12.0 or later operating system is required.
 
 &copy; Tatsuo Unemi 2023.

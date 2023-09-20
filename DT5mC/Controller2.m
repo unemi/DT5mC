@@ -3,16 +3,14 @@
 #import <netinet/in.h>
 #import <sys/time.h>
 #import <UniformTypeIdentifiers/UniformTypeIdentifiers.h>
-#import "Communication.h"
-#import "Controller2.h"
+#import "Controller2+Mask.h"
 #import "Display.h"
 #import "MyAgent.h"
-#import "DataCompress.h"
 
 Controller2 *controller = nil;
 static BOOL running = YES;
 static uint16 newPortNumber = DfltPortNumber, PortNumber = DfltPortNumber;
-static int newFrameWidth = DfltFrameWidth, newFrameHeight = DfltFrameHeight;
+int newFrameWidth = DfltFrameWidth, newFrameHeight = DfltFrameHeight;
 static BOOL newAutoFrameSize = YES;
 int FrameWidth = DfltFrameWidth, FrameHeight = DfltFrameHeight;
 BOOL AutoFrameSize = YES;
@@ -171,7 +169,7 @@ static RcvResult receive_frame(Display *display) {
 @implementation Controller2 {
 	NSConditionLock *stopCondLock;
 	NSMutableDictionary *factoryDefaults, *userDefaults, *loadedParams;
-	Display *display;
+	NSString *windowTitle;
 //
 //	for Preferences Panel
 	IBOutlet NSTextField *portDgt, *widthDgt, *heightDgt;
@@ -180,12 +178,6 @@ static RcvResult receive_frame(Display *display) {
 	IBOutlet NSTextField *simStpIntvlDgt;
 	IBOutlet NSWindow *prefPanel;
 	NSUndoManager *prefUndoManager;
-//
-//	for Masking Panel
-	IBOutlet NSButton *noiseBtn, *clearBtn, *svMskAsDfltBtn;
-	IBOutlet NSTextField *mskInfoTxt;
-	IBOutlet DgtAndStepper *brushSizeStp;
-	IBOutlet NSWindow *maskPanel;
 }
 static NSString *keyPortNumber = @"port number",
 	*keySrcImgWidth = @"source image width", *keySrcImgHeight = @"source image height",
@@ -279,88 +271,6 @@ static NSString *keyPortNumber = @"port number",
 	if (sender != simStpIntvlDgt) simStpIntvlDgt.doubleValue = newValue;
 	if (sender != simStpIntvlSld) simStpIntvlSld.doubleValue = newValue;
 	simStpIntvl = newValue;
-}
-//
-static NSString *keyMaskingFilter = @"masking filter", *keyBrushSize = @"brush size";
-int brushSize;
-- (NSData *)setupMasking {
-	NSUserDefaults *ud = NSUserDefaults.standardUserDefaults;
-	NSNumber *num = [ud objectForKey:keyBrushSize];
-	brushSize = (int)(brushSizeStp.integerValue = (num != nil)? num.integerValue : 5);
-	NSData *data = [ud objectForKey:keyMaskingFilter];
-	if (data == nil) return nil;
-	@try {
-		if (![data isKindOfClass:NSData.class])
-			@throw @"Data type of mask data in UserDefaults is not NSData.";
-		data = [data unzippedData];
-		simd_short2 dim = *(simd_short2 *)data.bytes;
-		if (dim.x * 3 != dim.y * 4 && dim.x * 9 != dim.y * 16)
-			@throw @"Mask size is neither 4:3 nor 16:9.";
-		if (data.length != sizeof(simd_short2) + dim.x * dim.y / 8)
-			@throw [NSString stringWithFormat:
-				@"Mask data size is not correct for %d x %d.", dim.x, dim.y];
-		newFrameWidth = (int)dim.x;
-		newFrameHeight = (int)dim.y;
-	} @catch (id obj) {
-		NSString *msg; short code;
-		if ([obj isKindOfClass:NSString.class]) { msg = obj; code = 0; }
-		else { msg = @"Data could not be unzipped."; code = (short)[obj integerValue]; }
-		error_msg(msg, code);
-		[ud removeObjectForKey:keyMaskingFilter];
-		data = nil;
-	}
-	return data;
-}
-- (IBAction)saveMaskAsDefault:(id)sender {
-	svMskAsDfltBtn.enabled = NO;
-	[SrcBmLock lock];
-	NSMutableData *mData = [NSMutableData dataWithLength:sizeof(simd_short2) + BitmapByteCount];
-	*(simd_short2 *)mData.mutableBytes = (simd_short2){ FrameWidth, FrameHeight };
-	memcpy((unsigned char *)mData.mutableBytes + sizeof(simd_short2),
-		display.maskBytes, BitmapByteCount);
-	[SrcBmLock unlock];
-	NSUserDefaults *ud = NSUserDefaults.standardUserDefaults;
-	[ud setObject:[mData zippedData] forKey:keyMaskingFilter];
-	[ud setInteger:brushSizeStp.integerValue forKey:keyBrushSize];
-	mskInfoTxt.hidden = NO;
-	[NSTimer scheduledTimerWithTimeInterval:3. repeats:NO block:
-		^(NSTimer * _Nonnull timer) { self->mskInfoTxt.hidden = YES; }];
-}
-- (void)adjustMaskingPanelPosition {
-	NSRect winFrm = window.frame, scrFrm = window.screen.frame, pnlFrm = maskPanel.frame;
-	pnlFrm.origin = (NSPoint){NSMinX(winFrm),
-		(NSMinY(winFrm) - NSMinY(scrFrm) > pnlFrm.size.height ||
-		NSMinY(winFrm) - NSMinY(scrFrm) > NSMaxY(scrFrm) - NSMaxY(winFrm))?
-			NSMinY(winFrm) - pnlFrm.size.height : NSMaxY(winFrm)};
-	[maskPanel setFrameOrigin:pnlFrm.origin];
-}
-- (void)showMaskingPanel {
-	[self adjustMaskingPanelPosition];
-	[window addChildWindow:maskPanel ordered:NSWindowAbove];
-	[maskPanel orderFront:nil];
-}
-- (void)hideMaskingPanel {
-	display.maskingOption = MaskNone;
-	noiseBtn.state = NSControlStateValueOff;
-	[window removeChildWindow:maskPanel];
-	[maskPanel orderOut:nil];
-}
-- (void)maskWasModified {
-	svMskAsDfltBtn.enabled = YES;
-}
-- (IBAction)noiseMask:(NSButton *)sender {
-	if (sender.state == NSControlStateValueOn) {
-		display.maskingOption |= MaskNoise;
-		[self maskWasModified];
-	} else display.maskingOption &= ~ MaskNoise;
-}
-- (IBAction)clearMask:(id)sender {
-	display.maskingOption |= MaskClear;
-	[self maskWasModified];
-}
-- (IBAction)changeBrushSize:(DgtAndStepper *)stp {
-	brushSize = (int)stp.integerValue;
-	[window invalidateCursorRectsForView:prjctView];
 }
 //
 - (void)receiveTargetArea:(id)dummy {
@@ -479,12 +389,8 @@ int brushSize;
 - (void)windowDidBecomeKey:(NSNotification *)notification {
 	if (notification.object == prefPanel) [self checkApplicable];
 }
-- (void)windowDidEndLiveResize:(NSNotification *)notification {
-	if (notification.object != window || ProjectionType != ProjectionMasking) return;
-	[self adjustMaskingPanelPosition];
-}
-- (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)window {
-	return (window == prefPanel)? prefUndoManager : undoManager;
+- (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)win {
+	return (win == prefPanel)? prefUndoManager : undoManager;
 }
 static NSMutableDictionary *make_param_dict(void) {
 	NSMutableDictionary *dict = NSMutableDictionary.dictionary;
@@ -571,6 +477,10 @@ static void displayReconfigCB(CGDirectDisplayID display,
 		kCGDisplayEnabledFlag | kCGDisplayDisabledFlag)) == 0) return;
 	in_main_thread(^{ [controller configureScreenMenu]; });
 }
+- (void)setupWindowTitle {
+	window.title = [NSString stringWithFormat:@"%@ (%@)", windowTitle,
+		[projectionPopUp itemAtIndex:ProjectionType].title];
+}
 - (void)awakeFromNib {
 	controller = self;
 	cameraFPS = 0.;
@@ -604,6 +514,7 @@ static void displayReconfigCB(CGDirectDisplayID display,
 	[display configImageBuffersWidth:newFrameWidth height:newFrameHeight];
 	if (maskData != nil)
 		memcpy(display.maskBytes, maskData.bytes + sizeof(simd_short2), BitmapByteCount);
+	[self setDefaultMask];
 //
 	[self setupPreferences];
 	SrcBmLock = NSLock.new;
@@ -611,6 +522,19 @@ static void displayReconfigCB(CGDirectDisplayID display,
 	[display configAgentBuf];
 	setup_agents();
 	[self showCamBitmapSize];
+//
+	NSSize vSize = prjctView.frame.size;
+	NSInteger vW = vSize.width, vH = vSize.height;
+	if (vW * 9 != vH * 16) {
+		NSRect winFrm = window.frame;
+		CGFloat dH = vSize.width * 9. / 16. - vSize.height;
+		winFrm.size.height += dH;
+		winFrm.origin.y -= dH;
+		[window setFrame:winFrm display:NO];
+	}
+	windowTitle = window.title;
+	[self setupWindowTitle];
+	[panel makeKeyWindow];
 }
 - (void)setParamsFromDict:(NSDictionary *)dict {
 	NSNumber *num;
@@ -692,6 +616,7 @@ static void displayReconfigCB(CGDirectDisplayID display,
 		[self adjustFullScrItemSelection:orgName];
 		[target sendAction:target.action to:target.target];
 	}];
+	[undoManager setActionName:@"Screen name"];
 	screenName = fullScrPopUp.titleOfSelectedItem;
 	[self adjustRevertBtns];
 }
@@ -711,6 +636,7 @@ static void displayReconfigCB(CGDirectDisplayID display,
 - (IBAction)changeAgentColor:(NSColorWell *)sender {
 	[undoManager registerUndoWithTarget:self selector:@selector(setAgentColor:)
 		object:@[@(agentRGBA[0]), @(agentRGBA[1]), @(agentRGBA[2])]];
+	[undoManager setActionName:@"Agent color"];
 	[[sender.color colorUsingColorSpace:NSColorSpace.genericRGBColorSpace]
 		getRed:&agentRGBA[0] green:&agentRGBA[1] blue:&agentRGBA[2] alpha:NULL];
 	[self adjustRevertBtns];
@@ -720,7 +646,9 @@ static void displayReconfigCB(CGDirectDisplayID display,
 		(sender == projectionPopUp)? [sender indexOfSelectedItem] : [sender tag]);
 	if (newType == ProjectionType) return;
 	ProjectionType = newType;
-	if (sender != projectionPopUp) [projectionPopUp selectItemAtIndex:ProjectionType];
+	NSMenuItem *menuItem = [projectionPopUp itemAtIndex:newType];
+	if (sender != projectionPopUp) [projectionPopUp selectItem:menuItem];
+	[self setupWindowTitle];
 	if (newType == ProjectionMasking) [self showMaskingPanel];
 	else if (orgType == ProjectionMasking) [self hideMaskingPanel];
 	[prjctView projectionModeDidChangeFrom:orgType to:newType];
@@ -751,7 +679,7 @@ static void displayReconfigCB(CGDirectDisplayID display,
 	[scan scanUpToCharactersFromSet:NSCharacterSet.decimalDigitCharacterSet intoString:NULL];
 	[scan scanInteger:&height];
 	NSRect winFrm = window.frame, scrFrm = window.screen.frame;
-	NSSize cSize = window.contentView.frame.size;
+	NSSize cSize = prjctView.frame.size;
 	winFrm.size.width += width - cSize.width;
 	winFrm.size.height += height - cSize.height;
 	winFrm.origin.x -= (width - cSize.width) / 2.;
@@ -772,6 +700,7 @@ static void displayReconfigCB(CGDirectDisplayID display,
 		dgt.integerValue = orgValue;
 		[dgt sendAction:dgt.action to:dgt.target];
 	}];
+	[undoManager setActionName:IntParams[k].key];
 	*IntParams[k].value = newValue;
 	if (IntParams[k].isAgentMemory) [display configAgentBuf];
 	[self adjustRevertBtns];
@@ -784,10 +713,9 @@ static void displayReconfigCB(CGDirectDisplayID display,
 		sld.doubleValue = orgValue;
 		[sld sendAction:sld.action to:sld.target];
 	}];
+	[undoManager setActionName:Parameters[k].key];
 	*Parameters[k].value = newValue;
-	if (Parameters[k].isGeometry) [display adjustTransMxWithOffset:
-		(simd_float2){xOffset, yOffset} scale:(simd_float2){xScale, yScale}
-		keystone:(float)keystone];
+	if (Parameters[k].isGeometry) [display adjustTransMxWithOffset];
 	[self adjustRevertBtns];
 }
 //

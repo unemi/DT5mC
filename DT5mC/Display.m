@@ -3,9 +3,10 @@
 //  DT5
 
 #import "Display.h"
-#import "Communication.h"
+#import "Controller2+Mask.h"
 #import "MyAgent.h"
 
+typedef unsigned char BByte;
 float camXMax = (float)DfltFrameWidth/DfltFrameHeight;
 float dispXMax = 16./9.;
 NSInteger NAgents, trailSteps;
@@ -235,8 +236,7 @@ static void make_adjust_matrix(simd_float3x3 *mx, simd_float4x2 *corners) {
 	mx->columns[1] = (simd_float3){d, e, f};
 	mx->columns[2] = (simd_float3){g, h, 1.0};
 }
-- (void)adjustTransMxWithOffset:(simd_float2)offset
-	scale:(simd_float2)scale keystone:(float)keystone {
+- (void)adjustTransMxWithOffset {
 	simd_float4x2 corners = {
 		(simd_float2){ -1., -1.},
 		(simd_float2){ keystone - 1., 1.},
@@ -245,7 +245,8 @@ static void make_adjust_matrix(simd_float3x3 *mx, simd_float4x2 *corners) {
 	};
 	make_adjust_matrix(&keystoneMx, &corners);
 	for (NSInteger i = 0; i < 4; i ++)
-		corners.columns[i] = corners.columns[i] * scale + offset;
+		corners.columns[i] = corners.columns[i]
+			* (simd_float2){xScale, yScale} + (simd_float2){xOffset, yOffset};
 	make_adjust_matrix(&adjustMx, &corners);
 }
 static id<MTLFunction> function_named(NSString *name, id<MTLLibrary> dfltLib) {
@@ -256,7 +257,7 @@ static id<MTLFunction> function_named(NSString *name, id<MTLLibrary> dfltLib) {
 	}
 	return func;
 }
-- (id<MTLBuffer>)makeBitmapBuffer:(unsigned char)initValue {
+- (id<MTLBuffer>)makeBitmapBuffer:(BByte)initValue {
 	id<MTLBuffer> buf = [self makeBufferWithLength:BitmapByteCount];
 	memset(buf.contents, initValue, BitmapByteCount);
 	return buf;
@@ -341,16 +342,11 @@ static id<MTLFunction> function_named(NSString *name, id<MTLLibrary> dfltLib) {
 	maskPSO = makeRenderPSO(@"vertexShaderD", @"fragmentShaderM");
 	imagePSO = makeRenderPSO(@"vertexShaderD", @"fragmentShaderD");
 	commandQueue = device.newCommandQueue;
-	keystoneMx = adjustMx = matrix_identity_float3x3;
+	[self adjustTransMxWithOffset];
 	return self;
 }
 - (void)fullScreenSwitch {
-	static NSDictionary *options = nil;
-	if (view.isInFullScreenMode) {
-		[window orderFront:nil];
-		[view exitFullScreenModeWithOptions:nil];
-	} else {
-		if (options == nil) options = @{NSFullScreenModeAllScreens:@NO};
+	if (!view.isInFullScreenMode) {
 		NSArray<NSScreen *> *screenList = NSScreen.screens;
 		NSScreen *screen = nil;
 		if (screenName == nil) screen = screenList.lastObject;
@@ -360,9 +356,9 @@ static id<MTLFunction> function_named(NSString *name, id<MTLLibrary> dfltLib) {
 					{ screen = scr; break; }
 			if (screen == nil) screen = screenList.lastObject;
 		}
-		[view enterFullScreenMode:screen withOptions:options];
-		[window orderOut:nil];
-	}
+		[view enterFullScreenMode:screen withOptions:
+			@{NSFullScreenModeAllScreens:@NO}];
+	} else [view exitFullScreenModeWithOptions:nil];
 }
 - (void)oneStep {
 	if (commandQueue == nil || AtrctSrcMap == NULL) return;
@@ -378,7 +374,8 @@ static id<MTLFunction> function_named(NSString *name, id<MTLLibrary> dfltLib) {
 	[cce setBuffer:maskedBm offset:0 atIndex:2];
 	[cce setBytes:&mskOpe length:sizeof(mskOpe) atIndex:3];
 	[self encodeCompute:cce pl:maskingPSO nElements:BitmapByteCount arg0:srcBm arg1:mskBm];
-	_maskingOption &= ~ MaskClear;
+	BOOL maskCleared = (_maskingOption & MaskClear) != 0;
+	if (maskCleared) _maskingOption &= ~ MaskClear;
 	simd_uint2 size = {FrameWidth, FrameHeight};
 	[cce setBytes:&size length:sizeof(size) atIndex:IndexImageSize];
 	[cce setBytes:&keystoneMx length:sizeof(keystoneMx) atIndex:IndexKeystoneMx];
@@ -396,15 +393,15 @@ static id<MTLFunction> function_named(NSString *name, id<MTLLibrary> dfltLib) {
 	[cmdBuf commit];
 	[cmdBuf waitUntilCompleted];
 	[imgBufLock unlock];
+	if (maskCleared) in_main_thread(^{ [controller endMaskEdit]; });
 	in_main_thread(^{ self->view.needsDisplay = YES; });
 }
 @end
 
-@interface MyMTKView () {
+@implementation MyMTKView {
 	NSCursor *brushCursor, *eraserCursor;
+	simd_int2 prevXY;
 }
-@end
-@implementation MyMTKView
 - (void)awakeFromNib {
 	[self.window makeFirstResponder:self];
 	NSImage *img = [NSImage imageNamed:@"CrsrImgBrush"]; img.size = (NSSize){32,32};
@@ -420,7 +417,7 @@ static id<MTLFunction> function_named(NSString *name, id<MTLLibrary> dfltLib) {
 	rct = (camXMax < dispXMax)?
 		NSInsetRect(rct, rct.size.height * (dispXMax - camXMax) / 2. - bsz, 0.) :
 		NSInsetRect(rct, 0., rct.size.width * (1./dispXMax - 1./camXMax) / 2. - bsz);
-	[self addCursorRect:rct cursor:
+	[self addCursorRect:NSIntersectionRect(rct, self.visibleRect) cursor:
 		(NSEvent.modifierFlags & NSEventModifierFlagOption)? eraserCursor : brushCursor];
 }
 - (void)projectionModeDidChangeFrom:(EmnProjectionType)orgMode to:(EmnProjectionType)newMode {
@@ -431,31 +428,78 @@ static id<MTLFunction> function_named(NSString *name, id<MTLLibrary> dfltLib) {
 	if (ProjectionType == ProjectionMasking)
 		[self.window invalidateCursorRectsForView:self];
 }
-- (void)mouseDragged:(NSEvent *)event {
-	if (ProjectionType != ProjectionMasking) return;
-	void (^operation)(unsigned char *, unsigned char);
+#define imin(a,b) ((a < b)? a : b)
+#define imax(a,b) ((a > b)? a : b)
+static void for_range(simd_int2 xx, void (^proc)(int)) {
+	if (xx.x < xx.y) for (int x = xx.x; x <= xx.y; x ++) proc(x);
+	else for (int x = xx.x; x >= xx.y; x --) proc(x);
+}
+static void fill_bm_line(BByte *bm, simd_int2 xx, void (^ope)(BByte *, BByte)) {
+	static BByte
+		bitsL[8] = {0xff,0xfe,0xfc,0xf8,0xf0,0xe0,0xc0,0x80},
+		bitsR[8] = {0x01,0x03,0x07,0x0f,0x1f,0x3f,0x7f,0xff};
+	if (xx.x > xx.y) xx = (simd_int2){xx.y, xx.x};
+	simd_int2 idx = xx / 8, bp = xx % 8;
+	BByte byteL = bitsL[bp.x], byteR = bitsR[bp.y];
+	if (idx.x == idx.y) byteL &= byteR;
+	ope(bm + idx.x, byteL);
+	for (int ix = idx.x + 1; ix < idx.y; ix ++) ope(bm + ix, 0xff);
+	if (idx.x < idx.y) ope(bm + idx.y, byteR);
+}
+- (void)modifyMaskBitmap:(NSEvent *)event {
+	void (^ope)(BByte *, BByte);
 	if (event.modifierFlags & NSEventModifierFlagOption)
-		operation = ^(unsigned char *dst, unsigned char mask) { *dst |= mask; };
-	else operation = ^(unsigned char *dst, unsigned char mask) { *dst &= ~ mask; };
+		ope = ^(BByte *dst, BByte mask) { *dst |= mask; };
+	else ope = ^(BByte *dst, BByte mask) { *dst &= ~ mask; };
 	simd_float2 vCoord = mtl_coord_of_cursor(self);
 	[SrcBmLock lock];
 	simd_float2 cScale = (simd_float2){dispXMax, camXMax} / fmin(dispXMax, camXMax),
 		xy = (vCoord * cScale + 1.) / 2.;
-	simd_int2 ixy = simd_make_int2(xy.x * FrameWidth, (1. - xy.y) * FrameHeight),
-		ixyMin = simd_max(ixy - brushSize, 0),
-		ixyMax = simd_min(ixy + brushSize, (simd_int2){FrameWidth - 1, FrameHeight - 1});
-	int idxXMin = ixyMin.x / 8, idxXMax = ixyMax.x / 8;
-	unsigned char *mskBuf = ((Display *)self.delegate).maskBytes + ixyMin.y * FrameWidth / 8,
-		byteL = 0xff << ixyMin.x % 8, byteR = 0xff >> (7 - ixyMax.x % 8);
-	if (idxXMin == idxXMax) byteL &= byteR;
-	for (int iy = ixyMin.y; iy <= ixyMax.y; iy ++, mskBuf += FrameWidth / 8) {
-		operation(mskBuf + idxXMin, byteL);
-		for (int ix = idxXMin + 1; ix < idxXMax; ix ++)
-			operation(mskBuf + ix, 0xff);
-		if (idxXMax > idxXMin) operation(mskBuf + idxXMax, byteR);
+	simd_int2 ixy = simd_make_int2(xy.x * FrameWidth, (1. - xy.y) * FrameHeight);
+	if (event.type == NSEventTypeLeftMouseDown)
+		prevXY = (simd_int2){ixy.x - brushSize * 2 - 1, ixy.y};
+	if (!simd_equal(ixy, prevXY)) {
+		BByte *bitmap = ((Display *)self.delegate).maskBytes;
+		int bpr = FrameWidth / 8;
+		simd_int2 dxy = ixy - prevXY,
+			inc = (simd_int2){(dxy.x >= 0)? 1 : -1, (dxy.y >= 0)? 1 : -1},
+			bsz = (simd_int2){brushSize, brushSize} * inc;
+		int Y0 = prevXY.y - bsz.y, Y1 = prevXY.y + bsz.y,
+			Y2 = ixy.y - bsz.y, Y3 = ixy.y + bsz.y;
+		if (dxy.x == 0) {
+			simd_int2 xrange = {ixy.x - brushSize, ixy.x + brushSize};
+			for_range((simd_int2){Y1 + inc.y, Y3},
+				^(int y) { fill_bm_line(bitmap + y * bpr, xrange, ope); });
+		} else if (dxy.y == 0) {
+			simd_int2 xrange = {prevXY.x + bsz.x + inc.x, ixy.x + bsz.x};
+			for_range((simd_int2){Y2, Y3},
+				^(int y) { fill_bm_line(bitmap + y * bpr, xrange, ope); });
+		} else {
+			int pX = prevXY.x, (^comp)(int, int);
+			if (dxy.y >= 0) comp = ^(int a, int b) { return a <= b; };
+			else comp = ^(int a, int b) { return a >= b; };
+			for_range((simd_int2){Y0, Y3}, ^(int y) {
+				simd_int2 xrange;
+				xrange.x = comp(y, Y1)? pX + bsz.x : (y - Y1) * dxy.x / dxy.y + pX - bsz.x;
+				xrange.y = comp(Y2, y)? ixy.x + bsz.x : (y - Y2) * dxy.x / dxy.y + ixy.x + bsz.x;
+				fill_bm_line(bitmap + y * bpr, xrange, ope); });
+		}
+		prevXY = ixy;
 	}
 	[SrcBmLock unlock];
-	[controller maskWasModified];
 	self.needsDisplay = YES;
+}
+- (void)mouseDown:(NSEvent *)event {
+	if (ProjectionType != ProjectionMasking) return;
+	[controller beginMaskEdit];
+	[self modifyMaskBitmap:event];
+}
+- (void)mouseDragged:(NSEvent *)event {
+	if (ProjectionType != ProjectionMasking) return;
+	[self modifyMaskBitmap:event];
+}
+- (void)mouseUp:(NSEvent *)event {
+	if (ProjectionType != ProjectionMasking) return;
+	[controller endMaskEdit];
 }
 @end

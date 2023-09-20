@@ -1,21 +1,14 @@
 /* Controller */
 
 #import "SldAndStepper.h"
-
-typedef enum {
-	ProjectionNormal,
-	ProjectionAdjust,
-	ProjectionMasking,
-	ProjectionAtrctImage,
-	ProjectionRplntImage
-} EmnProjectionType;
+#import "Communication.h"
 
 @class Controller2;
 extern void in_main_thread(void (^block)(void));
 extern void error_msg(NSString *msg, short err);
 extern unsigned long current_time_us(void);
 extern Controller2 *controller;
-extern int FrameWidth, FrameHeight;
+extern int FrameWidth, FrameHeight, newFrameWidth, newFrameHeight;
 extern BOOL AutoFrameSize;
 extern NSInteger newNAgents, newTrailSteps;
 extern EmnProjectionType ProjectionType;
@@ -31,7 +24,7 @@ extern CGFloat agentLength, agentWeight, agentMaxOpacity, agentMinOpacity, agent
 	agentSpeed, agentTurnAngle, avoidance, thHiSpeed;
 extern int brushSize;
 
-@class MyMTKView;
+@class MyMTKView, Display;
 @interface Controller2 : NSObject
 	<NSApplicationDelegate, NSWindowDelegate, NSMenuItemValidation> {
 	IBOutlet NSWindow *window;
@@ -44,10 +37,10 @@ extern int brushSize;
 	IBOutlet NSSwitch *fullScrSwitch;
 	IBOutlet NSButton *saveAsDfltBtn, *rvtToFDBtn, *rvtToUDBtn;
 	IBOutlet MyMTKView *prjctView;
+	Display *display;
 	CGFloat maxFPS, cameraFPS, agentsFPS;
 	NSUndoManager *undoManager;
 }
-- (void)maskWasModified;
 - (void)showCamBitmapSize;
 - (void)showDrawableSize:(CGSize)size;
 - (BOOL)loadSettings:(NSURL *)url;

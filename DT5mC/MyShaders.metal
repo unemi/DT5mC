@@ -147,7 +147,7 @@ fragment float4 fragmentShaderM(RasterizerDataD in [[stage_in]],
 	bool2 b = (uchar2(src[i], mask[i]) & uchar2(m, m)) != 0;
     return (b.x && b.y)? float4(1., 1., .5, 1.)	:
 		(!b.x && b.y)? float4(.1, .1, .6, 1.) :
-		(b.x && !b.y)? float4(.5, .5, .25, 1.) : float4(0., 0., .2, 1.);
+		(b.x && !b.y)? float4(.3, .3, .1, 1.) : float4(0., 0., .2, 1.);
 }
 // Distribution image
 fragment float4 fragmentShaderD(RasterizerDataD in [[stage_in]],

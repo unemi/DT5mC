@@ -20,9 +20,11 @@
 		23D974B72A8F36C800E81570 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23D974B62A8F36C800E81570 /* MetalKit.framework */; };
 		23D974BA2A8F3C9800E81570 /* Display.m in Sources */ = {isa = PBXBuildFile; fileRef = 23D974B82A8F3C9700E81570 /* Display.m */; };
 		23E5BA992A905A87003A0A79 /* MyShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 23E5BA982A905A87003A0A79 /* MyShaders.metal */; };
+		23EE02502AB94F1200F223CA /* Controller2+Mask.m in Sources */ = {isa = PBXBuildFile; fileRef = 23EE024F2AB94F1200F223CA /* Controller2+Mask.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		230F183E2AB57B9C00ABB10E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		231D5B2C2AA1925D00D0AC48 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		231D5B2D2AA2168300D0AC48 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		2347F8312AB455C100BEFF25 /* CrsrImgEraser.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = CrsrImgEraser.pdf; sourceTree = "<group>"; };
@@ -46,6 +48,8 @@
 		23D974B92A8F3C9700E81570 /* Display.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Display.h; sourceTree = "<group>"; };
 		23E5BA982A905A87003A0A79 /* MyShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = MyShaders.metal; sourceTree = "<group>"; };
 		23E5BA9A2A905AC0003A0A79 /* VecTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VecTypes.h; sourceTree = "<group>"; };
+		23EE024E2AB94EE700F223CA /* Controller2+Mask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Controller2+Mask.h"; sourceTree = "<group>"; };
+		23EE024F2AB94F1200F223CA /* Controller2+Mask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Controller2+Mask.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +67,7 @@
 		2379C5DD2A6A652600884B2A = {
 			isa = PBXGroup;
 			children = (
+				230F183E2AB57B9C00ABB10E /* README.md */,
 				2379C5E82A6A652600884B2A /* DT5mC */,
 				2379C5E72A6A652600884B2A /* Products */,
 				23D974B52A8F36C800E81570 /* Frameworks */,
@@ -84,6 +89,8 @@
 				23488E1A2A6A79180065C127 /* Communication.h */,
 				2379C6012A6A65EF00884B2A /* Controller2.h */,
 				2379C6022A6A65EF00884B2A /* Controller2.m */,
+				23EE024E2AB94EE700F223CA /* Controller2+Mask.h */,
+				23EE024F2AB94F1200F223CA /* Controller2+Mask.m */,
 				23D974B92A8F3C9700E81570 /* Display.h */,
 				23D974B82A8F3C9700E81570 /* Display.m */,
 				2379C5F92A6A65EE00884B2A /* MyAgent.h */,
@@ -140,7 +147,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					2379C5E52A6A652600884B2A = {
 						CreatedOnToolsVersion = 14.3.1;
@@ -187,6 +194,7 @@
 			files = (
 				23E5BA992A905A87003A0A79 /* MyShaders.metal in Sources */,
 				2379C5F22A6A652700884B2A /* main.m in Sources */,
+				23EE02502AB94F1200F223CA /* Controller2+Mask.m in Sources */,
 				2379C6072A6A65F000884B2A /* SldAndStepper.m in Sources */,
 				23D974BA2A8F3C9800E81570 /* Display.m in Sources */,
 				2379C6082A6A65F000884B2A /* Controller2.m in Sources */,
@@ -242,9 +250,11 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -259,7 +269,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -300,9 +310,11 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -311,7 +323,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -326,7 +338,8 @@
 				CODE_SIGN_ENTITLEMENTS = DT5mC/DT5mC.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 726X5Z9867;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -356,7 +369,8 @@
 				CODE_SIGN_ENTITLEMENTS = DT5mC/DT5mC.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 726X5Z9867;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
