@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleSignature</key>
+	<string>hbwr</string>
+	<key>HPDBookAccessPath</key>
+	<string>index.html</string>
+	<key>HPDBookCSIndexPath</key>
+	<string>$(PRODUCT_NAME).cshelpindex</string>
+	<key>HPDBookIndexPath</key>
+	<string>$(PRODUCT_NAME).helpindex</string>
+	<key>HPDBookKBProduct</key>
+	<string>DT5mC</string>
+	<key>HPDBookTitle</key>
+	<string>DT5mC Help</string>
+	<key>HPDBookType</key>
+	<string>3</string>
+</dict>
+</plist>

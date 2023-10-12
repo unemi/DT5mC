@@ -30,21 +30,27 @@
 - (void)setAction:(SEL)action {
 	myAction = action;
 }
-- (void)awakeFromNib {
+- (void)setupValue:(CGFloat)v min:(CGFloat)minV max:(CGFloat)maxV {
 	NSNumberFormatter *numFmt = digits.formatter;
-	NSInteger fracND = 3;
 	if (numFmt != nil) {
-		numFmt.maximum = @(self.maxValue);
-		numFmt.minimum = @(self.minValue);
-		fracND = numFmt.maximumFractionDigits;
+		numFmt.minimum = @(minV);
+		numFmt.maximum = @(maxV);
 	}
-	digits.doubleValue = self.doubleValue;
-	CGFloat incExp = floor(log10((self.maxValue - self.minValue) * .01));
-	self.increment = pow(10., fmax(incExp, -fracND));
+	super.minValue = minV;
+	super.maxValue = maxV;
+	self.doubleValue = v;
+	super.increment = inc = pow(10., floor(log10((maxV - minV) * .02)));
 	if (myTarget == nil) myTarget = self.target;
 	if (myAction == nil) myAction = self.action;
 	super.target = digits.target = self;
 	super.action = digits.action = @selector(changeValue:);
+}
+- (void)mouseDown:(NSEvent *)event {
+	 NSEventModifierFlags flags = event.modifierFlags;
+	 if (flags & NSEventModifierFlagShift) self.increment = inc * 10.;
+	 else if (flags & NSEventModifierFlagControl) self.increment = inc * .1;
+	 else self.increment = inc;
+	 [super mouseDown:event];
 }
 @end
 
@@ -59,14 +65,14 @@
 	super.doubleValue = value;
 	if (slider != nil) slider.doubleValue = value;
 }
-- (void)awakeFromNib {
+- (void)setupValue:(CGFloat)v min:(CGFloat)minV max:(CGFloat)maxV {
+	[super setupValue:v min:minV max:maxV];
 	if (slider != nil) {
-		slider.maxValue = self.maxValue;
-		slider.minValue = self.minValue;
-		slider.doubleValue = self.doubleValue;
+		slider.maxValue = maxV;
+		slider.minValue = minV;
+		slider.doubleValue = v;
 		slider.target = self;
 		slider.action = @selector(changeValue:);
 	}
-	[super awakeFromNib];
 }
 @end

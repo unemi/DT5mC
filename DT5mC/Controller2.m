@@ -36,39 +36,39 @@ CGFloat agentSpeed = 1., agentTurnAngle = .5;
 CGFloat avoidance = .7, thHiSpeed = .4;
 static struct IntParamRec {
 	NSString *key;
-	NSInteger *value;
+	NSInteger *var, min, max;
 	BOOL isAgentMemory;
 	DgtAndStepper *stp;
 } IntParams[] = {
-	{ @"attractant diffusion", &atrDifSz, NO },
-	{ @"repellent diffusion", &rplDifSz, NO },
-	{ @"number of agents", &newNAgents, YES },
-	{ @"trail steps", &newTrailSteps, YES },
+	{ @"attractant diffusion", &atrDifSz, 1, 999, NO },
+	{ @"repellent diffusion", &rplDifSz, 1, 999, NO },
+	{ @"number of agents", &newNAgents, 1, 2000, YES },
+	{ @"trail steps", &newTrailSteps, 1, 50, YES },
 	{ nil, NULL }
 };
 static struct ParamRec {
 	NSString *key;
-	CGFloat *value;
+	CGFloat *var, min, max;
 	BOOL isGeometry;
 	SldAndStepper *stp;
 } Parameters[] = {
-	{ @"X Offset", &xOffset, YES },
-	{ @"Y Offset", &yOffset, YES },
-	{ @"X Scale", &xScale, YES },
-	{ @"Y Scale", &yScale, YES },
-	{ @"keystone", &keystone, YES },
-	{ @"attractant evaporation", &atrEvprt, NO },
-	{ @"repellent evaporation", &rplEvprt, NO },
-	{ @"fade-in time", &fadeInTime, NO },
-	{ @"agent length", &agentLength, NO },
-	{ @"agent weight", &agentWeight, NO },
-	{ @"agent max opacity", &agentMaxOpacity, NO },
-	{ @"agent min opacity", &agentMinOpacity, NO },
-	{ @"agent opacity gradient", &agentOpcGrad, NO },
-	{ @"agent speed", &agentSpeed, NO },
-	{ @"agent turn angle", &agentTurnAngle, NO },
-	{ @"agent avoidance", &avoidance, NO }, 
-	{ @"attractant threshold for hi-speed", &thHiSpeed, NO },
+	{ @"X Offset", &xOffset, -.5, .5, YES },
+	{ @"Y Offset", &yOffset, -.5, .5, YES },
+	{ @"X Scale", &xScale, .01, 1., YES },
+	{ @"Y Scale", &yScale, .01, 1., YES },
+	{ @"keystone", &keystone, 0., .8, YES },
+	{ @"attractant evaporation", &atrEvprt, 0., .2, NO },
+	{ @"repellent evaporation", &rplEvprt, 0., .2, NO },
+	{ @"fade-in time", &fadeInTime, 0., 99.9, NO },
+	{ @"agent length", &agentLength, 0., 2., NO },
+	{ @"agent weight", &agentWeight, 0., 2., NO },
+	{ @"agent max opacity", &agentMaxOpacity, 0., 1., NO },
+	{ @"agent min opacity", &agentMinOpacity, 0., 1., NO },
+	{ @"agent opacity gradient", &agentOpcGrad, -1., 1., NO },
+	{ @"agent speed", &agentSpeed, 0., 4., NO },
+	{ @"agent turn angle", &agentTurnAngle, 0., 1., NO },
+	{ @"agent avoidance", &avoidance, 0., 1., NO }, 
+	{ @"attractant threshold for hi-speed", &thHiSpeed, 0., .9, NO },
 	{ nil, NULL }
 };
 
@@ -354,6 +354,8 @@ static NSString *keyPortNumber = @"port number",
 	startBtn.enabled = YES;
 }
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+	if (![NSHelpManager.sharedHelpManager registerBooksInBundle:NSBundle.mainBundle])
+		error_msg(@"Could not register HelpBooks.", 0);
 	if (!setup_receiver()) [NSApp terminate:nil];
 	window.styleMask = window.styleMask & ~ NSWindowStyleMaskResizable;
 	[window makeKeyAndOrderFront:nil];
@@ -394,17 +396,17 @@ static NSString *keyPortNumber = @"port number",
 }
 static NSMutableDictionary *make_param_dict(void) {
 	NSMutableDictionary *dict = NSMutableDictionary.dictionary;
-	for (struct IntParamRec *p = IntParams; p->key; p ++) dict[p->key] = @(*p->value);
-	for (struct ParamRec *p = Parameters; p->key; p ++) dict[p->key] = @(*p->value);
+	for (struct IntParamRec *p = IntParams; p->key; p ++) dict[p->key] = @(*p->var);
+	for (struct ParamRec *p = Parameters; p->key; p ++) dict[p->key] = @(*p->var);
 	dict[keyAgentColor] = @[@(agentRGBA[0]), @(agentRGBA[1]), @(agentRGBA[2])];
 	if (screenName != nil) dict[keyScreenName] = screenName;
 	return dict;
 }
 static BOOL is_params_different(NSDictionary *dict) {
 	for (struct IntParamRec *p = IntParams; p->key; p ++)
-		if ([dict[p->key] integerValue] != *p->value) return YES;
+		if ([dict[p->key] integerValue] != *p->var) return YES;
 	for (struct ParamRec *p = Parameters; p->key; p ++)
-		if ([dict[p->key] doubleValue] != *p->value) return YES;
+		if ([dict[p->key] doubleValue] != *p->var) return YES;
 	NSArray<NSNumber *> *rgb = dict[keyAgentColor];
 	for (NSInteger i = 0; i < 3; i ++)
 		if (rgb[i].doubleValue != agentRGBA[i]) return YES;
@@ -438,12 +440,16 @@ static BOOL is_params_different(NSDictionary *dict) {
 		maD[i].tag = i;
 		maD[i].target = self;
 		maD[i].action = @selector(changeDgtStp:);
+		[maD[i] setupValue:*IntParams[i].var
+			min:IntParams[i].min max:IntParams[i].max];
 	}
 	for (NSInteger i = 0; i < maS.count; i ++) {
 		Parameters[i].stp = maS[i];
 		maS[i].tag = i;
 		maS[i].target = self;
 		maS[i].action = @selector(changeSldStp:);
+		[maS[i] setupValue:*Parameters[i].var
+			min:Parameters[i].min max:Parameters[i].max];
 	}
 }
 static void setvalue_popupbutton(id database, NSString *key, NSPopUpButton *btn) {
@@ -489,17 +495,13 @@ static void displayReconfigCB(CGDirectDisplayID display,
 	if (error != kCGErrorSuccess)
 		error_msg(@"Could not register a callback for display reconfiguration,", error);
 	factoryDefaults = make_param_dict();
-	[self collectSteppers:panel.contentView];
 	NSUserDefaults *ud = NSUserDefaults.standardUserDefaults;
 	NSNumber *num;
-	for (struct IntParamRec *p = IntParams; p->key; p ++) {
-		if ((num = [ud objectForKey:p->key])) *p->value = num.integerValue;
-		p->stp.doubleValue = *p->value;
-	}
-	for (struct ParamRec *p = Parameters; p->key; p ++) {
-		if ((num = [ud objectForKey:p->key])) *p->value = num.doubleValue;
-		p->stp.doubleValue = *p->value;
-	}
+	for (struct IntParamRec *p = IntParams; p->key; p ++)
+		if ((num = [ud objectForKey:p->key])) *p->var = num.integerValue;
+	for (struct ParamRec *p = Parameters; p->key; p ++)
+		if ((num = [ud objectForKey:p->key])) *p->var = num.doubleValue;
+	[self collectSteppers:panel.contentView];
 	setvalue_popupbutton(ud, keyProjectionType, projectionPopUp);
 	NSString *scrName = [ud objectForKey:keyScreenName];
 	if (scrName != nil) {
@@ -657,9 +659,9 @@ static void displayReconfigCB(CGDirectDisplayID display,
 - (IBAction)saveAsDefault:(NSButton *)sender {
 	NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
 	for (struct IntParamRec *p = IntParams; p->key; p ++)
-		[ud setInteger:*p->value forKey:p->key];
+		[ud setInteger:*p->var forKey:p->key];
 	for (struct ParamRec *p = Parameters; p->key; p ++)
-		[ud setFloat:*p->value forKey:p->key];
+		[ud setFloat:*p->var forKey:p->key];
 	[ud setInteger:ProjectionType forKey:keyProjectionType];
 	if (screenName == nil) [ud removeObjectForKey:keyScreenName];
 	else [ud setObject:screenName forKey:keyScreenName];
@@ -694,27 +696,27 @@ static void displayReconfigCB(CGDirectDisplayID display,
 }
 - (void)changeDgtStp:(DgtAndStepper *)sender {
 	NSInteger k = [sender tag];
-	NSInteger orgValue = *IntParams[k].value, newValue = sender.integerValue;
+	NSInteger orgValue = *IntParams[k].var, newValue = sender.integerValue;
 	if (orgValue == newValue) return;
 	[undoManager registerUndoWithTarget:sender handler:^(DgtAndStepper *dgt) {
 		dgt.integerValue = orgValue;
 		[dgt sendAction:dgt.action to:dgt.target];
 	}];
 	[undoManager setActionName:IntParams[k].key];
-	*IntParams[k].value = newValue;
+	*IntParams[k].var = newValue;
 	if (IntParams[k].isAgentMemory) [display configAgentBuf];
 	[self adjustRevertBtns];
 }
 - (void)changeSldStp:(SldAndStepper *)sender {
 	NSInteger k = [sender tag];
-	CGFloat orgValue = *Parameters[k].value, newValue = sender.doubleValue;
+	CGFloat orgValue = *Parameters[k].var, newValue = sender.doubleValue;
 	if (orgValue == newValue) return;
 	[undoManager registerUndoWithTarget:sender handler:^(SldAndStepper *sld) {
 		sld.doubleValue = orgValue;
 		[sld sendAction:sld.action to:sld.target];
 	}];
 	[undoManager setActionName:Parameters[k].key];
-	*Parameters[k].value = newValue;
+	*Parameters[k].var = newValue;
 	if (Parameters[k].isGeometry) [display adjustTransMxWithOffset];
 	[self adjustRevertBtns];
 }

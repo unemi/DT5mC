@@ -11,8 +11,10 @@
 @interface DgtAndStepper : NSStepper {
 	NSObject *myTarget;
 	SEL myAction;
+	double inc;
 }
 @property (assign) IBOutlet NSTextField *digits;
+- (void)setupValue:(CGFloat)v min:(CGFloat)minV max:(CGFloat)maxV;
 @end
 
 @interface SldAndStepper : DgtAndStepper

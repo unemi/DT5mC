@@ -1,0 +1,8 @@
+body { font: 12.0px "Lucida Grande"; background-color: white }
+a { text-decoration: none }
+table.h1 { margin: 6px 6px 6px 6px }
+td.h1 { font: bold 20.0px "Lucida Grande" }
+td { font: 12.0px "Lucida Grande" }
+.hd { font: 10.0px "Lucida Grande" }
+.copyright { margin-top: -6px; font: italic 10.0px Times }
+figcaption { font: italic 11.0px "Lucida Grande" }
