@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1- transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>DT5mC Masking</title>
+	<meta name="description" content="DT5mC's display control" />
+	<meta name="keywords" content="stage, projection, calibration" />
+	<link href="help.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<table width=100%><tr><td width=36px><img src=icon.png width=32 height=32 /></td>
+<td class=h1>Masking</td>
+<td align=right valign=top class=hd><a href="index.html">Top</a> 
+<a href="30Adjustment.html">Prev</a> <a href="50Movement.html">Next</a></td>
+</tr></table>
+<figure>
+<img src="40Masking.png" />
+<figcaption>Sample view of the window in Masking mode.</figcaption>
+</figure>
+<p>
+The above figure shows a sample of projection window in <b>Masking</b>
+<a href="20Display.html#ProjectionMode">mode</a>.
+Blue and light yellow areas are effective, but black and dark yellow areas are ignored
+even if the tracker module detected something to be target.
+Light and dark yellow indicate the area detected by the tracker,
+but dark parts are ignored by this software as targets.
+It is useful when it's difficult to eliminate noise in fixed areas by the tracker software.
+</p></p>
+This mode allows you to edit the masking filter.
+You can add the filtering area by dragging the mouse on the window.
+Pressing the option key during your dragging, you can erase the area.
+The button at the bottom left corner of the window allows you to add the current detected area as noise.
+<b>Clear</b> button erases all of filtering area.
+You can change the brush size by type in digits.
+The latest operation can be cancelled by <b>Undo</b> operation.
+The button entitled <b>Save as Default Mask</b> is to save current mask pattern as
+a part of default parameters so as to reuse it in the next time this software launched.
+</p>
+<hr/>
+<div class=copyright>&copy; Tatsuo Unemi, 2023.</div>
+</body>
+</html>

@@ -1,8 +1,10 @@
-body { font: 12.0px "Lucida Grande"; background-color: white }
+body { font: 14.0px "Helvetica"; background-color: white }
 a { text-decoration: none }
 table.h1 { margin: 6px 6px 6px 6px }
-td.h1 { font: bold 20.0px "Lucida Grande" }
-td { font: 12.0px "Lucida Grande" }
-.hd { font: 10.0px "Lucida Grande" }
-.copyright { margin-top: -6px; font: italic 10.0px Times }
-figcaption { font: italic 11.0px "Lucida Grande" }
+td.h1 { font: bold 22.0px "Helvetica" }
+td { font: 14.0px "Helvetica" }
+.hd { font: 12.0px "Helvetica" }
+.copyright { margin-top: -6px; font: italic 11.0px "Helvetica" }
+figcaption { font: italic 11.0px "Helvetica" }
+h3, h4 { margin: 10px 0px 0px}
+p, ol, ul { margin: 3px 0px }

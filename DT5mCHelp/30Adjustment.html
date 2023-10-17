@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1- transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>DT5mC Adjustment</title>
+	<meta name="description" content="DT5mC's display control" />
+	<meta name="keywords" content="stage, projection, calibration" />
+	<link href="help.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<table width=100%><tr><td width=36px><img src=icon.png width=32 height=32 /></td>
+<td class=h1>DT5mC Adjustment</td>
+<td align=right valign=top class=hd><a href="index.html">Top</a> 
+<a href="20Display.html">Prev</a> <a href="40Masking.html">Next</a></td>
+</tr></table>
+<p>
+It might be necessary to adjust geometry of projection to fit
+the projection with the dancer's position and scale not by physical
+positioning of equipments but by this software.
+When you change the <a href="20Display.html#ProjectionMode">projection mode</a>
+to <b>Adjustment</b>, the projection window displays the detected area and grid lines
+as shown in the following figure.
+<figure>
+<img src="30AdjustWindow.png" width=400px />
+<figcaption>Projection window for geometric adjustment.</figcaption>
+</figure>
+Then switch the projecion to the full screen mode to check how the projected image fits the detected target.
+</p>
+<figure>
+<img src="30Adjust1.png" width=400px />
+<figcaption>Controls for adjustment parameters.</figcaption>
+</figure>
+<p>
+The control panel has five sets of controls to adjust the parameters;
+<b>X Offset</b>, <b>Y Offset</b>, <b>X Scale</b>, <b>Y Scale</b>, and <b>Keystone</b>.
+Offsets and scales change position and magnitude of target area in the projected image.
+Keystone does not affect the target adjustment, but scaling of swarm image.
+Because the projection on the stage is tilted, it's necessary to adjust the keystone parameter as the vertical grid line
+aligned parallel so that the swarm image looks same size even when the dancer moves forward and backward on the stage.
+</p><p>
+You can change the value of each parameter by operating a slider, a stepper, and digits key-in.
+The increment and decriment unit of the steppers are ±0.01 in default.
+It becomes ±0.1 (or ±0.001) if <b>shift</b> key (or <b>control</b> key) is pressed when you click the stepper.
+Your input of digits becomes effective after you move to another control for key-in
+by <b>TAB</b> key or by clicking another text field.
+</p>
+<hr/>
+<div class=copyright>&copy; Tatsuo Unemi, 2023.</div>
+</body>
+</html>

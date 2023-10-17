@@ -502,4 +502,9 @@ static void fill_bm_line(BByte *bm, simd_int2 xx, void (^ope)(BByte *, BByte)) {
 	if (ProjectionType != ProjectionMasking) return;
 	[controller endMaskEdit];
 }
+- (void)keyDown:(NSEvent *)event {
+	if (event.keyCode == 53 && self.isInFullScreenMode)
+		[self exitFullScreenModeWithOptions:nil];
+	else [super keyDown:event];
+}
 @end

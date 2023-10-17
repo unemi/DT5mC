@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1- transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>DT5mC Appearance</title>
+	<meta name="description" content="DT5mC's display control" />
+	<meta name="keywords" content="stage, projection, calibration" />
+	<link href="help.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<table width=100%><tr><td width=36px><img src=icon.png width=32 height=32 /></td>
+<td class=h1>Appearance</td>
+<td align=right valign=top class=hd><a href="index.html">Top</a> 
+<a href="50Movement.html">Prev</a></td>
+</tr></table>
+<figure>
+<img src="60Appearance.png" />
+<figcaption>Controls for appearance parameters.</figcaption>
+</figure>
+<p>
+Each agent, a member of swarm, is drawn as line segments
+connecting a number of points it passed.
+You can modify the appearance of swarm by the following five parameters
+accompanying the number of agents and agent colour:
+</p>
+<ol> 
+<li><b>Length</b>: total length of each agent. The tail segment might be shorten
+	if it would be longer to connect to the passed point.</li>
+<li><b>Weight</b>: thickness of line segment.</li>
+<li><b>Max Opacity</b>: opacity value when the agent is on the detected target.</li>
+<li><b>Min Opacity</b>: opacity value at the position where the attractant density is zero.
+The default value is zero. When you give it higher value, the agents at positions of low attractant density
+become visible, that enables to observe how the agents explore in the space by high speed movement.</li>
+<li><b>Opacity Gradient</b>: steepness of opacity value corresponding to the attractant density.</li>
+</ol>
+<hr/>
+<div class=copyright>&copy; Tatsuo Unemi, 2023.</div>
+</body>
+</html>

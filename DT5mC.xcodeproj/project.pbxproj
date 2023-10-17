@@ -7,16 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		230D7D082ADBA0AE0018E9F7 /* 30AdjustWindow.png in Resources */ = {isa = PBXBuildFile; fileRef = 230D7D072ADBA0AE0018E9F7 /* 30AdjustWindow.png */; };
 		231D5B2E2AA2168300D0AC48 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 231D5B2D2AA2168300D0AC48 /* Credits.rtf */; };
 		2347F8322AB455C100BEFF25 /* CrsrImgEraser.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 2347F8312AB455C100BEFF25 /* CrsrImgEraser.pdf */; };
 		2347F8342AB45CCA00BEFF25 /* CrsrImgBrush.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 2347F8332AB45CCA00BEFF25 /* CrsrImgBrush.pdf */; };
 		23488E192A6A78390065C127 /* MainMenu2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23488E172A6A78390065C127 /* MainMenu2.xib */; };
+		235691AA2ADA3F56008BABEE /* 60Appearance.png in Resources */ = {isa = PBXBuildFile; fileRef = 235691A92ADA3F56008BABEE /* 60Appearance.png */; };
 		235EB0252AD7B04A00D766A1 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 235EB0262AD7B04A00D766A1 /* index.html */; };
 		235EB02E2AD7B0F800D766A1 /* DT5mCHelp.helpindex in Resources */ = {isa = PBXBuildFile; fileRef = 235EB02C2AD7B0F800D766A1 /* DT5mCHelp.helpindex */; };
 		235EB02F2AD7B0F800D766A1 /* DT5mCHelp.cshelpindex in Resources */ = {isa = PBXBuildFile; fileRef = 235EB02D2AD7B0F800D766A1 /* DT5mCHelp.cshelpindex */; };
 		235EB0322AD7B69E00D766A1 /* 10overview.html in Resources */ = {isa = PBXBuildFile; fileRef = 235EB0312AD7B69E00D766A1 /* 10overview.html */; };
 		235EB0342AD7CF7400D766A1 /* 10stageSetup.svg in Resources */ = {isa = PBXBuildFile; fileRef = 235EB0332AD7CF7400D766A1 /* 10stageSetup.svg */; };
 		235EB0362AD7F45700D766A1 /* 10InfoFlow.svg in Resources */ = {isa = PBXBuildFile; fileRef = 235EB0352AD7F45700D766A1 /* 10InfoFlow.svg */; };
+		23691CDC2ADBF63100B56DF4 /* 40Masking.png in Resources */ = {isa = PBXBuildFile; fileRef = 23691CDB2ADBF63100B56DF4 /* 40Masking.png */; };
 		2379C5ED2A6A652700884B2A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2379C5EC2A6A652700884B2A /* Assets.xcassets */; };
 		2379C5F22A6A652700884B2A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2379C5F12A6A652700884B2A /* main.m */; };
 		2379C6062A6A65F000884B2A /* MyAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = 2379C5FD2A6A65EF00884B2A /* MyAgent.m */; };
@@ -26,6 +29,14 @@
 		23BDFC4F2AD6832B00F97004 /* DT5mCHelp.help in Resources */ = {isa = PBXBuildFile; fileRef = 23BDFC412AD67DB300F97004 /* DT5mCHelp.help */; };
 		23BDFC5D2AD68A6A00F97004 /* help.css in Resources */ = {isa = PBXBuildFile; fileRef = 23BDFC592AD68A6A00F97004 /* help.css */; };
 		23BDFC5E2AD68A6A00F97004 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 23BDFC5A2AD68A6A00F97004 /* icon.png */; };
+		23C220D62AD8DC7B00A91632 /* 20Display.html in Resources */ = {isa = PBXBuildFile; fileRef = 23C220D52AD8DC7B00A91632 /* 20Display.html */; };
+		23C220D82AD8ECDF00A91632 /* 20Display1.png in Resources */ = {isa = PBXBuildFile; fileRef = 23C220D72AD8ECDF00A91632 /* 20Display1.png */; };
+		23C220DA2AD95B0300A91632 /* 30Adjustment.html in Resources */ = {isa = PBXBuildFile; fileRef = 23C220D92AD95B0300A91632 /* 30Adjustment.html */; };
+		23C220DE2AD95CE700A91632 /* 50Movement.html in Resources */ = {isa = PBXBuildFile; fileRef = 23C220DB2AD95CE700A91632 /* 50Movement.html */; };
+		23C220DF2AD95CE700A91632 /* 60Appearance.html in Resources */ = {isa = PBXBuildFile; fileRef = 23C220DC2AD95CE700A91632 /* 60Appearance.html */; };
+		23C220E02AD95CE700A91632 /* 40Masking.html in Resources */ = {isa = PBXBuildFile; fileRef = 23C220DD2AD95CE700A91632 /* 40Masking.html */; };
+		23C220E22AD97A5F00A91632 /* 30Adjust1.png in Resources */ = {isa = PBXBuildFile; fileRef = 23C220E12AD97A5F00A91632 /* 30Adjust1.png */; };
+		23C220E42AD97A6A00A91632 /* 50Movement.png in Resources */ = {isa = PBXBuildFile; fileRef = 23C220E32AD97A6A00A91632 /* 50Movement.png */; };
 		23D974B72A8F36C800E81570 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23D974B62A8F36C800E81570 /* MetalKit.framework */; };
 		23D974BA2A8F3C9800E81570 /* Display.m in Sources */ = {isa = PBXBuildFile; fileRef = 23D974B82A8F3C9700E81570 /* Display.m */; };
 		23E5BA992A905A87003A0A79 /* MyShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 23E5BA982A905A87003A0A79 /* MyShaders.metal */; };
@@ -33,7 +44,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		23BDFC462AD67FAA00F97004 /* PBXContainerItemProxy */ = {
+		23DAC7152ADBF4AF0035CFC3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2379C5DE2A6A652600884B2A /* Project object */;
 			proxyType = 1;
@@ -43,6 +54,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		230D7D052ADB70090018E9F7 /* Output.xcfilelist */ = {isa = PBXFileReference; lastKnownFileType = text.xcfilelist; name = Output.xcfilelist; path = DT5mCHelp/Output.xcfilelist; sourceTree = "<group>"; };
+		230D7D062ADB70090018E9F7 /* Input.xcfilelist */ = {isa = PBXFileReference; lastKnownFileType = text.xcfilelist; name = Input.xcfilelist; path = DT5mCHelp/Input.xcfilelist; sourceTree = "<group>"; };
+		230D7D072ADBA0AE0018E9F7 /* 30AdjustWindow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 30AdjustWindow.png; path = DT5mCHelp/30AdjustWindow.png; sourceTree = "<group>"; };
 		230F183E2AB57B9C00ABB10E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		231D5B2C2AA1925D00D0AC48 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		231D5B2D2AA2168300D0AC48 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
@@ -50,13 +64,14 @@
 		2347F8332AB45CCA00BEFF25 /* CrsrImgBrush.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = CrsrImgBrush.pdf; sourceTree = "<group>"; };
 		23488E182A6A78390065C127 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu2.xib; sourceTree = "<group>"; };
 		23488E1A2A6A79180065C127 /* Communication.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Communication.h; sourceTree = "<group>"; };
+		235691A92ADA3F56008BABEE /* 60Appearance.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 60Appearance.png; path = DT5mCHelp/60Appearance.png; sourceTree = "<group>"; };
 		235EB0262AD7B04A00D766A1 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = index.html; path = DT5mCHelp/index.html; sourceTree = "<group>"; };
 		235EB02C2AD7B0F800D766A1 /* DT5mCHelp.helpindex */ = {isa = PBXFileReference; lastKnownFileType = file; name = DT5mCHelp.helpindex; path = DT5mCHelp/DT5mCHelp.helpindex; sourceTree = "<group>"; };
 		235EB02D2AD7B0F800D766A1 /* DT5mCHelp.cshelpindex */ = {isa = PBXFileReference; lastKnownFileType = file; name = DT5mCHelp.cshelpindex; path = DT5mCHelp/DT5mCHelp.cshelpindex; sourceTree = "<group>"; };
-		235EB0302AD7B12600D766A1 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; name = Makefile; path = DT5mCHelp/Makefile; sourceTree = "<group>"; };
 		235EB0312AD7B69E00D766A1 /* 10overview.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = 10overview.html; path = DT5mCHelp/10overview.html; sourceTree = "<group>"; };
 		235EB0332AD7CF7400D766A1 /* 10stageSetup.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = 10stageSetup.svg; path = DT5mCHelp/10stageSetup.svg; sourceTree = "<group>"; };
 		235EB0352AD7F45700D766A1 /* 10InfoFlow.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = 10InfoFlow.svg; path = DT5mCHelp/10InfoFlow.svg; sourceTree = "<group>"; };
+		23691CDB2ADBF63100B56DF4 /* 40Masking.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 40Masking.png; path = DT5mCHelp/40Masking.png; sourceTree = "<group>"; };
 		2379C5E62A6A652600884B2A /* DT5mC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DT5mC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2379C5EC2A6A652700884B2A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2379C5F12A6A652700884B2A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -73,6 +88,14 @@
 		23BDFC592AD68A6A00F97004 /* help.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = help.css; path = DT5mCHelp/help.css; sourceTree = "<group>"; };
 		23BDFC5A2AD68A6A00F97004 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = DT5mCHelp/icon.png; sourceTree = "<group>"; };
 		23BDFC5F2AD68BB800F97004 /* DT5mCHelp-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "DT5mCHelp-Info.plist"; path = "DT5mCHelp/DT5mCHelp-Info.plist"; sourceTree = "<group>"; };
+		23C220D52AD8DC7B00A91632 /* 20Display.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = 20Display.html; path = DT5mCHelp/20Display.html; sourceTree = "<group>"; };
+		23C220D72AD8ECDF00A91632 /* 20Display1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 20Display1.png; path = DT5mCHelp/20Display1.png; sourceTree = "<group>"; };
+		23C220D92AD95B0300A91632 /* 30Adjustment.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = 30Adjustment.html; path = DT5mCHelp/30Adjustment.html; sourceTree = "<group>"; };
+		23C220DB2AD95CE700A91632 /* 50Movement.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = 50Movement.html; path = DT5mCHelp/50Movement.html; sourceTree = "<group>"; };
+		23C220DC2AD95CE700A91632 /* 60Appearance.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = 60Appearance.html; path = DT5mCHelp/60Appearance.html; sourceTree = "<group>"; };
+		23C220DD2AD95CE700A91632 /* 40Masking.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = 40Masking.html; path = DT5mCHelp/40Masking.html; sourceTree = "<group>"; };
+		23C220E12AD97A5F00A91632 /* 30Adjust1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 30Adjust1.png; path = DT5mCHelp/30Adjust1.png; sourceTree = "<group>"; };
+		23C220E32AD97A6A00A91632 /* 50Movement.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 50Movement.png; path = DT5mCHelp/50Movement.png; sourceTree = "<group>"; };
 		23D974B62A8F36C800E81570 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
 		23D974B82A8F3C9700E81570 /* Display.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Display.m; sourceTree = "<group>"; };
 		23D974B92A8F3C9700E81570 /* Display.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Display.h; sourceTree = "<group>"; };
@@ -154,8 +177,9 @@
 		23BDFC4E2AD682AD00F97004 /* DT5mCHelp */ = {
 			isa = PBXGroup;
 			children = (
-				235EB0302AD7B12600D766A1 /* Makefile */,
 				23BDFC5F2AD68BB800F97004 /* DT5mCHelp-Info.plist */,
+				230D7D062ADB70090018E9F7 /* Input.xcfilelist */,
+				230D7D052ADB70090018E9F7 /* Output.xcfilelist */,
 				23BDFC502AD684AF00F97004 /* Resources */,
 			);
 			name = DT5mCHelp;
@@ -168,10 +192,21 @@
 				235EB02C2AD7B0F800D766A1 /* DT5mCHelp.helpindex */,
 				235EB0262AD7B04A00D766A1 /* index.html */,
 				235EB0312AD7B69E00D766A1 /* 10overview.html */,
+				23C220D52AD8DC7B00A91632 /* 20Display.html */,
+				23C220D92AD95B0300A91632 /* 30Adjustment.html */,
+				23C220DD2AD95CE700A91632 /* 40Masking.html */,
+				23C220DB2AD95CE700A91632 /* 50Movement.html */,
+				23C220DC2AD95CE700A91632 /* 60Appearance.html */,
 				23BDFC592AD68A6A00F97004 /* help.css */,
 				23BDFC5A2AD68A6A00F97004 /* icon.png */,
 				235EB0332AD7CF7400D766A1 /* 10stageSetup.svg */,
 				235EB0352AD7F45700D766A1 /* 10InfoFlow.svg */,
+				23C220D72AD8ECDF00A91632 /* 20Display1.png */,
+				230D7D072ADBA0AE0018E9F7 /* 30AdjustWindow.png */,
+				23C220E12AD97A5F00A91632 /* 30Adjust1.png */,
+				23691CDB2ADBF63100B56DF4 /* 40Masking.png */,
+				23C220E32AD97A6A00A91632 /* 50Movement.png */,
+				235691A92ADA3F56008BABEE /* 60Appearance.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -198,7 +233,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				23BDFC472AD67FAA00F97004 /* PBXTargetDependency */,
+				23DAC7162ADBF4AF0035CFC3 /* PBXTargetDependency */,
 			);
 			name = DT5mC;
 			productName = DT5mC;
@@ -211,6 +246,7 @@
 			buildPhases = (
 				23BDFC3D2AD67DB300F97004 /* Sources */,
 				23BDFC3E2AD67DB300F97004 /* Frameworks */,
+				230D7D042ADB68AD0018E9F7 /* ShellScript */,
 				23BDFC3F2AD67DB300F97004 /* Resources */,
 			);
 			buildRules = (
@@ -276,18 +312,51 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				23C220DA2AD95B0300A91632 /* 30Adjustment.html in Resources */,
+				23C220E42AD97A6A00A91632 /* 50Movement.png in Resources */,
 				235EB0252AD7B04A00D766A1 /* index.html in Resources */,
 				235EB0322AD7B69E00D766A1 /* 10overview.html in Resources */,
+				23C220DF2AD95CE700A91632 /* 60Appearance.html in Resources */,
 				23BDFC5D2AD68A6A00F97004 /* help.css in Resources */,
 				23BDFC5E2AD68A6A00F97004 /* icon.png in Resources */,
 				235EB0342AD7CF7400D766A1 /* 10stageSetup.svg in Resources */,
+				23C220DE2AD95CE700A91632 /* 50Movement.html in Resources */,
 				235EB0362AD7F45700D766A1 /* 10InfoFlow.svg in Resources */,
+				23C220E02AD95CE700A91632 /* 40Masking.html in Resources */,
+				23C220D62AD8DC7B00A91632 /* 20Display.html in Resources */,
+				235691AA2ADA3F56008BABEE /* 60Appearance.png in Resources */,
 				235EB02E2AD7B0F800D766A1 /* DT5mCHelp.helpindex in Resources */,
+				23C220D82AD8ECDF00A91632 /* 20Display1.png in Resources */,
+				23C220E22AD97A5F00A91632 /* 30Adjust1.png in Resources */,
 				235EB02F2AD7B0F800D766A1 /* DT5mCHelp.cshelpindex in Resources */,
+				230D7D082ADBA0AE0018E9F7 /* 30AdjustWindow.png in Resources */,
+				23691CDC2ADBF63100B56DF4 /* 40Masking.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		230D7D042ADB68AD0018E9F7 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"$(SRCROOT)/$(TARGET_NAME)/Input.xcfilelist",
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+				"$(SRCROOT)/$(TARGET_NAME)/Output.xcfilelist",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\ncd $SRCROOT/$TARGET_NAME\nhiutil -I corespotlight -Caf DT5mCHelp.cshelpindex -vv .\nhiutil -I lsm -Caf DT5mCHelp.helpindex -vv .\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		2379C5E22A6A652600884B2A /* Sources */ = {
@@ -315,10 +384,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		23BDFC472AD67FAA00F97004 /* PBXTargetDependency */ = {
+		23DAC7162ADBF4AF0035CFC3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 23BDFC402AD67DB300F97004 /* DT5mCHelp */;
-			targetProxy = 23BDFC462AD67FAA00F97004 /* PBXContainerItemProxy */;
+			targetProxy = 23DAC7152ADBF4AF0035CFC3 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -455,7 +524,7 @@
 				CODE_SIGN_ENTITLEMENTS = DT5mC/DT5mC.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 726X5Z9867;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -486,7 +555,7 @@
 				CODE_SIGN_ENTITLEMENTS = DT5mC/DT5mC.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 726X5Z9867;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -514,6 +583,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -529,6 +599,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = jp.ac.soka.unemi.DT5mCHelp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				WRAPPER_EXTENSION = help;
@@ -539,6 +610,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -554,6 +626,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = jp.ac.soka.unemi.DT5mCHelp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				WRAPPER_EXTENSION = help;

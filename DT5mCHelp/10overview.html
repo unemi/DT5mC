@@ -2,36 +2,52 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1- transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>Overview</title>
+	<title>DT5mC Overview</title>
 	<meta name="description" content="DT5mC's overview" />
-	<meta name="keywords" content="camera, simulation, projection" />
+	<meta name="keywords" content="stage, camera, simulation, projection" />
 	<link href="help.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <table width=100%><tr><td width=36px><img src=icon.png width=32 height=32 /></td>
 <td class=h1>Overview</td>
-<td align=right valign=top class=hd><a href="10overview.html">Next</a></td>
+<td align=right valign=top class=hd><a href="index.html">Top</a> <a href="20Display.html">Next</a></td>
 </tr></table>
 <p>
-In the final part of the scene in Gods and Dogs,
+In the final part of the scene in
+<a href="https://artsandculture.google.com/asset/gods-and-dogs/nAFjLaKEH8sdiQ?hl=en">Gods and Dogs</a>,
 a male dancer performs solo movement.
 When the stage lights turn dim, worms start roaming on his body,
 expressing by projection from the ceiling bridge or back end of the theatre space.
-This projection follows the dancer's movement, then dispears when he moves back toword the backdrop.
+This projection follows the dancer's movement, then disappears when he moves back to the backdrop.
+</p><p>
 The following figure illustrates a typical setup of equipments in the theatre space.
 Both the camera and the projector are placed on the ceiling bridge together with the computer.
+At least one of these equipments should has a zooming lenz to be able to adjust
+the optically covering areas of them.
+As the distance between these equipments and the target stage is usually tens of meters,
+it might be difficult to physically align the orientations for this adjustment.
+This software has a functionality to adjust the geometry of projection by some parameters,
+offsets, scales, and keystone, explained in the section <a href="30Adjustment.html">Adjustment</a>.
+</p><p>
+The camera should have a filter that passes infrared light but blocks visible light
+in order to eliminate a reflection from any objects on the stage other than the dancer's body.
+Infrared light is invisible for human eyes, but it is visible by the camera.
+As the projector's output light does not include infrared light,
+the projected image does not interfere the target detection by the camera.
 </p>
 <figure>
-<img src="10stageSetup.svg" width=300px />
+<img src="10stageSetup.svg" />
 <figcaption>A typical setup of equipments in the theatre space.</figcaption>
 </figure>
 <p>
 Two applications run on the computer,
-the one processes the camera image to detect the dencer's body,
-and the other one, this DT5mC, organizes swarm simulation and produces the image in which worms are roaming.
+the one processes the camera image to detect the dancer's body,
+and the other one, this DT5mC, organises swarm simulation and produces the animation in which worms are roaming.
+<i>Tracker</i> application sends image data in a raw binary bitmap format via UDP/IP protocol.
+This means it's also possible to use a separated computer for each application using a local network connection.
 </p>
 <figure>
-<img src="10InfoFlow.svg" width=300px />
+<img src="10InfoFlow.svg" />
 <figcaption>Information flow from camera to projector.</figcaption>
 </figure>
 <hr/>

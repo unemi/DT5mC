@@ -49,7 +49,6 @@ kernel void expandBitmap(constant uchar *src, device float *result,
 	uint2 ixy = {index % size->x, index / size->x};
 	result[index] = max(result[index],
 		tracked_value(src, *size, (float2(ixy) + .5) / float2(*size) * 2. - 1., *keystoneMx));
-//	result[index] = bit_is_on(src, ixy.y * size->x + ixy.x)? 1. : 0.;
 }
 kernel void defuseAndEvaporate(device const float *src, device float *result,
 	constant int3 *size [[buffer(IndexImageSize)]],	// width, height and window

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1- transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>DT5mC Display Control</title>
+	<meta name="description" content="DT5mC's display control" />
+	<meta name="keywords" content="stage, projection, calibration" />
+	<link href="help.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<table width=100%><tr><td width=36px><img src=icon.png width=32 height=32 /></td>
+<td class=h1>Display Control</td>
+<td align=right valign=top class=hd><a href="index.html">Top</a> 
+<a href="10Overview.html">Prev</a> <a href="30Adjustment.html">Next</a></td>
+</tr></table>
+<figure>
+<img src="20Display1.png" />
+<figcaption>GUI elements to display control.</figcaption>
+</figure>
+<p>
+The above figure shows two buttons, a switch, and a popup button for display controls
+at the top left part of the control panel.
+</p>
+<h3>Start and Stop</h3>
+<p>
+You can stop and start the simulation process by clicking the buttons
+at top left part of the control panel.
+The same operations are possible by the menu items <b>Start</b> and <b>Stop</b>
+in the <b>Projection</b> menu in the menu bar, whose shortcut keys are
+<b>⌘G</b> and <b>⇧⌘G</b> respectively.
+When you stop the simulation, the projection swarm disappears suddenly,
+but it appears gradually by <b>Fade in time</b> when it starts again.
+You can change this duration by alternate the value displayed at middle right part of the control panel.
+</p>
+<h3>Full Screen Mode</h3>
+<p>
+The switch at the top middle is to turn the full screen mode on and off.
+If your computer has more than one screens, the control panel can stay visible when the projection
+and the control panel are placed in the different screens.
+The switch is effective to turn the full screen mode off.
+The menu item <b>Full Screen</b> in the <b>Projection</b> menu in the menu bar has the same
+function to switch the mode.
+The shortcut key of this menu item is <b>⌘F</b>, that is effective to turn the mode off
+even when the control panel is hidden behind the full screen projection.
+<b>ESC</b> key also has the same effect to exit from the full screen mode.
+</p>
+<h4>Selecting screen for full screen mode</h4>
+<p>
+In usual setups, a projector is attached to the video output port, typically HDMI,
+of a laptop computer, such as MacBook Pro, as the secondary screen.
+In this case, you don't need to make any changes for screen settings since
+this software selects the secondary screen for full screen mode.
+In case your computer has more than two screens,
+it is helpful to specify the screen to be used for full screen mode,
+by a popup button at the bottom part of control panel.
+The menu attached to this button contains the items entitled screen names. 
+</p>
+<a name="ProjectionMode"></a>
+<h3>Selecting Projection Mode</h3>
+<p>
+Using the popup button at the top right part of control panel,
+you can choose one of the projection modes;
+<b>Normal</b>, <b>Adjustment</b>, <b>Masking</b>, <b>Attractant</b>, and <b>Repellent</b>.
+The menu items of the same titles in the <b>Projection</b> menu in the menu bar
+are also available to change the mode.
+Each mode displays as follows.
+<ul>
+<li><b>Normal</b>: swarm animation for the real performance.</li>
+<li><b>Adjustment</b>: detected area and grid for geometric
+	<a href="30Adjustment.html">adjustment</a>.</li>
+<li><b>Masking</b>: to edit the masking bitmap to avoid interference by noise.
+<li><b>Attractant</b>, <b>Repellent</b>: monitoring the distribution of those
+	virtual chemicals to control the swarm behaviour.
+</ul>
+</p>
+<hr/>
+<div class=copyright>&copy; Tatsuo Unemi, 2023.</div>
+</body>
+</html>
