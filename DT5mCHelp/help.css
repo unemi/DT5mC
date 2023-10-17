@@ -1,10 +1,13 @@
-body { font: 14.0px "Helvetica"; background-color: white }
+:root { font: 13px/1.5 -apple-system, sans-serif }
+body { margin: 2rem }
 a { text-decoration: none }
-table.h1 { margin: 6px 6px 6px 6px }
-td.h1 { font: bold 22.0px "Helvetica" }
-td { font: 14.0px "Helvetica" }
-.hd { font: 12.0px "Helvetica" }
-.copyright { margin-top: -6px; font: italic 11.0px "Helvetica" }
-figcaption { font: italic 11.0px "Helvetica" }
+table.h1 { margin: 6px }
+td.h1 { font-weight: bold; font-size: 22px }
+td { font-size: 14px }
+.hd { font-size: 12px }
+.copyright { margin-top: -6px; font-style: italic; font-size: 11px }
+figcaption { font-style: italic; font-size: 11.0px }
 h3, h4 { margin: 10px 0px 0px}
-p, ol, ul { margin: 3px 0px }
+p, ol, ul { margin: 5px 0px }
+figure { text-align: center; margin: 0px 8px }
+figure img { width: min(400px,95%) }
