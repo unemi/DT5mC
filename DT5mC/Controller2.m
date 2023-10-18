@@ -169,7 +169,7 @@ static RcvResult receive_frame(Display *display) {
 @implementation Controller2 {
 	NSConditionLock *stopCondLock;
 	NSMutableDictionary *factoryDefaults, *userDefaults, *loadedParams;
-	NSString *windowTitle;
+	NSString *windowTitle, *sizeText;
 //
 //	for Preferences Panel
 	IBOutlet NSTextField *portDgt, *widthDgt, *heightDgt;
@@ -359,6 +359,8 @@ static NSString *keyPortNumber = @"port number",
 	if (!setup_receiver()) [NSApp terminate:nil];
 	window.styleMask = window.styleMask & ~ NSWindowStyleMaskResizable;
 	[window makeKeyAndOrderFront:nil];
+	CGFloat winW = window.contentView.frame.size.width;
+	sizeText = [NSString stringWithFormat:@"%.0f x %.0f", winW, winW * 9 / 16];
 	stopCondLock = NSConditionLock.new;
 	[self startThreads:nil];
 }
@@ -693,6 +695,7 @@ static void displayReconfigCB(CGDirectDisplayID display,
 	else if (NSMaxY(winFrm) > NSMaxY(scrFrm))
 		winFrm.origin.y = NSMaxY(scrFrm) - winFrm.size.height;
 	[window setFrame:winFrm display:YES animate:YES];
+	sizeText = menuItem.title;
 }
 - (void)changeDgtStp:(DgtAndStepper *)sender {
 	NSInteger k = [sender tag];
@@ -732,6 +735,8 @@ static void displayReconfigCB(CGDirectDisplayID display,
 	else if (action == @selector(changeProjection:))
 		return menuItem.menu == projectionPopUp.menu
 			|| ProjectionType != menuItem.tag;
+	else if (action == @selector(resizeWindow:))
+		return ![menuItem.title isEqualToString:sizeText];
 	else if (action == @selector(switchFullScreen:))
 		menuItem.title = prjctView.inFullScreenMode?
 			@"Exit Full Screen" : @"Enter Full Screen";
