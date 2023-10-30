@@ -7,7 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		230B0C632AEC92F800AEB888 /* CommonFunc.m in Sources */ = {isa = PBXBuildFile; fileRef = 230B0C622AEC92F800AEB888 /* CommonFunc.m */; };
+		230B0C642AEC92F800AEB888 /* CommonFunc.m in Sources */ = {isa = PBXBuildFile; fileRef = 230B0C622AEC92F800AEB888 /* CommonFunc.m */; };
 		230D7D082ADBA0AE0018E9F7 /* 30AdjustWindow.png in Resources */ = {isa = PBXBuildFile; fileRef = 230D7D072ADBA0AE0018E9F7 /* 30AdjustWindow.png */; };
+		2311AFA62AE8E72F00FB9813 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2311AFA52AE8E72F00FB9813 /* AppDelegate.m */; };
+		2311AFA82AE8E72F00FB9813 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2311AFA72AE8E72F00FB9813 /* Assets.xcassets */; };
+		2311AFAB2AE8E72F00FB9813 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2311AFA92AE8E72F00FB9813 /* MainMenu.xib */; };
+		2311AFAD2AE8E72F00FB9813 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2311AFAC2AE8E72F00FB9813 /* main.m */; };
+		2312B20F2AE1008400385131 /* 70Settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 2312B20D2AE1008400385131 /* 70Settings.png */; };
+		2312B2102AE1008400385131 /* 70Settings.html in Resources */ = {isa = PBXBuildFile; fileRef = 2312B20E2AE1008400385131 /* 70Settings.html */; };
 		231D5B2E2AA2168300D0AC48 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 231D5B2D2AA2168300D0AC48 /* Credits.rtf */; };
 		2347F8322AB455C100BEFF25 /* CrsrImgEraser.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 2347F8312AB455C100BEFF25 /* CrsrImgEraser.pdf */; };
 		2347F8342AB45CCA00BEFF25 /* CrsrImgBrush.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 2347F8332AB45CCA00BEFF25 /* CrsrImgBrush.pdf */; };
@@ -20,6 +28,8 @@
 		235EB0342AD7CF7400D766A1 /* 10stageSetup.svg in Resources */ = {isa = PBXBuildFile; fileRef = 235EB0332AD7CF7400D766A1 /* 10stageSetup.svg */; };
 		235EB0362AD7F45700D766A1 /* 10InfoFlow.svg in Resources */ = {isa = PBXBuildFile; fileRef = 235EB0352AD7F45700D766A1 /* 10InfoFlow.svg */; };
 		23691CDC2ADBF63100B56DF4 /* 40Masking.png in Resources */ = {isa = PBXBuildFile; fileRef = 23691CDB2ADBF63100B56DF4 /* 40Masking.png */; };
+		236E378E2AEA3EAE00BCCF75 /* MonitorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 236E378D2AEA3EAE00BCCF75 /* MonitorView.m */; };
+		236E37902AEA868D00BCCF75 /* MyShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 236E378F2AEA868D00BCCF75 /* MyShader.metal */; };
 		2379C5ED2A6A652700884B2A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2379C5EC2A6A652700884B2A /* Assets.xcassets */; };
 		2379C5F22A6A652700884B2A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2379C5F12A6A652700884B2A /* main.m */; };
 		2379C6062A6A65F000884B2A /* MyAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = 2379C5FD2A6A65EF00884B2A /* MyAgent.m */; };
@@ -54,10 +64,22 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		230B0C612AEC92F800AEB888 /* CommonFunc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonFunc.h; sourceTree = "<group>"; };
+		230B0C622AEC92F800AEB888 /* CommonFunc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CommonFunc.m; sourceTree = "<group>"; };
+		230B0C652AECB08800AEB888 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		230D7D052ADB70090018E9F7 /* Output.xcfilelist */ = {isa = PBXFileReference; lastKnownFileType = text.xcfilelist; name = Output.xcfilelist; path = DT5mCHelp/Output.xcfilelist; sourceTree = "<group>"; };
 		230D7D062ADB70090018E9F7 /* Input.xcfilelist */ = {isa = PBXFileReference; lastKnownFileType = text.xcfilelist; name = Input.xcfilelist; path = DT5mCHelp/Input.xcfilelist; sourceTree = "<group>"; };
 		230D7D072ADBA0AE0018E9F7 /* 30AdjustWindow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 30AdjustWindow.png; path = DT5mCHelp/30AdjustWindow.png; sourceTree = "<group>"; };
 		230F183E2AB57B9C00ABB10E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		2311AFA22AE8E72F00FB9813 /* DTmS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DTmS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2311AFA42AE8E72F00FB9813 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		2311AFA52AE8E72F00FB9813 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		2311AFA72AE8E72F00FB9813 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2311AFAA2AE8E72F00FB9813 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		2311AFAC2AE8E72F00FB9813 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		2311AFAE2AE8E72F00FB9813 /* DTmS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DTmS.entitlements; sourceTree = "<group>"; };
+		2312B20D2AE1008400385131 /* 70Settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 70Settings.png; path = DT5mCHelp/70Settings.png; sourceTree = "<group>"; };
+		2312B20E2AE1008400385131 /* 70Settings.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = 70Settings.html; path = DT5mCHelp/70Settings.html; sourceTree = "<group>"; };
 		231D5B2C2AA1925D00D0AC48 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		231D5B2D2AA2168300D0AC48 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		2347F8312AB455C100BEFF25 /* CrsrImgEraser.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = CrsrImgEraser.pdf; sourceTree = "<group>"; };
@@ -72,6 +94,9 @@
 		235EB0332AD7CF7400D766A1 /* 10stageSetup.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = 10stageSetup.svg; path = DT5mCHelp/10stageSetup.svg; sourceTree = "<group>"; };
 		235EB0352AD7F45700D766A1 /* 10InfoFlow.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = 10InfoFlow.svg; path = DT5mCHelp/10InfoFlow.svg; sourceTree = "<group>"; };
 		23691CDB2ADBF63100B56DF4 /* 40Masking.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 40Masking.png; path = DT5mCHelp/40Masking.png; sourceTree = "<group>"; };
+		236E378C2AEA3EAE00BCCF75 /* MonitorView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MonitorView.h; sourceTree = "<group>"; };
+		236E378D2AEA3EAE00BCCF75 /* MonitorView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MonitorView.m; sourceTree = "<group>"; };
+		236E378F2AEA868D00BCCF75 /* MyShader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = MyShader.metal; sourceTree = "<group>"; };
 		2379C5E62A6A652600884B2A /* DT5mC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DT5mC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2379C5EC2A6A652700884B2A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2379C5F12A6A652700884B2A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -106,6 +131,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		2311AF9F2AE8E72F00FB9813 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2379C5E32A6A652600884B2A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -124,12 +156,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2311AFA32AE8E72F00FB9813 /* DT5mS */ = {
+			isa = PBXGroup;
+			children = (
+				230B0C652AECB08800AEB888 /* Info.plist */,
+				2311AFA42AE8E72F00FB9813 /* AppDelegate.h */,
+				2311AFA52AE8E72F00FB9813 /* AppDelegate.m */,
+				236E378C2AEA3EAE00BCCF75 /* MonitorView.h */,
+				236E378D2AEA3EAE00BCCF75 /* MonitorView.m */,
+				236E378F2AEA868D00BCCF75 /* MyShader.metal */,
+				2311AFA72AE8E72F00FB9813 /* Assets.xcassets */,
+				2311AFA92AE8E72F00FB9813 /* MainMenu.xib */,
+				2311AFAC2AE8E72F00FB9813 /* main.m */,
+				2311AFAE2AE8E72F00FB9813 /* DTmS.entitlements */,
+			);
+			path = DT5mS;
+			sourceTree = "<group>";
+		};
 		2379C5DD2A6A652600884B2A = {
 			isa = PBXGroup;
 			children = (
 				230F183E2AB57B9C00ABB10E /* README.md */,
+				230B0C612AEC92F800AEB888 /* CommonFunc.h */,
+				230B0C622AEC92F800AEB888 /* CommonFunc.m */,
 				23BDFC4E2AD682AD00F97004 /* DT5mCHelp */,
 				2379C5E82A6A652600884B2A /* DT5mC */,
+				2311AFA32AE8E72F00FB9813 /* DT5mS */,
 				2379C5E72A6A652600884B2A /* Products */,
 				23D974B52A8F36C800E81570 /* Frameworks */,
 			);
@@ -140,6 +192,7 @@
 			children = (
 				2379C5E62A6A652600884B2A /* DT5mC.app */,
 				23BDFC412AD67DB300F97004 /* DT5mCHelp.help */,
+				2311AFA22AE8E72F00FB9813 /* DTmS.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -197,6 +250,7 @@
 				23C220DD2AD95CE700A91632 /* 40Masking.html */,
 				23C220DB2AD95CE700A91632 /* 50Movement.html */,
 				23C220DC2AD95CE700A91632 /* 60Appearance.html */,
+				2312B20E2AE1008400385131 /* 70Settings.html */,
 				23BDFC592AD68A6A00F97004 /* help.css */,
 				23BDFC5A2AD68A6A00F97004 /* icon.png */,
 				235EB0332AD7CF7400D766A1 /* 10stageSetup.svg */,
@@ -207,6 +261,7 @@
 				23691CDB2ADBF63100B56DF4 /* 40Masking.png */,
 				23C220E32AD97A6A00A91632 /* 50Movement.png */,
 				235691A92ADA3F56008BABEE /* 60Appearance.png */,
+				2312B20D2AE1008400385131 /* 70Settings.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -222,6 +277,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		2311AFA12AE8E72F00FB9813 /* DTmS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2311AFB12AE8E72F00FB9813 /* Build configuration list for PBXNativeTarget "DTmS" */;
+			buildPhases = (
+				2311AF9E2AE8E72F00FB9813 /* Sources */,
+				2311AF9F2AE8E72F00FB9813 /* Frameworks */,
+				2311AFA02AE8E72F00FB9813 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DTmS;
+			productName = DTmS;
+			productReference = 2311AFA22AE8E72F00FB9813 /* DTmS.app */;
+			productType = "com.apple.product-type.application";
+		};
 		2379C5E52A6A652600884B2A /* DT5mC */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2379C5F62A6A652700884B2A /* Build configuration list for PBXNativeTarget "DT5mC" */;
@@ -267,6 +339,9 @@
 				BuildIndependentTargetsInParallel = 1;
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
+					2311AFA12AE8E72F00FB9813 = {
+						CreatedOnToolsVersion = 15.0.1;
+					};
 					2379C5E52A6A652600884B2A = {
 						CreatedOnToolsVersion = 14.3.1;
 					};
@@ -290,11 +365,21 @@
 			targets = (
 				2379C5E52A6A652600884B2A /* DT5mC */,
 				23BDFC402AD67DB300F97004 /* DT5mCHelp */,
+				2311AFA12AE8E72F00FB9813 /* DTmS */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		2311AFA02AE8E72F00FB9813 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2311AFA82AE8E72F00FB9813 /* Assets.xcassets in Resources */,
+				2311AFAB2AE8E72F00FB9813 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2379C5E42A6A652600884B2A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -317,6 +402,7 @@
 				235EB0252AD7B04A00D766A1 /* index.html in Resources */,
 				235EB0322AD7B69E00D766A1 /* 10overview.html in Resources */,
 				23C220DF2AD95CE700A91632 /* 60Appearance.html in Resources */,
+				2312B20F2AE1008400385131 /* 70Settings.png in Resources */,
 				23BDFC5D2AD68A6A00F97004 /* help.css in Resources */,
 				23BDFC5E2AD68A6A00F97004 /* icon.png in Resources */,
 				235EB0342AD7CF7400D766A1 /* 10stageSetup.svg in Resources */,
@@ -324,6 +410,7 @@
 				235EB0362AD7F45700D766A1 /* 10InfoFlow.svg in Resources */,
 				23C220E02AD95CE700A91632 /* 40Masking.html in Resources */,
 				23C220D62AD8DC7B00A91632 /* 20Display.html in Resources */,
+				2312B2102AE1008400385131 /* 70Settings.html in Resources */,
 				235691AA2ADA3F56008BABEE /* 60Appearance.png in Resources */,
 				235EB02E2AD7B0F800D766A1 /* DT5mCHelp.helpindex in Resources */,
 				23C220D82AD8ECDF00A91632 /* 20Display1.png in Resources */,
@@ -359,6 +446,18 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		2311AF9E2AE8E72F00FB9813 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				236E37902AEA868D00BCCF75 /* MyShader.metal in Sources */,
+				2311AFAD2AE8E72F00FB9813 /* main.m in Sources */,
+				236E378E2AEA3EAE00BCCF75 /* MonitorView.m in Sources */,
+				230B0C642AEC92F800AEB888 /* CommonFunc.m in Sources */,
+				2311AFA62AE8E72F00FB9813 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2379C5E22A6A652600884B2A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -366,6 +465,7 @@
 				23E5BA992A905A87003A0A79 /* MyShaders.metal in Sources */,
 				2379C5F22A6A652700884B2A /* main.m in Sources */,
 				23EE02502AB94F1200F223CA /* Controller2+Mask.m in Sources */,
+				230B0C632AEC92F800AEB888 /* CommonFunc.m in Sources */,
 				2379C6072A6A65F000884B2A /* SldAndStepper.m in Sources */,
 				23D974BA2A8F3C9800E81570 /* Display.m in Sources */,
 				2379C6082A6A65F000884B2A /* Controller2.m in Sources */,
@@ -392,6 +492,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		2311AFA92AE8E72F00FB9813 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2311AFAA2AE8E72F00FB9813 /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
 		23488E172A6A78390065C127 /* MainMenu2.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -403,6 +511,72 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		2311AFAF2AE8E72F00FB9813 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = DTmS/DTmS.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 726X5Z9867;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DTmS/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
+				INFOPLIST_KEY_NSCameraUsageDescription = "To capture the images on the stage.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "© Tatsuo Unemi, 2008-2023.";
+				INFOPLIST_KEY_NSMainNibFile = MainMenu;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = jp.ac.soka.unemi.DTmS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Debug;
+		};
+		2311AFB02AE8E72F00FB9813 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = DTmS/DTmS.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 726X5Z9867;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DTmS/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
+				INFOPLIST_KEY_NSCameraUsageDescription = "To capture the images on the stage.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "© Tatsuo Unemi, 2008-2023.";
+				INFOPLIST_KEY_NSMainNibFile = MainMenu;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = jp.ac.soka.unemi.DTmS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Release;
+		};
 		2379C5F42A6A652700884B2A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -524,7 +698,7 @@
 				CODE_SIGN_ENTITLEMENTS = DT5mC/DT5mC.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 726X5Z9867;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -555,7 +729,7 @@
 				CODE_SIGN_ENTITLEMENTS = DT5mC/DT5mC.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 726X5Z9867;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -636,6 +810,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		2311AFB12AE8E72F00FB9813 /* Build configuration list for PBXNativeTarget "DTmS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2311AFAF2AE8E72F00FB9813 /* Debug */,
+				2311AFB02AE8E72F00FB9813 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		2379C5E12A6A652600884B2A /* Build configuration list for PBXProject "DT5mC" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

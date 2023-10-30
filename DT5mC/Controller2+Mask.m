@@ -20,7 +20,8 @@ int brushSize;
 - (NSData *)setupMasking {
 	NSUserDefaults *ud = NSUserDefaults.standardUserDefaults;
 	NSNumber *num = [ud objectForKey:keyBrushSize];
-	brushSize = (int)(brushSizeStp.integerValue = (num != nil)? num.integerValue : 5);
+	brushSize = (int)((num != nil)? num.integerValue : 5);
+	[brushSizeStp setupValue:brushSize min:1 max:200];
 	NSData *data = [ud objectForKey:keyMaskingFilter];
 	if (data == nil) return nil;
 	@try {

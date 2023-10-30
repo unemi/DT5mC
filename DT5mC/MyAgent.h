@@ -14,7 +14,7 @@ typedef struct TrailCell {
 typedef struct  {
 	simd_float2 p, v;
 	TrailCell *head, *tail;
-	float length;
+	float leftLife, length;
 	uint32 trailCount;
 } MyAgent;
 

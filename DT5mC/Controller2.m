@@ -6,6 +6,7 @@
 #import "Controller2+Mask.h"
 #import "Display.h"
 #import "MyAgent.h"
+#import "../CommonFunc.h"
 
 Controller2 *controller = nil;
 static BOOL running = YES;
@@ -28,7 +29,7 @@ static NSString *keyScreenName = @"screen name";
 NSString *screenName = nil;
 // Agent parameters
 CGFloat xOffset = 0., yOffset = 0., xScale = 1., yScale = 1., keystone = 0.;
-NSInteger atrDifSz = 2, rplDifSz = 2;
+NSInteger atrDifSz = 2, rplDifSz = 10;
 CGFloat atrEvprt = .1, rplEvprt = .05;
 CGFloat agentLength = 1., agentWeight = 0.5;
 CGFloat agentMaxOpacity = .7, agentMinOpacity = 0., agentOpcGrad = 0.;
@@ -40,8 +41,8 @@ static struct IntParamRec {
 	BOOL isAgentMemory;
 	DgtAndStepper *stp;
 } IntParams[] = {
-	{ @"attractant diffusion", &atrDifSz, 1, 999, NO },
-	{ @"repellent diffusion", &rplDifSz, 1, 999, NO },
+	{ @"attractant diffusion", &atrDifSz, 1, 99, NO },
+	{ @"repellent diffusion", &rplDifSz, 1, 99, NO },
 	{ @"number of agents", &newNAgents, 1, 2000, YES },
 	{ @"trail steps", &newTrailSteps, 1, 50, YES },
 	{ nil, NULL }
@@ -72,38 +73,6 @@ static struct ParamRec {
 	{ nil, NULL }
 };
 
-void in_main_thread(void (^block)(void)) {
-	if (NSThread.isMainThread) block();
-	else dispatch_async(dispatch_get_main_queue(), block);
-}
-static void show_alert(NSAlertStyle style, NSString *msg, short err) {
-#ifdef DEBUG
-NSLog(@"Alert: %@ (%d)", msg, err);
-#endif
-	in_main_thread( ^{
-		NSString *str = NSLocalizedString(msg, nil);
-		if (err != noErr) str = [NSString stringWithFormat:@"%@\n%@ = %d", str,
-			NSLocalizedString(@"error code", nil), err];
-		NSAlert *a = NSAlert.new;
-		a.alertStyle = style;
-		a.messageText = NSLocalizedString(@"Error in DT5mC", nil);
-		a.informativeText = str;
-		[a runModal];
-	} );
-}
-void error_msg(NSString *msg, short err) {
-	show_alert(NSAlertStyleCritical, msg, err);
-}
-static void unix_error_msg(NSString *msg) {
-	error_msg([NSString stringWithFormat:@"%@:(%d) %s.", msg, errno, strerror(errno)], 0);
-}
-unsigned long current_time_us(void) {
-	static unsigned long startTime = 0;
-	struct timeval tv;
-	gettimeofday(&tv, NULL);
-	if (startTime == 0) startTime = tv.tv_sec;
-	return (tv.tv_sec - startTime) * 1000000L + tv.tv_usec;
-}
 static BOOL infer_bitmap_size(ssize_t size, int aw, int ah, int *w, int *h) {
 	NSInteger d = aw * ah;
 	if (size % d != 0) return NO;
@@ -457,7 +426,7 @@ static BOOL is_params_different(NSDictionary *dict) {
 static void setvalue_popupbutton(id database, NSString *key, NSPopUpButton *btn) {
 	NSNumber *num;
 	if ((num = [database objectForKey:key])) {
-		[btn selectItemAtIndex:[num intValue]];
+		[btn selectItemAtIndex:num.integerValue];
 		[[btn target] performSelector:[btn action] withObject:btn afterDelay:0];
 	}
 }

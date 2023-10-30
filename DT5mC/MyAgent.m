@@ -97,13 +97,29 @@ static void reset_agent(MyAgent *a) {
 	a->head = a->tail = newTrailCell(a->p, 0.);
 	a->length = 0.;
 	a->trailCount = 1;
+	a->leftLife = drand48() * 5.;
+}
+static void warp_agent(MyAgent *a) {
+	simd_float2 leftBottom = {a->p.x, a->p.y}, rightTop = {a->p.x, a->p.y};
+	for (TrailCell *tc = a->head; tc; tc = tc->post) {
+		leftBottom = simd_min(leftBottom, tc->p);
+		rightTop = simd_max(rightTop, tc->p);
+	}
+	simd_float2 sz = rightTop - leftBottom,
+		d = {drand48() * (camXMax - sz.x), drand48() * (1. - sz.y)};
+	d -= leftBottom;
+	a->p += d;
+	for (TrailCell *tc = a->head; tc; tc = tc->post) tc->p += d;
+	a->leftLife = 5.;
 }
 static void exocrine_agent(MyAgent *a) {
 	simd_int2 ij = simd_int_sat(a->p * (simd_float2){FrameWidth / camXMax, FrameHeight});
 	if (ij.x >= 0 && ij.y >= 0 && ij.x < FrameWidth && ij.y < FrameHeight)
 		RplntSrcMap[ij.y * FrameWidth + ij.x] = 1.;
 }
+static float elapsedSec = 0.;
 static void move_agent(MyAgent *a) {
+	if ((a->leftLife -= elapsedSec) <= 0.) warp_agent(a);
 	float bAngle = agentTurnAngle * TurnAngle * (drand48() + .5);
 	float bVelocity = InitV * (drand48() * 1.2 + .3);
 	float atrct = get_chemical(AtrctSrcMap, a->p);
@@ -229,6 +245,10 @@ void exocrine_agents(void) {
 	do_parallel(exocrine_agent);
 }
 void move_agents(void) {
+	static unsigned long prev_time_us = 0;
+	unsigned long now_us = current_time_us();
+	elapsedSec = (prev_time_us == 0)? 1./60. : (now_us - prev_time_us) * 1e-6;
+	prev_time_us = now_us;
 	[AgentTrailLock lock];
 	do_parallel(move_agent);
 	[AgentTrailLock unlock];

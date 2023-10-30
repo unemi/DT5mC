@@ -3,8 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<title>DT5mC Movement</title>
-	<meta name="description" content="DT5mC's display control" />
-	<meta name="keywords" content="stage, projection, calibration" />
+	<meta name="description" content="DT5mC's agents' movement" />
+	<meta name="keywords" content="swarm, speed, angle, avoidance, exploration" />
 	<link href="help.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -32,7 +32,7 @@ These distributions are represented by separated two dimensional arrays of float
 The arrangement is evenly mapped to the square lattice covering the area where the agents move.
 Each cell in the lattice corresponds to a small square of each position.
 </p><p>
-To make the dancer's image to attract agents, the cells under the detect target
+To make the dancer's image to attract agents, the cells under the detected target
 is filled with the maximum value of attractant density (is equal to 1).
 To distribute agents properly without too dense crowd, each agent put maximum density of repellent at its position.
 By applying diffusion and evaporation, the attractant summons agents from surrounds,

@@ -4,4 +4,5 @@ $(SRCROOT)/$(TARGET_NAME)/30Adjustment.html
 $(SRCROOT)/$(TARGET_NAME)/40Masking.html
 $(SRCROOT)/$(TARGET_NAME)/50Movement.html
 $(SRCROOT)/$(TARGET_NAME)/60Appearance.html
+$(SRCROOT)/$(TARGET_NAME)/70Settings.html
 $(SRCROOT)/$(TARGET_NAME)/index.html

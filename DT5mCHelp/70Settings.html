@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1- transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>DT5mC Settings</title>
+	<meta name="description" content="DT5mC's settings" />
+	<meta name="keywords" content="settings, preferences, port number, interval" />
+	<link href="help.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<table width=100%><tr><td width=36px><img src=icon.png width=32 height=32 /></td>
+<td class=h1>Settings</td>
+<td align=right valign=top class=hd><a href="index.html">Top</a> 
+<a href="60Appearance.html">Prev</a></td>
+</tr></table>
+<figure>
+<img src="70Settings.png" style="width:min(285px,95%);margin-bottom:-40px" />
+<figcaption>Settings window.</figcaption>
+</figure>
+<p>
+The window shown above appears when you click the menu item <b>Settings ...</b> in <b>DT5mC</b> menu in the menu bar.
+You can change parameters for communication with the tracker and simulation frame rate.
+</p>
+<ol> 
+<li><b>Reveiver's Port Number</b>: port number to receive packets from tracker. The default value is 9003.</li>
+<li><b>Bitmap Size: Automatic</b>: if checked, the system calculates the image size from the packet size
+	assuming the aspect ratio is 16:9 or 4:3. An error message is shown if it failed to determine the size.
+	If this check box is not checked, it uses the numbers in <b>Width</b> and <b>Height</b> text fields.
+	It shows an error message when the packet size does not fit with the image size.</li>
+<li><b>Simulation steps interval:</b>: magnitude of interval between simulation steps.
+	This parameter should be adjusted so that the simulation frame rate becomes 60 FPS or as similar value as possible.
+	The real frame rate is displayed in the bottom part of the control panel.</li>
+</ol>
+<hr/>
+<div class=copyright>&copy; Tatsuo Unemi, 2023.</div>
+</body>
+</html>
