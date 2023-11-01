@@ -43,8 +43,10 @@ the projected image does not interfere the target detection by the camera.
 Two applications run on the computer,
 the one processes the camera image to detect the dancer's body,
 and the other one, this DT5mC, organises swarm simulation and produces the animation in which worms are roaming.
-<i>Tracker</i> application sends image data in a raw binary bitmap format via UDP/IP protocol.
-This means it's also possible to use a separated computer for each application using a local network connection.
+DT5mC works as a server that waits for some UDP packet reaching the communication port.
+<i>Tracker</i> application sends image data in a raw binary bitmap format through the local loopback interface.
+The current version does not allow these two applications run on separated machines connected via IP network,
+because the single UDP packet contains data of single frame that is too large for the external communication.
 </p>
 <figure>
 <img src="10InfoFlow.svg" />

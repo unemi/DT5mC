@@ -14,8 +14,9 @@
 #define PORT_NUMBER 9003
 
 @interface AppDelegate : NSObject <NSApplicationDelegate,
-	AVCaptureVideoDataOutputSampleBufferDelegate> {
-	IBOutlet NSButton *btnStart, *btnStop;
+	AVCaptureVideoDataOutputSampleBufferDelegate,
+	NSMenuItemValidation> {
+	IBOutlet NSButton *btnStart, *btnStop, *cboxMirror;
 	IBOutlet NSPopUpButton *cameraPopUp;
 	IBOutlet NSColorWell *targetColWel;
 	IBOutlet NSSlider *sldHue, *sldSat, *sldBri, *sldBlur;
@@ -32,6 +33,7 @@
 	simd_uint3 frmSize;
 	simd_float3 targetHSB, ranges;
 	float blurWinSz;
+	BOOL mirror;
 }
 @property (strong) IBOutlet NSWindow *window;
 @end

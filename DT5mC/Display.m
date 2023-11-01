@@ -140,8 +140,8 @@ static void set_color(RCE rce, simd_float4 rgba) {
 	[rce drawPrimitives:MTLPrimitiveTypeTriangleStrip vertexStart:0 vertexCount:4];
 }
 - (void)drawTrackedImage:(RCE)rce {
-	[rce setVertexBytes:&adjustMx length:sizeof(adjustMx) atIndex:IndexAdjustMatrix];
-	[rce setFragmentBytes:&keystoneMx length:sizeof(keystoneMx) atIndex:IndexKeystoneMx];
+	simd_float4 scl_offset = {xScale, yScale, xOffset, yOffset};
+	[rce setVertexBytes:&scl_offset length:sizeof(scl_offset) atIndex:IndexAdjustMatrix];
 	[self drawImage:rce pso:trackedPSO buf:srcBm];
 }
 - (void)drawAgents:(RCE)rce {

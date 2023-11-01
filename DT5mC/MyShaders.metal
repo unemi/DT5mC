@@ -29,9 +29,8 @@ bool bit_is_on(constant uchar *src, int2 k, uint2 s) {
 #define SumValue(c,uv) \
 	sumw += ww = max(0., 1. - length(c));\
 	if (bit_is_on(src, uv, size)) sum += ww;
-float tracked_value(constant uchar *src, uint2 size, float2 p, float3x3 keystoneMx) {
-	float3 p3 = (float3){p.x, p.y, 1.} * keystoneMx;
-	float2 q = (p3.xy / p3.z + 1.) / 2. * float2(size);
+float tracked_value(constant uchar *src, uint2 size, float2 p) {
+	float2 q = (p + 1.) / 2. * float2(size);
 	int2 i1 = int2(floor(q));
 	float2 d1 = fract(q) - .5, dij = sign(d1), d2 = 1. - dij * d1;
 	int2 i2 = clamp(i1 + int2(dij), int2(0), int2(size - 1));
@@ -47,8 +46,8 @@ kernel void expandBitmap(constant uchar *src, device float *result,
 	constant float3x3 *keystoneMx [[buffer(IndexKeystoneMx)]],
 	uint index [[thread_position_in_grid]]) {
 	uint2 ixy = {index % size->x, index / size->x};
-	result[index] = max(result[index],
-		tracked_value(src, *size, (float2(ixy) + .5) / float2(*size) * 2. - 1., *keystoneMx));
+	float3 p = float3((float2(ixy) + .5) / float2(*size) * 2. - 1., 1.) * *keystoneMx;
+	result[index] = max(result[index], tracked_value(src, *size, p.xy / p.z));
 }
 kernel void defuseAndEvaporate(device const float *src, device float *result,
 	constant int3 *size [[buffer(IndexImageSize)]],	// width, height and window
@@ -110,18 +109,16 @@ struct RasterizerDataD {
 vertex RasterizerDataD vertexShaderT(uint vertexID [[vertex_id]],
 	constant float2 *vertices [[buffer(IndexVertices)]],
 	constant float2 *scale [[buffer(IndexGeomFactor)]],
-	constant float3x3 *adjustMx [[buffer(IndexAdjustMatrix)]]) {
+	constant float4 *sclOfst [[buffer(IndexAdjustMatrix)]]) {
     RasterizerDataD out = {{0.,0.,0.,1.}};
-    float3 p = float3(vertices[vertexID] * *scale, 1.) * *adjustMx;
-    out.position.xy = p.xy / p.z;
+    out.position.xy = vertices[vertexID] * *scale * sclOfst->xy + sclOfst->zw;
     out.pt = vertices[vertexID];
     return out;
 }
 fragment float4 fragmentShaderT(RasterizerDataD in [[stage_in]],
 	constant uchar *srcBm [[buffer(IndexImageMap)]],
-	constant uint2 *mapSize [[buffer(IndexMapSize)]],
-	constant float3x3 *keystoneMx [[buffer(IndexKeystoneMx)]]) {
-	float c = tracked_value(srcBm, *mapSize, in.pt, *keystoneMx);
+	constant uint2 *mapSize [[buffer(IndexMapSize)]]) {
+	float c = tracked_value(srcBm, *mapSize, in.pt);
 	c = c * .8 + .2;
     return float4(c, c, c, 1.);
 }

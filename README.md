@@ -7,6 +7,10 @@ that works together with another software for camera image processing developed 
 
 In 2023, the code was revised to be adaptable to 4K 60Hz projector and 16:9 camera image utilising GPU power.
 
+This project includes two application targets, DT5mC and DT5mS.
+DT5mC receives the image data from the tracker application to produce images of swarm for the real usage for the performance.
+DT5mS is a software for a test trial of DT5mC that imitates the tracker in which the target area is calculated by colour tracking filter.
+
 ### Machine requirement
 This software runs on Apple's Mac computer equipped with Apple Silicon CPU/GPU.
 macOS 12.0 or a later operating system is required.

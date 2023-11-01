@@ -11,7 +11,7 @@ using namespace metal;
 kernel void blur(device const uchar4 *src, device float4 *result,
 	constant int2 *size, constant float *winSz,
 	uint index [[thread_position_in_grid]]) {
-	if (*winSz <= 1.) { result[index] = float4(src[index]) / 255.; return; }
+	if (*winSz <= 1.) { result[index] = float4(float3(src[index].yzw) / 255., 1.); return; }
 	int3 a = {int(index) % size->x, int(index) / size->x, int(ceil(*winSz))};
 	int4 b = int4(max(0, a.x - a.z), min(size->x, a.x + a.z + 1),
 		max(0, a.y - a.z), min(size->y, a.y + a.z + 1));

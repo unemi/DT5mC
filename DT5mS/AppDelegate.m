@@ -13,7 +13,7 @@ static int soc = -1;
 static struct sockaddr_in name;
 static NSString *keyCameraName = @"cameraName",
 	*keyTargetHSB = @"targetHSB", *keyRanges = @"ranges",
-	*keyBlurWinSz = @"blurWindowSize";
+	*keyBlurWinSz = @"blurWindowSize", *keyMirror = @"mirror";
 
 @implementation AppDelegate
 - (void)senderThread:(id)dummy {
@@ -150,8 +150,12 @@ static void dispatch_compute(id<MTLComputeCommandEncoder> cce,
 			sliders[i].doubleValue = arr[i].doubleValue * 100.;
 	} else for (NSSlider *sld in sliders) [self changeRanges:sld];
 	NSNumber *num;
-	if ((num = [ud objectForKey:keyBlurWinSz])) blurWinSz = num.floatValue;
+	if ((num = [ud objectForKey:keyBlurWinSz]))
+		sldBlur.doubleValue = blurWinSz = num.floatValue;
 	else blurWinSz = sldBlur.doubleValue;
+	if ((num = [ud objectForKey:keyMirror]))
+		cboxMirror.state = mirror = num.boolValue;
+	else mirror = cboxMirror.state;
 //	Metal libraries
 	device = MTLCreateSystemDefaultDevice();
 	id<MTLLibrary> dfltLib = device.newDefaultLibrary;
@@ -196,6 +200,7 @@ static void dispatch_compute(id<MTLComputeCommandEncoder> cce,
 	[ud setObject:@[@(targetHSB.x), @(targetHSB.y), @(targetHSB.z)] forKey:keyTargetHSB];
 	[ud setObject:@[@(ranges.x), @(ranges.y), @(ranges.z)] forKey:keyRanges];
 	[ud setFloat:blurWinSz forKey:keyBlurWinSz];
+	[ud setBool:mirror forKey:keyMirror];
 }
 - (BOOL)applicationSupportsSecureRestorableState:(NSApplication *)app {
 	return YES;
@@ -230,7 +235,11 @@ static void dispatch_compute(id<MTLComputeCommandEncoder> cce,
 		procBuffer = newPrcBuf;
 		frmSize = fSize;
 	}
-	memcpy((char *)cameraBuffer.contents, baseAddr, size);
+	if (mirror) {
+		char *dst = cameraBuffer.contents, *src = baseAddr + (fSize.x - 1) * 4;
+		for (NSInteger i = 0; i < fSize.y; i ++, src += fSize.z, dst += fSize.z)
+			for (NSInteger j = 0; j < fSize.x; j ++) memcpy(dst - j * 4, src + j * 4, 4);
+	} else memcpy((char *)cameraBuffer.contents, baseAddr, size);
 	[frmBufLock unlockWithCondition:YES];
 	CVPixelBufferUnlockBaseAddress(cvBuf, kCVPixelBufferLock_ReadOnly);
 }
@@ -247,6 +256,14 @@ static void dispatch_compute(id<MTLComputeCommandEncoder> cce,
 	btnStart.enabled = YES;
 	btnStop.enabled = NO;
 }
+- (IBAction)startStop:(id)sender {
+	if (btnStart.enabled) [self startProc:sender];
+	else [self stopProc:sender];
+}
+- (IBAction)switchMirror:(NSObject *)sender {
+	mirror = !mirror;
+	if (sender != cboxMirror) cboxMirror.state = mirror;
+}
 - (IBAction)changeTargetColor:(NSColorWell *)sender {
 	NSColor *col = sender.color;
 	if (col.numberOfComponents < 3)
@@ -260,5 +277,13 @@ static void dispatch_compute(id<MTLComputeCommandEncoder> cce,
 }
 - (IBAction)changeBlurWinSz:(NSSlider *)sld {
 	blurWinSz = sld.doubleValue;
+}
+//
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem {
+	if (menuItem.action == @selector(startStop:))
+		menuItem.title = btnStart.enabled? @"Start" : @"Stop";
+	else if (menuItem.action == @selector(switchMirror:))
+		menuItem.state = mirror;
+	return YES;
 }
 @end

@@ -71,13 +71,13 @@
 		230D7D062ADB70090018E9F7 /* Input.xcfilelist */ = {isa = PBXFileReference; lastKnownFileType = text.xcfilelist; name = Input.xcfilelist; path = DT5mCHelp/Input.xcfilelist; sourceTree = "<group>"; };
 		230D7D072ADBA0AE0018E9F7 /* 30AdjustWindow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 30AdjustWindow.png; path = DT5mCHelp/30AdjustWindow.png; sourceTree = "<group>"; };
 		230F183E2AB57B9C00ABB10E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		2311AFA22AE8E72F00FB9813 /* DTmS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DTmS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2311AFA22AE8E72F00FB9813 /* DT5mS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DT5mS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2311AFA42AE8E72F00FB9813 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		2311AFA52AE8E72F00FB9813 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		2311AFA72AE8E72F00FB9813 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2311AFAA2AE8E72F00FB9813 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		2311AFAC2AE8E72F00FB9813 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		2311AFAE2AE8E72F00FB9813 /* DTmS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DTmS.entitlements; sourceTree = "<group>"; };
+		2311AFAE2AE8E72F00FB9813 /* DT5mS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DT5mS.entitlements; sourceTree = "<group>"; };
 		2312B20D2AE1008400385131 /* 70Settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 70Settings.png; path = DT5mCHelp/70Settings.png; sourceTree = "<group>"; };
 		2312B20E2AE1008400385131 /* 70Settings.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = 70Settings.html; path = DT5mCHelp/70Settings.html; sourceTree = "<group>"; };
 		231D5B2C2AA1925D00D0AC48 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -168,7 +168,7 @@
 				2311AFA72AE8E72F00FB9813 /* Assets.xcassets */,
 				2311AFA92AE8E72F00FB9813 /* MainMenu.xib */,
 				2311AFAC2AE8E72F00FB9813 /* main.m */,
-				2311AFAE2AE8E72F00FB9813 /* DTmS.entitlements */,
+				2311AFAE2AE8E72F00FB9813 /* DT5mS.entitlements */,
 			);
 			path = DT5mS;
 			sourceTree = "<group>";
@@ -192,7 +192,7 @@
 			children = (
 				2379C5E62A6A652600884B2A /* DT5mC.app */,
 				23BDFC412AD67DB300F97004 /* DT5mCHelp.help */,
-				2311AFA22AE8E72F00FB9813 /* DTmS.app */,
+				2311AFA22AE8E72F00FB9813 /* DT5mS.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -277,9 +277,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		2311AFA12AE8E72F00FB9813 /* DTmS */ = {
+		2311AFA12AE8E72F00FB9813 /* DT5mS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2311AFB12AE8E72F00FB9813 /* Build configuration list for PBXNativeTarget "DTmS" */;
+			buildConfigurationList = 2311AFB12AE8E72F00FB9813 /* Build configuration list for PBXNativeTarget "DT5mS" */;
 			buildPhases = (
 				2311AF9E2AE8E72F00FB9813 /* Sources */,
 				2311AF9F2AE8E72F00FB9813 /* Frameworks */,
@@ -289,9 +289,9 @@
 			);
 			dependencies = (
 			);
-			name = DTmS;
+			name = DT5mS;
 			productName = DTmS;
-			productReference = 2311AFA22AE8E72F00FB9813 /* DTmS.app */;
+			productReference = 2311AFA22AE8E72F00FB9813 /* DT5mS.app */;
 			productType = "com.apple.product-type.application";
 		};
 		2379C5E52A6A652600884B2A /* DT5mC */ = {
@@ -365,7 +365,7 @@
 			targets = (
 				2379C5E52A6A652600884B2A /* DT5mC */,
 				23BDFC402AD67DB300F97004 /* DT5mCHelp */,
-				2311AFA12AE8E72F00FB9813 /* DTmS */,
+				2311AFA12AE8E72F00FB9813 /* DT5mS */,
 			);
 		};
 /* End PBXProject section */
@@ -517,7 +517,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = DTmS/DTmS.entitlements;
+				CODE_SIGN_ENTITLEMENTS = DT5mS/DT5mS.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -525,7 +526,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = DTmS/Info.plist;
+				INFOPLIST_FILE = DT5mS/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				INFOPLIST_KEY_NSCameraUsageDescription = "To capture the images on the stage.";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "© Tatsuo Unemi, 2008-2023.";
@@ -536,10 +537,11 @@
 					"@executable_path/../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 13.6;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = jp.ac.soka.unemi.DTmS;
+				PRODUCT_BUNDLE_IDENTIFIER = jp.ac.soka.unemi.DT5mS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 			};
 			name = Debug;
@@ -550,7 +552,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = DTmS/DTmS.entitlements;
+				CODE_SIGN_ENTITLEMENTS = DT5mS/DT5mS.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -558,7 +561,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = DTmS/Info.plist;
+				INFOPLIST_FILE = DT5mS/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				INFOPLIST_KEY_NSCameraUsageDescription = "To capture the images on the stage.";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "© Tatsuo Unemi, 2008-2023.";
@@ -569,10 +572,11 @@
 					"@executable_path/../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 13.6;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = jp.ac.soka.unemi.DTmS;
+				PRODUCT_BUNDLE_IDENTIFIER = jp.ac.soka.unemi.DT5mS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 			};
 			name = Release;
@@ -810,7 +814,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		2311AFB12AE8E72F00FB9813 /* Build configuration list for PBXNativeTarget "DTmS" */ = {
+		2311AFB12AE8E72F00FB9813 /* Build configuration list for PBXNativeTarget "DT5mS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2311AFAF2AE8E72F00FB9813 /* Debug */,
