@@ -124,6 +124,7 @@ static void move_agent(MyAgent *a) {
 	float bVelocity = InitV * (drand48() * 1.2 + .3);
 	float atrct = get_chemical(AtrctSrcMap, a->p);
 	if (atrct > thHiSpeed) bVelocity *= agentSpeed;
+	else if (thHiSpeed <= 0.) bVelocity *= MaxV;
 	else if (atrct > thHiSpeed / 2) bVelocity *=
 		1. + (thHiSpeed / 2 - atrct) / thHiSpeed * 2 * (1. - agentSpeed);
 	else bVelocity *= atrct / thHiSpeed * 2 + (1. - atrct / thHiSpeed * 2) * MaxV;

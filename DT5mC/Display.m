@@ -150,7 +150,7 @@ static void set_color(RCE rce, simd_float4 rgba) {
 	[rce setVertexBytes:&gf length:sizeof(gf) atIndex:IndexGeomFactor];
 	[rce setVertexBytes:&adjustMx length:sizeof(adjustMx) atIndex:IndexAdjustMatrix];
 	simd_float4 color = {agentRGBA[0], agentRGBA[1], agentRGBA[2], 1.};
-	simd_float2 opRange = {agentMinOpacity * fadingAlpha, agentMaxOpacity * fadingAlpha};
+	simd_float2 opRange = {agentMinOpacity, agentMaxOpacity * fadingAlpha};
 	[rce setFragmentBytes:&color length:sizeof(color) atIndex:IndexColor];
 	[rce setFragmentBytes:&opRange length:sizeof(opRange) atIndex:IndexOpRange];
 	id<MTLBuffer> vBuf = agentVxBuf, oBuf = agentOpBuf, iBuf = agentIdxBuf;

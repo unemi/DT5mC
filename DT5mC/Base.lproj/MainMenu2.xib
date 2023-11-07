@@ -18,9 +18,9 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="157" y="318" width="422" height="668"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1055"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1800" height="1125"/>
             <view key="contentView" id="2">
-                <rect key="frame" x="0.0" y="0.0" width="422" height="668"/>
+                <rect key="frame" x="0.0" y="0.0" width="422" height="669"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField focusRingType="none" verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="1258">
@@ -875,7 +875,7 @@
                         </textFieldCell>
                     </textField>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="317">
-                        <rect key="frame" x="296" y="13" width="112" height="27"/>
+                        <rect key="frame" x="297" y="13" width="111" height="27"/>
                         <buttonCell key="cell" type="push" title="Save As Default" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3089">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="smallSystem"/>
@@ -885,7 +885,7 @@
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="LtG-8z-gie">
-                        <rect key="frame" x="14" y="13" width="166" height="27"/>
+                        <rect key="frame" x="14" y="13" width="165" height="27"/>
                         <buttonCell key="cell" type="push" title="Revert to Factory Defaults" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="JZS-mu-Oci">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="smallSystem"/>
@@ -895,7 +895,7 @@
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yAa-bK-BY8">
-                        <rect key="frame" x="256" y="39" width="152" height="27"/>
+                        <rect key="frame" x="257" y="39" width="151" height="27"/>
                         <buttonCell key="cell" type="push" title="Revert to User Defaults" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="sie-aE-D4t">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="smallSystem"/>
@@ -967,7 +967,7 @@
                         </textFieldCell>
                     </textField>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Pbu-Ia-H2j">
-                        <rect key="frame" x="20" y="628" width="28" height="21"/>
+                        <rect key="frame" x="20" y="627" width="28" height="23"/>
                         <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Flj-9x-y6g">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -975,21 +975,21 @@
                         </buttonCell>
                         <constraints>
                             <constraint firstAttribute="width" constant="28" id="0PN-EQ-M4u"/>
-                            <constraint firstAttribute="height" constant="19" id="K4w-OY-gwa"/>
+                            <constraint firstAttribute="height" constant="21" id="K4w-OY-gwa"/>
                         </constraints>
                         <connections>
                             <action selector="startThreads:" target="206" id="uwR-MH-3gc"/>
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wxb-pa-o3n">
-                        <rect key="frame" x="56" y="628" width="28" height="21"/>
+                        <rect key="frame" x="56" y="627" width="28" height="23"/>
                         <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rll-ch-vtx">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                             <imageReference key="image" image="stop.fill" catalog="system" symbolScale="small"/>
                         </buttonCell>
                         <constraints>
-                            <constraint firstAttribute="height" constant="19" id="aKZ-in-kng"/>
+                            <constraint firstAttribute="height" constant="21" id="aKZ-in-kng"/>
                             <constraint firstAttribute="width" constant="28" id="nHg-aP-G3p"/>
                         </constraints>
                         <connections>
@@ -1637,7 +1637,7 @@
             <windowStyleMask key="styleMask" titled="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="663" y="146" width="800" height="450"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1055"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1800" height="1125"/>
             <view key="contentView" id="547">
                 <rect key="frame" x="0.0" y="0.0" width="800" height="450"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -1657,7 +1657,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="142" y="858" width="264" height="240"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1055"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1800" height="1125"/>
             <view key="contentView" id="3ZJ-qd-jW5">
                 <rect key="frame" x="0.0" y="0.0" width="264" height="240"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -1713,7 +1713,7 @@
                         </connections>
                     </textField>
                     <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="M24-KL-Hea">
-                        <rect key="frame" x="28" y="125" width="46" height="16"/>
+                        <rect key="frame" x="30" y="125" width="44" height="16"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Width:" id="xLu-4c-x4A">
                             <font key="font" usesAppearanceFont="YES"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1759,7 +1759,7 @@
                         </connections>
                     </textField>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Wh6-xf-m3d">
-                        <rect key="frame" x="181" y="87" width="70" height="32"/>
+                        <rect key="frame" x="182" y="87" width="69" height="32"/>
                         <buttonCell key="cell" type="push" title="Apply" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="zIE-tn-RQP">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -1779,7 +1779,7 @@
                         </connections>
                     </button>
                     <button toolTip="Adjust the digits of width and height to the current size." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6S3-EN-lbn">
-                        <rect key="frame" x="23" y="87" width="160" height="32"/>
+                        <rect key="frame" x="25" y="87" width="159" height="32"/>
                         <buttonCell key="cell" type="push" title="Refelect current size" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="oLv-6M-XmS">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>

@@ -47,29 +47,30 @@ static struct IntParamRec {
 	{ @"trail steps", &newTrailSteps, 1, 50, YES },
 	{ nil, NULL }
 };
+typedef enum { PrmTypeGeometry, PrmTypeAppearance, PrmTypeMovement } ParamType;
 static struct ParamRec {
 	NSString *key;
 	CGFloat *var, min, max;
-	BOOL isGeometry;
+	ParamType paramType;
 	SldAndStepper *stp;
 } Parameters[] = {
-	{ @"X Offset", &xOffset, -.5, .5, YES },
-	{ @"Y Offset", &yOffset, -.5, .5, YES },
-	{ @"X Scale", &xScale, .01, 1., YES },
-	{ @"Y Scale", &yScale, .01, 1., YES },
-	{ @"keystone", &keystone, 0., .8, YES },
-	{ @"attractant evaporation", &atrEvprt, 0., .2, NO },
-	{ @"repellent evaporation", &rplEvprt, 0., .2, NO },
-	{ @"fade-in time", &fadeInTime, 0., 99.9, NO },
-	{ @"agent length", &agentLength, 0., 2., NO },
-	{ @"agent weight", &agentWeight, 0., 2., NO },
-	{ @"agent max opacity", &agentMaxOpacity, 0., 1., NO },
-	{ @"agent min opacity", &agentMinOpacity, 0., 1., NO },
-	{ @"agent opacity gradient", &agentOpcGrad, -1., 1., NO },
-	{ @"agent speed", &agentSpeed, 0., 4., NO },
-	{ @"agent turn angle", &agentTurnAngle, 0., 1., NO },
-	{ @"agent avoidance", &avoidance, 0., 1., NO }, 
-	{ @"attractant threshold for hi-speed", &thHiSpeed, 0., .9, NO },
+	{ @"X Offset", &xOffset, -.5, .5, PrmTypeGeometry },
+	{ @"Y Offset", &yOffset, -.5, .5, PrmTypeGeometry },
+	{ @"X Scale", &xScale, .01, 1., PrmTypeGeometry },
+	{ @"Y Scale", &yScale, .01, 1., PrmTypeGeometry },
+	{ @"keystone", &keystone, 0., .8, PrmTypeGeometry },
+	{ @"attractant evaporation", &atrEvprt, 0., .2, PrmTypeMovement },
+	{ @"repellent evaporation", &rplEvprt, 0., .2, PrmTypeMovement },
+	{ @"fade-in time", &fadeInTime, 0., 99.9, PrmTypeMovement },
+	{ @"agent length", &agentLength, 0., 2., PrmTypeAppearance },
+	{ @"agent weight", &agentWeight, 0., 2., PrmTypeAppearance },
+	{ @"agent max opacity", &agentMaxOpacity, 0., 1., PrmTypeAppearance },
+	{ @"agent min opacity", &agentMinOpacity, 0., 1., PrmTypeAppearance },
+	{ @"agent opacity gradient", &agentOpcGrad, -1., 1., PrmTypeAppearance },
+	{ @"agent speed", &agentSpeed, 0., 4., PrmTypeMovement },
+	{ @"agent turn angle", &agentTurnAngle, 0., 1., PrmTypeMovement },
+	{ @"agent avoidance", &avoidance, 0., 1., PrmTypeMovement }, 
+	{ @"attractant threshold for hi-speed", &thHiSpeed, 0., .9, PrmTypeMovement },
 	{ nil, NULL }
 };
 
@@ -689,7 +690,11 @@ static void displayReconfigCB(CGDirectDisplayID display,
 	}];
 	[undoManager setActionName:Parameters[k].key];
 	*Parameters[k].var = newValue;
-	if (Parameters[k].isGeometry) [display adjustTransMxWithOffset];
+	switch (Parameters[k].paramType) {
+		case PrmTypeGeometry: [display adjustTransMxWithOffset];
+		case PrmTypeAppearance: if (!running) prjctView.needsDisplay = YES;
+		case PrmTypeMovement: break;
+	}
 	[self adjustRevertBtns];
 }
 //

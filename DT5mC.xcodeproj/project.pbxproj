@@ -36,6 +36,8 @@
 		2379C6072A6A65F000884B2A /* SldAndStepper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2379C5FF2A6A65EF00884B2A /* SldAndStepper.m */; };
 		2379C6082A6A65F000884B2A /* Controller2.m in Sources */ = {isa = PBXBuildFile; fileRef = 2379C6022A6A65EF00884B2A /* Controller2.m */; };
 		239596A92AB3ED3500C09B31 /* DataCompress.m in Sources */ = {isa = PBXBuildFile; fileRef = 239596A82AB3ED3500C09B31 /* DataCompress.m */; };
+		23985C252AF916060084031D /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23985C232AF916060084031D /* AVFoundation.framework */; };
+		23985C262AF916060084031D /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23985C242AF916060084031D /* AVKit.framework */; };
 		23BDFC4F2AD6832B00F97004 /* DT5mCHelp.help in Resources */ = {isa = PBXBuildFile; fileRef = 23BDFC412AD67DB300F97004 /* DT5mCHelp.help */; };
 		23BDFC5D2AD68A6A00F97004 /* help.css in Resources */ = {isa = PBXBuildFile; fileRef = 23BDFC592AD68A6A00F97004 /* help.css */; };
 		23BDFC5E2AD68A6A00F97004 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 23BDFC5A2AD68A6A00F97004 /* icon.png */; };
@@ -109,6 +111,8 @@
 		2379C6022A6A65EF00884B2A /* Controller2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Controller2.m; sourceTree = "<group>"; };
 		239596A72AB3ED3500C09B31 /* DataCompress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataCompress.h; sourceTree = "<group>"; };
 		239596A82AB3ED3500C09B31 /* DataCompress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataCompress.m; sourceTree = "<group>"; };
+		23985C232AF916060084031D /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		23985C242AF916060084031D /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		23BDFC412AD67DB300F97004 /* DT5mCHelp.help */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DT5mCHelp.help; sourceTree = BUILT_PRODUCTS_DIR; };
 		23BDFC592AD68A6A00F97004 /* help.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = help.css; path = DT5mCHelp/help.css; sourceTree = "<group>"; };
 		23BDFC5A2AD68A6A00F97004 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = DT5mCHelp/icon.png; sourceTree = "<group>"; };
@@ -135,6 +139,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				23985C252AF916060084031D /* AVFoundation.framework in Frameworks */,
+				23985C262AF916060084031D /* AVKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,6 +275,8 @@
 		23D974B52A8F36C800E81570 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				23985C232AF916060084031D /* AVFoundation.framework */,
+				23985C242AF916060084031D /* AVKit.framework */,
 				23D974B62A8F36C800E81570 /* MetalKit.framework */,
 			);
 			name = Frameworks;
@@ -521,7 +529,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 726X5Z9867;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -556,7 +564,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 726X5Z9867;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -702,7 +710,7 @@
 				CODE_SIGN_ENTITLEMENTS = DT5mC/DT5mC.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 726X5Z9867;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -733,7 +741,7 @@
 				CODE_SIGN_ENTITLEMENTS = DT5mC/DT5mC.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 726X5Z9867;
 				ENABLE_HARDENED_RUNTIME = YES;

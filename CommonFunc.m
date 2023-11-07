@@ -23,7 +23,8 @@ static void show_alert(NSObject *object, short err, BOOL fatal) {
 				str = [NSString stringWithFormat:@"%@\nerror code = %d", str, err];
 			alt = NSAlert.new;
 			alt.alertStyle = fatal? NSAlertStyleCritical : NSAlertStyleWarning;
-			alt.messageText = [@"Error in " stringByAppendingString:
+			alt.messageText = [NSString stringWithFormat:@"%@ in %@",
+				fatal? @"Error" : @"Warning",
 				[NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleName"]];
 			alt.informativeText = str;
 		}

@@ -6,25 +6,42 @@
 //
 
 @import Cocoa;
-@import AVFoundation;
+@import AVKit;
 @import MetalKit;
-@class MonitorView;
+@class MonitorView, DropButton;
 #define BM_WIDTH 640
 #define BM_HEIGHT 360
 #define PORT_NUMBER 9003
 
+typedef enum { SrcCam, SrcMov } SourceType;
+
 @interface AppDelegate : NSObject <NSApplicationDelegate,
 	AVCaptureVideoDataOutputSampleBufferDelegate,
 	NSMenuItemValidation> {
-	IBOutlet NSButton *btnStart, *btnStop, *cboxMirror;
+	IBOutlet NSButton *btnStart, *btnStop, *cboxMirror,
+		*rdiCamera, *rdiMovie;
+	IBOutlet DropButton *btnMovFile;
 	IBOutlet NSPopUpButton *cameraPopUp;
 	IBOutlet NSColorWell *targetColWel;
+	IBOutlet NSTextField *txtTrgtCol;
 	IBOutlet NSSlider *sldHue, *sldSat, *sldBri, *sldBlur;
+	IBOutlet NSTextField *dgtHue, *dgtSat, *dgtBri, *dgtBlur;
 	IBOutlet MonitorView *cameraView, *monitorView;
+	IBOutlet AVPlayerView *movieView;
+	IBOutlet NSTextField *infoText;
 	AVCaptureDeviceDiscoverySession *camSearch;
 	NSArray<AVCaptureDevice *> *cameras;
 	AVCaptureDevice *camera;
 	AVCaptureSession *ses;
+	NSURL *movieURL;
+	AVPlayerItemVideoOutput *movieVideoOutput;
+	dispatch_queue_t movieObserverQueue;
+	CMTime movieFrameInterval;
+	CGFloat movieDuration;
+	id movieTimeObserver;
+	CVPixelBufferRef lastFrame[2];
+	NSDictionary<NSString *, id> *videoSettings;
+	NSAttributedString *camInfoStr, *movInfoStr;
 	id<MTLDevice> device;
 	id<MTLComputePipelineState> blurPSO, filterPSO, monitorPSO;
 	id<MTLCommandQueue> commandQueue;
@@ -33,7 +50,8 @@
 	simd_uint3 frmSize;
 	simd_float3 targetHSB, ranges;
 	float blurWinSz;
-	BOOL mirror;
+	BOOL running, mirror;
+	SourceType sourceType;
 }
 @property (strong) IBOutlet NSWindow *window;
 @end
