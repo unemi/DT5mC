@@ -9,15 +9,15 @@
 #import "AppDelegate.h"
 #import "MonitorView.h"
 #import "../CommonFunc.h"
+#define MONITOR_BUFFER procBuffer
 
 static int soc = -1; 
 static struct sockaddr_in name;
 static NSString *keyCameraName = @"cameraName",
 	*keyTargetHSB = @"targetHSB", *keyRanges = @"ranges",
-	*keyBlurWinSz = @"blurWindowSize", *keyMirror = @"mirror",
-	*keySourceType = @"sourceType", *keyMovieBookmark = @"movieBookmark",
-	*keyMovieVolume = @"movieVolume", *keyMovieMuted = @"movieMuted",
-	*keyMovieTime = @"movieTime";
+	*keyBlurWinSz = @"blurWindowSize", *keyErodeWinSz = @"erodeWindowSize",
+	*keyMirror = @"mirror", *keySourceType = @"sourceType", *keyMovieBookmark = @"movieBookmark",
+	*keyMovieVolume = @"movieVolume", *keyMovieMuted = @"movieMuted", *keyMovieTime = @"movieTime";
 
 @implementation AppDelegate
 - (void)senderThread:(id)dummy {
@@ -60,6 +60,8 @@ static void dispatch_compute(id<MTLComputeCommandEncoder> cce,
 	struct { simd_int2 srcSz, dstSz, offset; float scale; simd_float3 hsb, range; }
 		filterParams = { { frmSize.x, frmSize.y }, {  BM_WIDTH, BM_HEIGHT },
 			{0, 0}, 0, targetHSB, ranges };
+	struct { simd_int2 size; int winSz; }
+		erodeParams = { { frmSize.x, frmSize.y }, erodeWinSz / 2 };
 	simd_float2 ratio = (simd_float2){frmSize.x, frmSize.y} / (simd_float2){BM_WIDTH, BM_HEIGHT};
 	filterParams.scale = fmax(ratio.x, ratio.y);
 	if (ratio.x > ratio.y) filterParams.offset.y = (BM_HEIGHT * ratio.x - frmSize.y) / 2;
@@ -70,10 +72,12 @@ static void dispatch_compute(id<MTLComputeCommandEncoder> cce,
 	MyAssert(cce, @"Cannot make command encoder.", nil);
 	dispatch_compute(cce, blurPSO, frmSize.x * frmSize.y,
 		cameraBuffer, procBuffer, &blurParams, sizeof(blurParams));
-	dispatch_compute(cce, filterPSO, BM_WIDTH * BM_HEIGHT / 8,
-		procBuffer, bitmapBuffer, &filterParams, sizeof(filterParams));
-	dispatch_compute(cce, monitorPSO, BM_WIDTH * BM_HEIGHT,
-		bitmapBuffer, monitorBuffer, NULL, 0);
+	dispatch_compute(cce, filterPSO, BM_WIDTH * BM_HEIGHT,
+		procBuffer, byteMapBuffer, &filterParams, sizeof(filterParams));
+	dispatch_compute(cce, erodePSO, BM_WIDTH * BM_HEIGHT,
+		byteMapBuffer, MONITOR_BUFFER, &erodeParams, sizeof(erodeParams));
+	dispatch_compute(cce, bitmapPSO, BM_WIDTH * BM_HEIGHT / 8,
+		MONITOR_BUFFER, bitmapBuffer, NULL, 0);
 	[cce endEncoding];
 	[bitmapLock lock];
 	[cmdBuf commit];
@@ -81,13 +85,12 @@ static void dispatch_compute(id<MTLComputeCommandEncoder> cce,
 		cameraView.frm = (FrameInfo){
 			frmSize.x, frmSize.y, 4, frmSize.z, NSBitmapFormatAlphaFirst };
 		[cameraView rebuildImageRep:cameraBuffer.contents];
+		in_main_thread(^{ self->cameraView.needsDisplay = YES; });
 	}
 	[cmdBuf waitUntilCompleted];
 	[bitmapLock unlockWithCondition:YES];
-	[monitorView rebuildImageRep:monitorBuffer.contents];
-	in_main_thread(^{
-		if (self->sourceType == SrcCam) self->cameraView.needsDisplay = YES;
-		self->monitorView.needsDisplay = YES; });
+	[monitorView rebuildImageRep:MONITOR_BUFFER.contents];
+	in_main_thread(^{ self->monitorView.needsDisplay = YES; });
 }
 - (void)filterThread:(id)dummy {
 	while (running) {
@@ -289,6 +292,11 @@ static void show_color_hex(NSColor *col, NSTextField *hex) {
 		size.width, size.height, dim.width, dim.height]);
 	return YES;
 }
+- (void)lockAndFilter {
+	[frmBufLock lock];
+	[self filtering];
+	[frmBufLock unlockWithCondition:NO];
+}
 - (BOOL)prepareSourceMedia:(SourceType)newType {
 	BOOL isCamera = newType == SrcCam;
 	if (isCamera) {
@@ -324,9 +332,10 @@ static void show_color_hex(NSColor *col, NSTextField *hex) {
 		[movieView.player play];
 	} else if (lastFrame[newType] != NULL) {
 		[self processVideoFrame:lastFrame[newType]];
-		[frmBufLock lock];
-		[self filtering];
-		[frmBufLock unlockWithCondition:NO];
+		[self lockAndFilter];
+	} else if (newType == SrcCam) {
+		stillCamImgCnt = 60;
+		[ses startRunning];	// to get still image from camera
 	}
 	return YES;
 }
@@ -361,6 +370,10 @@ static void show_color_hex(NSColor *col, NSTextField *hex) {
 		sldBlur.doubleValue = blurWinSz = num.floatValue;
 	else blurWinSz = sldBlur.doubleValue;
 	dgtBlur.doubleValue = blurWinSz;
+	if ((num = [ud objectForKey:keyErodeWinSz]))
+		sldErode.integerValue = erodeWinSz = num.intValue;
+	else erodeWinSz = sldErode.intValue;
+	dgtErode.integerValue = erodeWinSz;
 	if ((num = [ud objectForKey:keyMirror]))
 		cboxMirror.state = mirror = num.boolValue;
 	else mirror = cboxMirror.state;
@@ -376,12 +389,13 @@ static void show_color_hex(NSColor *col, NSTextField *hex) {
 	id<MTLLibrary> dfltLib = device.newDefaultLibrary;
 	blurPSO = [self makePSOWithName:@"blur" lib:dfltLib];
 	filterPSO = [self makePSOWithName:@"myFilter" lib:dfltLib];
-	monitorPSO = [self makePSOWithName:@"monitorMap" lib:dfltLib];
+	erodePSO = [self makePSOWithName:@"binaryErosion" lib:dfltLib];
+	bitmapPSO = [self makePSOWithName:@"makeBitmap" lib:dfltLib];
 	commandQueue = device.newCommandQueue;
 	frmBufLock = NSConditionLock.new;
 	bitmapLock = NSConditionLock.new;
+	byteMapBuffer = [self makeBufferWithName:@"monitor" size:BM_WIDTH * BM_HEIGHT];
 	bitmapBuffer = [self makeBufferWithName:@"bitmap" size:BM_WIDTH * BM_HEIGHT / 8];
-	monitorBuffer = [self makeBufferWithName:@"monitor" size:BM_WIDTH * BM_HEIGHT];
 	monitorView.frm = (FrameInfo){ BM_WIDTH, BM_HEIGHT, 1, BM_WIDTH, 0 };
 	monitorView.colorSpaceName = NSDeviceWhiteColorSpace;
 	cameraView.colorSpaceName = NSDeviceRGBColorSpace;
@@ -415,6 +429,7 @@ static void show_color_hex(NSColor *col, NSTextField *hex) {
 	[ud setObject:@[@(targetHSB.x), @(targetHSB.y), @(targetHSB.z)] forKey:keyTargetHSB];
 	[ud setObject:@[@(ranges.x), @(ranges.y), @(ranges.z)] forKey:keyRanges];
 	[ud setFloat:blurWinSz forKey:keyBlurWinSz];
+	[ud setInteger:erodeWinSz forKey:keyErodeWinSz];
 	[ud setBool:mirror forKey:keyMirror];
 	[ud setInteger:sourceType forKey:keySourceType];
 	if (movieView.player != nil) {
@@ -459,6 +474,11 @@ static void show_color_hex(NSColor *col, NSTextField *hex) {
 	[frmBufLock unlockWithCondition:YES];
 	CVPixelBufferUnlockBaseAddress(cvBuf, kCVPixelBufferLock_ReadOnly);
 }
+- (void)processNewFrame:(CVPixelBufferRef)cvPixBuf {
+	[self processVideoFrame:cvPixBuf];
+	if (lastFrame[sourceType] != NULL) CVPixelBufferRelease(lastFrame[sourceType]);
+	lastFrame[sourceType] = cvPixBuf;
+}
 - (IBAction)switchSource:(NSObject *)sender {
 	if ([sender isKindOfClass:NSButton.class]) {
 		SourceType newType = (SourceType)((NSButton *)sender).tag;
@@ -479,11 +499,56 @@ static void show_color_hex(NSColor *col, NSTextField *hex) {
 	if (sourceType != SrcCam) return;
 	CVPixelBufferRef cvPixBuf = CMSampleBufferGetImageBuffer(sampleBuffer);
 	CVPixelBufferRetain(cvPixBuf);
-	[self processVideoFrame:cvPixBuf];
-	if (lastFrame[SrcCam] != NULL) CVPixelBufferRelease(lastFrame[SrcCam]);
-	lastFrame[SrcCam] = cvPixBuf;
+	[self processNewFrame:cvPixBuf];
+	if (!running) {
+		if ((-- stillCamImgCnt) > 0) {
+			simd_uchar4 *px = cameraBuffer.contents;
+			simd_float3 sum = 0, sum2 = 0;
+			for (NSInteger y = 0; y < frmSize.y; y ++, px += frmSize.z / 4)
+			for (NSInteger x = 0; x < frmSize.x; x ++) {
+				simd_float3 p = (simd_float3){px[x].y, px[x].z, px[x].w} / 255.;
+				sum += p; sum2 += p * p; }
+			NSInteger n = frmSize.x * frmSize.y;
+			if (simd_reduce_add(sum2 - sum * sum / n) / n > .01)
+				[ses stopRunning];
+		} else [ses stopRunning];
+		[self lockAndFilter];
+	}
 }
 //
+static void cvPix_released_cb(void *refCon, const void *bytes) { free((void *)bytes); }
+static CVPixelBufferRef cvPixBuf_from_CGImage(CGImageRef cgImg) {
+	NSInteger pxW = CGImageGetWidth(cgImg), pxH = CGImageGetHeight(cgImg);
+	unsigned char *bytes = malloc(pxW * pxH * 4);
+	NSBitmapImageRep *imgRep = [NSBitmapImageRep.alloc
+		initWithBitmapDataPlanes:(unsigned char *[1]){bytes}
+		pixelsWide:pxW pixelsHigh:pxH bitsPerSample:8 samplesPerPixel:4
+		hasAlpha:YES isPlanar:NO colorSpaceName:NSDeviceRGBColorSpace
+		bitmapFormat:NSBitmapFormatAlphaFirst bytesPerRow:pxW * 4 bitsPerPixel:32];
+	NSGraphicsContext *ctx = NSGraphicsContext.currentContext;
+	NSGraphicsContext.currentContext = [NSGraphicsContext graphicsContextWithBitmapImageRep:imgRep];
+	[[NSBitmapImageRep.alloc initWithCGImage:cgImg] drawAtPoint:NSZeroPoint];
+	NSGraphicsContext.currentContext = ctx;
+	CVPixelBufferRef pxBuf = NULL;
+	CVReturn retCode = CVPixelBufferCreateWithBytes(kCFAllocatorDefault, pxW, pxH,
+		kCVPixelFormatType_32ARGB, bytes, pxW * 4, cvPix_released_cb, NULL, NULL, &pxBuf);
+	return (retCode == kCVReturnSuccess)? pxBuf : NULL;
+}
+- (void)movieStillFrameImage {
+	AVAssetImageGenerator *imgGen = [AVAssetImageGenerator
+		assetImageGeneratorWithAsset:movieView.player.currentItem.asset];
+	[imgGen generateCGImagesAsynchronouslyForTimes:
+		@[[NSValue valueWithCMTime:kCMTimeZero]] completionHandler:
+		^(CMTime time, CGImageRef image, CMTime actualTime,
+			AVAssetImageGeneratorResult result, NSError *error) {
+		if (result != AVAssetImageGeneratorSucceeded) { err_msg(error, NO); return; }
+		CVPixelBufferRef cvPixBuf = cvPixBuf_from_CGImage(image);
+		if (cvPixBuf != NULL) {
+			[self processNewFrame:cvPixBuf];
+			[self lockAndFilter];
+		}
+	}];
+}
 - (BOOL)movieURLWasChosen:(NSURL *)URL {
 	BOOL isFirstTime = movieView.player == nil;
 	if (![self setupMovieWithURL:URL byUserDefault:NO]) return NO;
@@ -498,7 +563,9 @@ static void show_color_hex(NSColor *col, NSTextField *hex) {
 	if (sourceType == SrcCam) {
 		rdiMovie.state = YES;
 		[self prepareSourceMedia:SrcMov];
-	} else if (running) {
+	}
+	if (!running) [self movieStillFrameImage];
+	else if (sourceType == SrcMov) {
 		if (!isFirstTime) [movieView.player pause];
 		[movieView.player play];
 	}
@@ -512,9 +579,7 @@ static void show_color_hex(NSColor *col, NSTextField *hex) {
 	CVPixelBufferRef cvPixBuf = [movieVideoOutput
 		copyPixelBufferForItemTime:time itemTimeForDisplay:NULL];
 	if (cvPixBuf == NULL) return;
-	[self processVideoFrame:cvPixBuf];
-	if (lastFrame[SrcMov] != NULL) CVPixelBufferRelease(lastFrame[SrcMov]);
-	lastFrame[SrcMov] = cvPixBuf;
+	[self processNewFrame:cvPixBuf];
 }
 - (void)configRunning:(BOOL)start {
 	btnStart.enabled = !start;
@@ -589,6 +654,9 @@ NSLog(@"addPeriodicTimeObserverForInterval");
 }
 - (IBAction)changeBlurWinSz:(NSSlider *)sld {
 	dgtBlur.doubleValue = blurWinSz = sld.doubleValue;
+}
+- (IBAction)changeErodeWinSz:(NSSlider *)sld {
+	dgtErode.integerValue = erodeWinSz = sld.intValue;
 }
 //
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem {

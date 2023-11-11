@@ -30,42 +30,55 @@ kernel void blur(device const uchar4 *src, device float4 *result,
 struct FilterInfo { int2 srcSz, dstSz, offset; float scale; float3 hsb, ranges; };
 kernel void myFilter(device const float4 *src, device uchar *result,
 	constant FilterInfo *info, uint index [[thread_position_in_grid]]) {
-	uchar byte = 0, mask = 1;
 	int npx = max(1, int(info->scale));
-	for (int k = 0; k < 8; k ++, mask <<= 1) {
-		int pxIdx = index * 8 + k;
-		int2 a = {pxIdx % info->dstSz.x, pxIdx / info->dstSz.x};	// destination position x,y
-		int2 s = int2(float2(a) * info->scale) - info->offset;	// source position x,y
-		if (!all(clamp(s, 1 - npx, info->srcSz - 1) == s)) continue;
-		float3 rgb = 0.;
-		for (int iy = 0; iy < npx; iy ++) {
-			int yy = s.y + iy;
-			if (yy < 0 || yy >= info->srcSz.y) continue;
-			for (int ix = 0; ix < npx; ix ++) {
-				int xx = s.x + ix;
-				if (xx >= 0 && xx < info->srcSz.x)
-					rgb += src[yy * info->srcSz.x + xx].rgb;
-			}
+	int2 a = {int(index) % info->dstSz.x, int(index) / info->dstSz.x};	// destination position x,y
+	int2 s = int2(float2(a) * info->scale) - info->offset;	// source position x,y
+	if (!all(clamp(s, 1 - npx, info->srcSz - 1) == s)) return;
+	float3 rgb = 0.;
+	for (int iy = 0; iy < npx; iy ++) {
+		int yy = s.y + iy;
+		if (yy < 0 || yy >= info->srcSz.y) continue;
+		for (int ix = 0; ix < npx; ix ++) {
+			int xx = s.x + ix;
+			if (xx >= 0 && xx < info->srcSz.x)
+				rgb += src[yy * info->srcSz.x + xx].rgb;
 		}
-		rgb /= npx * npx;
-		int maxIdx, minIdx;
-		if (rgb.r > rgb.g) { maxIdx = 0; minIdx = 1; }
-		else { maxIdx = 1; minIdx = 0; }
-		if (rgb[maxIdx] < rgb.b) maxIdx = 2;
-		else if (rgb[minIdx] > rgb.b) minIdx = 2;
-		float dif = (rgb[maxIdx] - rgb[minIdx]) * 6.;
-		float3 hsb = { (dif == 0)? 0. :
-			(minIdx == 2)? (rgb.g - rgb.r) / dif + 1./6. :
-			(minIdx == 0)? (rgb.b - rgb.g) / dif + 3./6. :
-			(rgb.r - rgb.b) / dif + 5./6.,
-			(rgb[maxIdx] == 0.)? 0. : dif / 6. / rgb[maxIdx], rgb[maxIdx] };
-		float3 d = abs(hsb - info->hsb);
-		if (d.x > .5) d.x = 1. - d.x;
-		if (all(min(d, info->ranges) == d)) byte |= mask;
 	}
-	result[index] = byte;
+	rgb /= npx * npx;
+	int maxIdx, minIdx;
+	if (rgb.r > rgb.g) { maxIdx = 0; minIdx = 1; }
+	else { maxIdx = 1; minIdx = 0; }
+	if (rgb[maxIdx] < rgb.b) maxIdx = 2;
+	else if (rgb[minIdx] > rgb.b) minIdx = 2;
+	float dif = (rgb[maxIdx] - rgb[minIdx]) * 6.;
+	float3 hsb = { (dif == 0)? 0. :
+		(minIdx == 2)? (rgb.g - rgb.r) / dif + 1./6. :
+		(minIdx == 0)? (rgb.b - rgb.g) / dif + 3./6. :
+		(rgb.r - rgb.b) / dif + 5./6.,
+		(rgb[maxIdx] == 0.)? 0. : dif / 6. / rgb[maxIdx], rgb[maxIdx] };
+	float3 d = abs(hsb - info->hsb);
+	if (d.x > .5) d.x = 1. - d.x;
+	result[index] = all(min(d, info->ranges) == d)? 255 : 0;
 }
-kernel void monitorMap(device const uchar *bitmap, device uchar *bytemap,
+struct ErosionInfo { int2 size; int winSz; };
+kernel void binaryErosion(device const uchar *src, device uchar *dst,
+	constant ErosionInfo *info,
 	uint index [[thread_position_in_grid]]) {
-	bytemap[index] = ((bitmap[index / 8] & (1 << (index % 8))) == 0)? 0 : 255;
+	int cnt = 0, w = info->size.x;
+	int2 p = {int(index) % w, int(index) / w};
+	int2 s = max(p - info->winSz, 0);
+	int2 e = min(p + info->winSz + 1, info->size);
+	int2 d = e - s;
+	for (int y = s.y; y < e.y; y ++)
+	for (int x = s.x; x < e.x; x ++)
+		if (src[y * w + x] != 0) cnt ++;
+	dst[index] = (cnt > d.x * d.y / 2)? 255 : 0;
+}
+kernel void makeBitmap(device const uchar *bytemap, device uchar *bitmap,
+	uint index [[thread_position_in_grid]]) {
+//	bitmap[index] = (index < 640*340/16)? 0 : 255;
+	uchar byte = 0, mask = 1;
+	for (int k = 0; k < 8; k ++, mask <<= 1)
+		if (bytemap[index * 8 + k] != 0) byte |= mask;
+	bitmap[index] = byte;
 }

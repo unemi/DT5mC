@@ -9,6 +9,7 @@
 @import AVKit;
 @import MetalKit;
 @class MonitorView, DropButton;
+// BM_WIDTH must be a multiple of 8
 #define BM_WIDTH 640
 #define BM_HEIGHT 360
 #define PORT_NUMBER 9003
@@ -24,8 +25,8 @@ typedef enum { SrcCam, SrcMov } SourceType;
 	IBOutlet NSPopUpButton *cameraPopUp;
 	IBOutlet NSColorWell *targetColWel;
 	IBOutlet NSTextField *txtTrgtCol;
-	IBOutlet NSSlider *sldHue, *sldSat, *sldBri, *sldBlur;
-	IBOutlet NSTextField *dgtHue, *dgtSat, *dgtBri, *dgtBlur;
+	IBOutlet NSSlider *sldHue, *sldSat, *sldBri, *sldBlur, *sldErode;
+	IBOutlet NSTextField *dgtHue, *dgtSat, *dgtBri, *dgtBlur, *dgtErode;
 	IBOutlet MonitorView *cameraView, *monitorView;
 	IBOutlet AVPlayerView *movieView;
 	IBOutlet NSTextField *infoText;
@@ -43,15 +44,17 @@ typedef enum { SrcCam, SrcMov } SourceType;
 	NSDictionary<NSString *, id> *videoSettings;
 	NSAttributedString *camInfoStr, *movInfoStr;
 	id<MTLDevice> device;
-	id<MTLComputePipelineState> blurPSO, filterPSO, monitorPSO;
+	id<MTLComputePipelineState> blurPSO, filterPSO, erodePSO, bitmapPSO;
 	id<MTLCommandQueue> commandQueue;
-	id<MTLBuffer> cameraBuffer, procBuffer, bitmapBuffer, monitorBuffer;
+	id<MTLBuffer> cameraBuffer, procBuffer, byteMapBuffer, bitmapBuffer;
 	NSConditionLock *frmBufLock, *bitmapLock;
 	simd_uint3 frmSize;
 	simd_float3 targetHSB, ranges;
 	float blurWinSz;
+	int erodeWinSz;
 	BOOL running, mirror;
 	SourceType sourceType;
+	NSInteger stillCamImgCnt;
 }
 @property (strong) IBOutlet NSWindow *window;
 @end

@@ -36,7 +36,6 @@
 		2379C6072A6A65F000884B2A /* SldAndStepper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2379C5FF2A6A65EF00884B2A /* SldAndStepper.m */; };
 		2379C6082A6A65F000884B2A /* Controller2.m in Sources */ = {isa = PBXBuildFile; fileRef = 2379C6022A6A65EF00884B2A /* Controller2.m */; };
 		239596A92AB3ED3500C09B31 /* DataCompress.m in Sources */ = {isa = PBXBuildFile; fileRef = 239596A82AB3ED3500C09B31 /* DataCompress.m */; };
-		23985C252AF916060084031D /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23985C232AF916060084031D /* AVFoundation.framework */; };
 		23985C262AF916060084031D /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23985C242AF916060084031D /* AVKit.framework */; };
 		23BDFC4F2AD6832B00F97004 /* DT5mCHelp.help in Resources */ = {isa = PBXBuildFile; fileRef = 23BDFC412AD67DB300F97004 /* DT5mCHelp.help */; };
 		23BDFC5D2AD68A6A00F97004 /* help.css in Resources */ = {isa = PBXBuildFile; fileRef = 23BDFC592AD68A6A00F97004 /* help.css */; };
@@ -139,7 +138,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				23985C252AF916060084031D /* AVFoundation.framework in Frameworks */,
 				23985C262AF916060084031D /* AVKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
