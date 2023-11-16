@@ -7,12 +7,11 @@
 #import "Controller2.h"
 #import "Display.h"
 #define InitV .002
-#define MaxV 8.
 #define AttractantTh3 0.05f
 #define AgentWeight .004
 #define AgentLength .0333
 #define TurnAngle (M_PI/2)
-#define MaxWarp .2
+#define NNextCandidates 5
 #define AllocUnit 4096
 
 static MyAgent *theAgents = NULL;
@@ -77,13 +76,6 @@ static float get_chem(float *map, simd_float2 q) {
 static float get_chemical(float *map, simd_float2 p) {
 	return get_chem(map, p * (simd_float2){FrameWidth / camXMax, FrameHeight});
 }
-static BOOL random_bool(void) {
-//	static unsigned long n, k = 0;
-	static NSInteger n, k = 0;
-	if (k <= 0) { k = 32; n = lrand48(); }
-	else { k --; n >>= 1; }
-	return ((n & 1) == 1);
-}
 static void reset_agent(MyAgent *a) {
 	CGFloat size = AgentWeight * agentWeight;
 	a->p.y = drand48() * (1 + camXMax) * 2;
@@ -97,7 +89,7 @@ static void reset_agent(MyAgent *a) {
 	a->head = a->tail = newTrailCell(a->p, 0.);
 	a->length = 0.;
 	a->trailCount = 1;
-	a->leftLife = drand48() * 5.;
+	a->leftLife = drand48() * lifeSpan;
 }
 static void warp_agent(MyAgent *a) {
 	simd_float2 leftBottom = {a->p.x, a->p.y}, rightTop = {a->p.x, a->p.y};
@@ -110,7 +102,7 @@ static void warp_agent(MyAgent *a) {
 	d -= leftBottom;
 	a->p += d;
 	for (TrailCell *tc = a->head; tc; tc = tc->post) tc->p += d;
-	a->leftLife = 5.;
+	a->leftLife = lifeSpan;
 }
 static void exocrine_agent(MyAgent *a) {
 	simd_int2 ij = simd_int_sat(a->p * (simd_float2){FrameWidth / camXMax, FrameHeight});
@@ -119,32 +111,34 @@ static void exocrine_agent(MyAgent *a) {
 }
 static float elapsedSec = 0.;
 static void move_agent(MyAgent *a) {
-	if ((a->leftLife -= elapsedSec) <= 0.) warp_agent(a);
-	float bAngle = agentTurnAngle * TurnAngle * (drand48() + .5);
+	if (lifeSpan > 0. && (a->leftLife -= elapsedSec) <= 0.) warp_agent(a);
 	float bVelocity = InitV * (drand48() * 1.2 + .3);
 	float atrct = get_chemical(AtrctSrcMap, a->p);
 	if (atrct > thHiSpeed) bVelocity *= agentSpeed;
-	else if (thHiSpeed <= 0.) bVelocity *= MaxV;
+	else if (thHiSpeed <= 0.) bVelocity *= maxSpeed;
 	else if (atrct > thHiSpeed / 2) bVelocity *=
 		1. + (thHiSpeed / 2 - atrct) / thHiSpeed * 2 * (1. - agentSpeed);
-	else bVelocity *= atrct / thHiSpeed * 2 + (1. - atrct / thHiSpeed * 2) * MaxV;
+	else bVelocity *= atrct / thHiSpeed * 2 + (1. - atrct / thHiSpeed * 2) * maxSpeed;
 	if (bVelocity <= 0.) return;
-	float ph[3], th = atan2(a->v.y, a->v.x), s = 0.;
-	simd_float2 candidate[3];
-	for (int i = 0; i < 3; i ++) {
-		float phi = th + (i - 1) * bAngle;
+
+	float bAngle = agentTurnAngle * TurnAngle * (drand48() + .5);
+	float ph[NNextCandidates], th = atan2(a->v.y, a->v.x);
+	simd_float2 candidate[NNextCandidates];
+	for (int i = 0; i < NNextCandidates; i ++) {
+		float phi = th + (i / (NNextCandidates - 1.) * 2. - 1.) * bAngle;
 		simd_float2 sp = candidate[i] = a->p + bVelocity * (simd_float2){cos(phi), sin(phi)};
-		ph[i] = get_chemical(AtrctSrcMap, sp)
-			- avoidance * pow(get_chemical(RplntSrcMap, sp), 2.f);
-		s += ph[i];
+		ph[i] = get_chemical(AtrctSrcMap, sp) * (1. - avoidance)
+			- avoidance * get_chemical(RplntSrcMap, sp);
 	}
-	int k = (ph[0] > ph[1])?
-		((ph[0] > ph[2])? 0 : (ph[0] < ph[2])? 2 : random_bool()? 0 : 2) :
-		(ph[0] < ph[1])?
-		((ph[1] > ph[2])? 1 : (ph[1] < ph[2])? 2 : random_bool()? 1 : 2) :
-		((ph[0] < ph[2])? 2 : (ph[0] > ph[2])? (random_bool()? 0 : 1) : lrand48() % 3);
+	int bests[NNextCandidates] = {0}, nBests = 1;
+	for (int i = 1; i < NNextCandidates; i ++) {
+		if (ph[i] > ph[bests[0]]) { bests[0] = i; nBests = 1; }
+		else if (ph[i] == ph[bests[0]]) bests[nBests ++] = i;
+	}
+	int k = (nBests <= 1)? bests[0] : bests[lrand48() % nBests];
 	a->v = candidate[k] - a->p;
 	a->p = candidate[k];
+
 	CGFloat size = AgentWeight * agentWeight;
 	if (a->p.x < -size || a->p.x > camXMax+size || a->p.y < -size || a->p.y > 1+size)
 		{ reset_agent(a); return; }

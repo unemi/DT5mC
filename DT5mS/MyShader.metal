@@ -76,7 +76,6 @@ kernel void binaryErosion(device const uchar *src, device uchar *dst,
 }
 kernel void makeBitmap(device const uchar *bytemap, device uchar *bitmap,
 	uint index [[thread_position_in_grid]]) {
-//	bitmap[index] = (index < 640*340/16)? 0 : 255;
 	uchar byte = 0, mask = 1;
 	for (int k = 0; k < 8; k ++, mask <<= 1)
 		if (bytemap[index * 8 + k] != 0) byte |= mask;

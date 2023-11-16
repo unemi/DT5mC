@@ -34,7 +34,7 @@ CGFloat atrEvprt = .1, rplEvprt = .05;
 CGFloat agentLength = 1., agentWeight = 0.5;
 CGFloat agentMaxOpacity = .7, agentMinOpacity = 0., agentOpcGrad = 0.;
 CGFloat agentSpeed = 1., agentTurnAngle = .5;
-CGFloat avoidance = .7, thHiSpeed = .4;
+CGFloat avoidance = .7, thHiSpeed = .4, maxSpeed = 8., lifeSpan = 10.;
 static struct IntParamRec {
 	NSString *key;
 	NSInteger *var, min, max;
@@ -71,6 +71,8 @@ static struct ParamRec {
 	{ @"agent turn angle", &agentTurnAngle, 0., 1., PrmTypeMovement },
 	{ @"agent avoidance", &avoidance, 0., 1., PrmTypeMovement }, 
 	{ @"attractant threshold for hi-speed", &thHiSpeed, 0., .9, PrmTypeMovement },
+	{ @"max speed", &maxSpeed, 1., 10., PrmTypeMovement }, 
+	{ @"life span", &lifeSpan, 0., 20., PrmTypeMovement }, 
 	{ nil, NULL }
 };
 

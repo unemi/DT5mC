@@ -21,7 +21,7 @@ extern CGFloat xOffset, yOffset, xScale, yScale, keystone;
 extern NSInteger atrDifSz, rplDifSz;
 extern CGFloat atrEvprt, rplEvprt;
 extern CGFloat agentLength, agentWeight, agentMaxOpacity, agentMinOpacity, agentOpcGrad,
-	agentSpeed, agentTurnAngle, avoidance, thHiSpeed;
+	agentSpeed, agentTurnAngle, avoidance, thHiSpeed, maxSpeed, lifeSpan;
 extern int brushSize;
 
 @class MyMTKView, Display;
