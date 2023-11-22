@@ -56,8 +56,8 @@ static struct ParamRec {
 } Parameters[] = {
 	{ @"X Offset", &xOffset, -.5, .5, PrmTypeGeometry },
 	{ @"Y Offset", &yOffset, -.5, .5, PrmTypeGeometry },
-	{ @"X Scale", &xScale, .01, 1., PrmTypeGeometry },
-	{ @"Y Scale", &yScale, .01, 1., PrmTypeGeometry },
+	{ @"X Scale", &xScale, .2, 2., PrmTypeGeometry },
+	{ @"Y Scale", &yScale, .2, 2., PrmTypeGeometry },
 	{ @"keystone", &keystone, 0., .8, PrmTypeGeometry },
 	{ @"attractant evaporation", &atrEvprt, 0., .2, PrmTypeMovement },
 	{ @"repellent evaporation", &rplEvprt, 0., .2, PrmTypeMovement },

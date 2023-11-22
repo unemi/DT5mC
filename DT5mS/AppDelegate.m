@@ -61,7 +61,7 @@ static void dispatch_compute(id<MTLComputeCommandEncoder> cce,
 		filterParams = { { frmSize.x, frmSize.y }, {  BM_WIDTH, BM_HEIGHT },
 			{0, 0}, 0, targetHSB, ranges };
 	struct { simd_int2 size; int winSz; }
-		erodeParams = { { frmSize.x, frmSize.y }, erodeWinSz / 2 };
+		erodeParams = { { BM_WIDTH, BM_HEIGHT }, erodeWinSz / 2 };
 	simd_float2 ratio = (simd_float2){frmSize.x, frmSize.y} / (simd_float2){BM_WIDTH, BM_HEIGHT};
 	filterParams.scale = fmax(ratio.x, ratio.y);
 	if (ratio.x > ratio.y) filterParams.offset.y = (BM_HEIGHT * ratio.x - frmSize.y) / 2;
@@ -141,12 +141,15 @@ NSAttributedString *info_string(NSString *str) {
 		[frmRtStr appendFormat:@"%@%g-%g", pnc, rng.minFrameRate, rng.maxFrameRate];
 		pnc = @", ";
 	}
+	AVCaptureExposureMode expoMode = cam.exposureMode;
 	camInfoStr = info_string([NSString stringWithFormat:@"Camera device:\n"
 		@" Manufacturer: %@\n Model: %@\n ID:%@\n Name: %@\n Size: %d x %d\n"
-		@" Frame rate: %@\n Auto focus: %@",
+		@" Frame rate: %@\n Auto focus: %@\n Exposure mode: %@",
 		cam.manufacturer, cam.modelID, cam.uniqueID, cam.localizedName,
 		dimen.width, dimen.height, frmRtStr,
-		@[@"None", @"Slow", @"Fast"][format.autoFocusSystem]]);
+		@[@"None", @"Slow", @"Fast"][format.autoFocusSystem],
+		(expoMode < 0 || expoMode > 3)? @"None" :
+			@[@"Locked", @"Auto", @"Continuous auto", @"Custom"][expoMode]]);
 }
 - (void)setupCameraList:(NSArray<AVCaptureDevice *> *)camList {
 	[cameraPopUp removeAllItems];
@@ -422,6 +425,7 @@ static void show_color_hex(NSColor *col, NSTextField *hex) {
 	}
 }
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
+	if (running) [self stopProc:nil];
 	if (soc >= 0) close(soc);
 	[movieURL stopAccessingSecurityScopedResource];
 	NSUserDefaults *ud = NSUserDefaults.standardUserDefaults;
@@ -581,12 +585,16 @@ static CVPixelBufferRef cvPixBuf_from_CGImage(CGImageRef cgImg) {
 	if (cvPixBuf == NULL) return;
 	[self processNewFrame:cvPixBuf];
 }
-- (void)configRunning:(BOOL)start {
-	btnStart.enabled = !start;
-	btnStop.enabled = running = start;
-	if (start) [NSThread detachNewThreadSelector:
+- (void)configByRunning {
+	btnStart.enabled = !running;
+	btnStop.enabled = running;
+	if (running) [NSThread detachNewThreadSelector:
 		@selector(filterThread:) toTarget:self withObject:nil];
 	else { [frmBufLock lock]; [frmBufLock unlockWithCondition:YES]; }
+}
+- (void)configRunning:(BOOL)start {
+	running = start;
+	[self configByRunning];
 }
 - (void)movieRateChanged:(NSDictionary *)change {
 	AVPlayer *player = movieView.player;
@@ -626,7 +634,8 @@ NSLog(@"addPeriodicTimeObserverForInterval");
 - (IBAction)stopProc:(id)sender {
 	switch (sourceType) {
 		case SrcMov: [movieView.player pause]; break;
-		case SrcCam: [ses stopRunning]; [self configRunning:NO];
+		case SrcCam: running = NO;
+		[ses stopRunning]; [self configByRunning];
 	}
 }
 - (IBAction)startStop:(id)sender {
