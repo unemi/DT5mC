@@ -63,24 +63,24 @@ int brushSize;
 		^(NSTimer * _Nonnull timer) { self->mskInfoTxt.hidden = YES; }];
 }
 - (void)showMaskingPanel {
-	NSRect frame = window.frame, vfrm = prjctView.frame;
-	CGFloat vHeight = maskPanelView.frame.size.height;
+	NSRect frame = window.frame, vFrm = maskPanelView.frame, pFrm = prjctView.frame;
+	CGFloat vHeight = vFrm.size.height;
 	frame.size.height += vHeight; frame.origin.y -= vHeight;
-	vfrm.origin.y += vHeight;
 	[window setFrame:frame display:NO];
-	[prjctView setFrame:vfrm];
+	vFrm.origin.y = window.contentView.frame.size.height - vHeight;
+	[maskPanelView setFrame:vFrm];
 	[window.contentView addSubview:maskPanelView];
+	if (!prjctView.inFullScreenMode) [prjctView setFrame:pFrm];
 }
 - (void)hideMaskingPanel {
 	display.maskingOption = MaskNone;
 	noiseBtn.state = NSControlStateValueOff;
 	[maskPanelView removeFromSuperview];
-	NSRect frame = window.frame, vfrm = prjctView.frame;
-	frame.size.height -= vfrm.origin.y;
-	frame.origin.y += vfrm.origin.y;
-	vfrm.origin.y = 0.;
+	NSRect frame = window.frame, pFrm = prjctView.frame;
+	CGFloat vHeight = maskPanelView.frame.size.height;
+	frame.size.height -= vHeight; frame.origin.y += vHeight;
 	[window setFrame:frame display:NO];
-	[prjctView setFrame:vfrm];
+	if (!prjctView.inFullScreenMode) [prjctView setFrame:pFrm];
 }
 - (void)checkSameWithDefaultMask {
 	svMskAsDfltBtn.enabled = !(maskDefault.length == BitmapByteCount &&

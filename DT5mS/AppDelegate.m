@@ -13,7 +13,7 @@
 
 static int soc = -1; 
 static struct sockaddr_in name;
-static NSString *keyCameraName = @"cameraName",
+static NSString *keyCameraName = @"cameraName", *keyExpoDur = @"exposureDuration",
 	*keyTargetHSB = @"targetHSB", *keyRanges = @"ranges",
 	*keyBlurWinSz = @"blurWindowSize", *keyErodeWinSz = @"erodeWindowSize",
 	*keyMirror = @"mirror", *keySourceType = @"sourceType", *keyMovieBookmark = @"movieBookmark",
@@ -131,25 +131,57 @@ NSAttributedString *info_string(NSString *str) {
 	if (canAddIt) {
 		[ses addInput:devIn];
 		camera = cam;
-	} else if (orgDevIn != nil) [ses addInput:orgDevIn];
+	} else if (orgDevIn != nil) { [ses addInput:orgDevIn]; return; }
 	AVCaptureDeviceFormat *format = cam.activeFormat;
 	CMFormatDescriptionRef desc = format.formatDescription;
 	CMVideoDimensions dimen = CMVideoFormatDescriptionGetDimensions(desc);
-	NSMutableString *frmRtStr = NSMutableString.new;
+	NSMutableString *frmRtStr = NSMutableString.new, *expDurStr = NSMutableString.new;
 	NSString *pnc = @"";
 	for (AVFrameRateRange *rng in format.videoSupportedFrameRateRanges) {
 		[frmRtStr appendFormat:@"%@%g-%g", pnc, rng.minFrameRate, rng.maxFrameRate];
 		pnc = @", ";
 	}
+	if (frmRtStr.length > 0) [frmRtStr appendString:@" fps"];
 	AVCaptureExposureMode expoMode = cam.exposureMode;
+	CMTime minExp = cam.activeVideoMinFrameDuration,
+		maxExp = cam.activeVideoMaxFrameDuration;
+	CGFloat minExDr = (CGFloat)minExp.value/minExp.timescale*1000.,
+		maxExDr = (CGFloat)maxExp.value/maxExp.timescale*1000.;
+	BOOL expAdjustable = NO;
+	if (isnormal(minExDr) && minExDr > 0) [expDurStr appendFormat:@"%.2f", minExDr];
+	if (isnormal(maxExDr) && maxExDr > minExDr) {
+		[expDurStr appendFormat:@"-%.2f", maxExDr];
+		sldExpDur.minValue = minExDr; sldExpDur.maxValue = maxExDr;
+//		cam.exposureDuration = clamp(exposureDur, minExDr, maxExDr);	// not available on maxOS
+		exposureDur = (minExDr + maxExDr) / 2.;
+		sldExpDur.doubleValue = dgtExpDur.doubleValue = exposureDur;
+		NSNumberFormatter *fmt = dgtExpDur.formatter;
+		fmt.minimum = @(minExDr); fmt.maximum = @(maxExDr);
+		expAdjustable = YES;
+		if (expoMode != AVCaptureExposureModeLocked
+		 && expoMode != AVCaptureExposureModeCustom) {
+			if ([cam isExposureModeSupported:AVCaptureExposureModeCustom])
+				expoMode = cam.exposureMode = AVCaptureExposureModeCustom;
+			else if ([cam isExposureModeSupported:AVCaptureExposureModeLocked])
+				expoMode = cam.exposureMode = AVCaptureExposureModeLocked;
+			else expAdjustable = NO;
+		}
+	}
+	if (expDurStr.length > 0) [expDurStr appendString:@" ms"];
+	sldExpDur.enabled = NO; //expAdjustable;
+	AVCaptureAutoFocusSystem autoFocus = format.autoFocusSystem;
 	camInfoStr = info_string([NSString stringWithFormat:@"Camera device:\n"
 		@" Manufacturer: %@\n Model: %@\n ID:%@\n Name: %@\n Size: %d x %d\n"
-		@" Frame rate: %@\n Auto focus: %@\n Exposure mode: %@",
+		@" Frame rate: %@\n Auto focus: %@\n"
+		@" Exposure mode: %@\n    duration: %@",
 		cam.manufacturer, cam.modelID, cam.uniqueID, cam.localizedName,
 		dimen.width, dimen.height, frmRtStr,
-		@[@"None", @"Slow", @"Fast"][format.autoFocusSystem],
+		(autoFocus < 0 || autoFocus > 2)? @"Unknown" :
+			@[@"None", @"Slow", @"Fast"][autoFocus],
 		(expoMode < 0 || expoMode > 3)? @"None" :
-			@[@"Locked", @"Auto", @"Continuous auto", @"Custom"][expoMode]]);
+			@[@"Locked", @"Auto", @"Continuous auto", @"Custom"][expoMode],
+		expDurStr]);
+	infoText.attributedStringValue = camInfoStr;
 }
 - (void)setupCameraList:(NSArray<AVCaptureDevice *> *)camList {
 	[cameraPopUp removeAllItems];
@@ -161,8 +193,10 @@ NSAttributedString *info_string(NSString *str) {
 			[NSApp terminate:nil];
 		return;
 	}
-	rdiCamera.enabled = YES;
-	cameraPopUp.enabled = camList.count > 1;
+	if (sourceType == SrcCam) {
+		rdiCamera.enabled = YES;
+		cameraPopUp.enabled = camList.count > 1;
+	}
 	for (AVCaptureDevice *dev in camList)
 		[cameraPopUp addItemWithTitle:dev.localizedName];
 	[cameraPopUp sizeToFit];
@@ -179,7 +213,6 @@ NSAttributedString *info_string(NSString *str) {
 		if (defName != nil && [cameraPopUp itemWithTitle:defName] != nil)
 			cam = camList[[cameraPopUp indexOfItemWithTitle:defName]];
 		[self setupCamera:cam];
-		infoText.attributedStringValue = camInfoStr;
 	}
 	[cameraPopUp selectItemWithTitle:camera.localizedName];
 	cameras = camList;
@@ -369,6 +402,10 @@ static void show_color_hex(NSColor *col, NSTextField *hex) {
 			dgts[i].doubleValue = sliders[i].doubleValue = arr[i].doubleValue * 100.;
 	} else for (NSSlider *sld in sliders) [self changeRanges:sld];
 	NSNumber *num;
+	if ((num = [ud objectForKey:keyExpoDur]))
+		sldExpDur.doubleValue = exposureDur = num.doubleValue;
+	else exposureDur = sldExpDur.doubleValue;
+	dgtExpDur.doubleValue = exposureDur;
 	if ((num = [ud objectForKey:keyBlurWinSz]))
 		sldBlur.doubleValue = blurWinSz = num.floatValue;
 	else blurWinSz = sldBlur.doubleValue;
@@ -494,7 +531,16 @@ static void show_color_hex(NSColor *col, NSTextField *hex) {
 	AVCaptureDevice *newCam = cameras[cameraPopUp.indexOfSelectedItem];
 	if (newCam == camera) return;
 	[self setupCamera:newCam];
-	infoText.attributedStringValue = camInfoStr;
+}
+- (IBAction)changeExposureDur:(id)sender {
+	dgtExpDur.doubleValue = exposureDur = sldExpDur.doubleValue;
+	// not supported on macOS
+//	NSError *error;
+//	if (![camera lockForConfiguration:&error]) { err_msg(error, NO); return; }
+//	CMTime dur = CMTimeMake(exposureDur / 1000, 1000000L);
+//	[camera setExposureModeCustomWithDuration:dur
+//		ISO:AVCaptureISOCurrent completionHandler:nil];
+//	[camera unlockForConfiguration];
 }
 // AVCaptureVideoDataOutputSampleBufferDelegate
 - (void)captureOutput:(AVCaptureOutput *)output

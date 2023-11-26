@@ -33,7 +33,7 @@ kernel void myFilter(device const float4 *src, device uchar *result,
 	int npx = max(1, int(info->scale));
 	int2 a = {int(index) % info->dstSz.x, int(index) / info->dstSz.x};	// destination position x,y
 	int2 s = int2(float2(a) * info->scale) - info->offset;	// source position x,y
-	if (!all(clamp(s, 1 - npx, info->srcSz - 1) == s)) return;
+	if (!all(clamp(s, 1 - npx, info->srcSz - 1) == s)) { result[index] = 0; return; }
 	float3 rgb = 0.;
 	for (int iy = 0; iy < npx; iy ++) {
 		int yy = s.y + iy;

@@ -23,7 +23,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="422" height="713"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textField focusRingType="none" verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="1258">
+                    <textField verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="1258">
                         <rect key="frame" x="226" y="674" width="69" height="16"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Projection:" id="3096">
                             <font key="font" metaFont="system"/>
@@ -64,7 +64,7 @@
                             <action selector="changeProjection:" target="206" id="1357"/>
                         </connections>
                     </popUpButton>
-                    <textField focusRingType="none" verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="1261">
+                    <textField verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="1261">
                         <rect key="frame" x="40" y="594" width="54" height="16"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="X Scale:" id="3099">
                             <font key="font" metaFont="system"/>
@@ -72,7 +72,7 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField focusRingType="none" verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="1262">
+                    <textField verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="1262">
                         <rect key="frame" x="36" y="646" width="58" height="16"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="X Offset:" id="3100">
                             <font key="font" metaFont="system"/>
@@ -80,7 +80,7 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1263">
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1263">
                         <rect key="frame" x="362" y="594" width="40" height="16"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="40" id="ofa-XX-wHX"/>
@@ -95,7 +95,7 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1264">
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1264">
                         <rect key="frame" x="362" y="620" width="40" height="16"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="40" id="2Fk-YJ-Rx0"/>
@@ -118,7 +118,7 @@
                         <rect key="frame" x="98" y="611" width="237" height="28"/>
                         <sliderCell key="cell" continuous="YES" state="on" alignment="left" minValue="-0.5" maxValue="0.5" tickMarkPosition="above" sliderType="linear" id="3104"/>
                     </slider>
-                    <textField focusRingType="none" verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="1267">
+                    <textField verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="1267">
                         <rect key="frame" x="36" y="620" width="58" height="16"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Y Offset:" id="3105">
                             <font key="font" metaFont="system"/>
@@ -126,7 +126,7 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1268">
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1268">
                         <rect key="frame" x="362" y="646" width="40" height="16"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="40" id="fDy-OX-s1S"/>
@@ -141,7 +141,7 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField focusRingType="none" verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="1291">
+                    <textField verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="1291">
                         <rect key="frame" x="18" y="332" width="76" height="14"/>
                         <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title=" Max Opacity:" id="3110">
                             <font key="font" metaFont="smallSystem"/>
@@ -149,7 +149,7 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1292">
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1292">
                         <rect key="frame" x="362" y="332" width="40" height="14"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="40" id="mNl-ze-Hve"/>
@@ -164,7 +164,7 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField focusRingType="none" verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="1293">
+                    <textField verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="1293">
                         <rect key="frame" x="322" y="428" width="36" height="14"/>
                         <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Color:" id="3112">
                             <font key="font" metaFont="smallSystem"/>
@@ -172,7 +172,7 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField focusRingType="none" verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="1294">
+                    <textField verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="1294">
                         <rect key="frame" x="50" y="354" width="44" height="14"/>
                         <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Weight:" id="3113">
                             <font key="font" metaFont="smallSystem"/>
@@ -186,7 +186,7 @@
                             <font key="font" metaFont="smallSystem"/>
                         </sliderCell>
                     </slider>
-                    <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1296">
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1296">
                         <rect key="frame" x="362" y="354" width="40" height="14"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="40" id="WZ7-FH-RvO"/>
@@ -212,7 +212,7 @@
                             <action selector="changeAgentColor:" target="206" id="1355"/>
                         </connections>
                     </colorWell>
-                    <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1298">
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1298">
                         <rect key="frame" x="362" y="256" width="40" height="14"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="40" id="DWb-Rw-qum"/>
@@ -233,7 +233,7 @@
                             <font key="font" metaFont="smallSystem"/>
                         </sliderCell>
                     </slider>
-                    <textField focusRingType="none" verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="1300">
+                    <textField verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="1300">
                         <rect key="frame" x="53" y="256" width="41" height="14"/>
                         <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Speed:" id="3118">
                             <font key="font" metaFont="smallSystem"/>
@@ -253,7 +253,7 @@
                             <font key="font" metaFont="smallSystem"/>
                         </sliderCell>
                     </slider>
-                    <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1458">
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1458">
                         <rect key="frame" x="362" y="234" width="40" height="14"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="40" id="Lpb-Dx-u9G"/>
@@ -268,7 +268,7 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1459">
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1459">
                         <rect key="frame" x="362" y="212" width="40" height="14"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="40" id="9oE-5g-tVq"/>
@@ -289,7 +289,7 @@
                             <font key="font" metaFont="smallSystem"/>
                         </sliderCell>
                     </slider>
-                    <textField focusRingType="none" verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="1461">
+                    <textField verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="1461">
                         <rect key="frame" x="63" y="234" width="31" height="14"/>
                         <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Turn:" id="3123">
                             <font key="font" metaFont="smallSystem"/>
@@ -297,7 +297,7 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField focusRingType="none" verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="1462">
+                    <textField verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="1462">
                         <rect key="frame" x="32" y="212" width="62" height="14"/>
                         <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Avoidance:" id="3124">
                             <font key="font" metaFont="smallSystem"/>
@@ -311,7 +311,7 @@
                             <font key="font" metaFont="smallSystem"/>
                         </sliderCell>
                     </slider>
-                    <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1606">
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1606">
                         <rect key="frame" x="362" y="310" width="40" height="14"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="40" id="cC0-We-PXY"/>
@@ -326,7 +326,7 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField focusRingType="none" verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="1607">
+                    <textField verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="1607">
                         <rect key="frame" x="24" y="310" width="70" height="14"/>
                         <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Min Opacity:" id="3133">
                             <font key="font" metaFont="smallSystem"/>
@@ -337,7 +337,7 @@
                     <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="1612">
                         <rect key="frame" x="0.0" y="276" width="422" height="5"/>
                     </box>
-                    <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2197">
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2197">
                         <rect key="frame" x="362" y="542" width="40" height="16"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="40" id="0Fi-3E-id9"/>
@@ -352,7 +352,7 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField focusRingType="none" verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="2198">
+                    <textField verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="2198">
                         <rect key="frame" x="30" y="542" width="64" height="16"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Keystone:" id="3136">
                             <font key="font" metaFont="system"/>
@@ -364,7 +364,7 @@
                         <rect key="frame" x="98" y="533" width="237" height="28"/>
                         <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="1" tickMarkPosition="above" sliderType="linear" id="3137"/>
                     </slider>
-                    <textField focusRingType="none" verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="2261">
+                    <textField verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="2261">
                         <rect key="frame" x="18" y="401" width="88" height="14"/>
                         <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Max Trail Steps:" id="3140">
                             <font key="font" metaFont="smallSystem"/>
@@ -372,7 +372,7 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField focusRingType="none" verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="2442">
+                    <textField verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="2442">
                         <rect key="frame" x="127" y="426" width="43" height="19"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="43" id="GP2-W8-bES"/>
@@ -387,7 +387,7 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField focusRingType="none" verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="2444">
+                    <textField verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="2444">
                         <rect key="frame" x="18" y="428" width="103" height="14"/>
                         <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Number of Agents:" id="3142">
                             <font key="font" metaFont="smallSystem"/>
@@ -404,7 +404,7 @@
                             <outlet property="digits" destination="2442" id="4Lh-9r-OVD"/>
                         </connections>
                     </stepper>
-                    <textField focusRingType="none" verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="zrY-1J-pw8">
+                    <textField verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="zrY-1J-pw8">
                         <rect key="frame" x="112" y="399" width="30" height="19"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="30" id="PNg-qo-cCm"/>
@@ -428,7 +428,7 @@
                             <outlet property="digits" destination="zrY-1J-pw8" id="eDg-0u-EX0"/>
                         </connections>
                     </stepper>
-                    <textField focusRingType="none" verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="DPL-GC-3Au">
+                    <textField verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="DPL-GC-3Au">
                         <rect key="frame" x="152" y="506" width="30" height="19"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="30" id="6R3-kf-Ues"/>
@@ -452,7 +452,7 @@
                             <outlet property="digits" destination="DPL-GC-3Au" id="BDR-C5-eWo"/>
                         </connections>
                     </stepper>
-                    <textField focusRingType="none" verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="GzY-U2-oyh">
+                    <textField verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="GzY-U2-oyh">
                         <rect key="frame" x="262" y="506" width="30" height="19"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="30" id="deg-wO-9gc"/>
@@ -476,7 +476,7 @@
                             <outlet property="digits" destination="GzY-U2-oyh" id="nso-bx-4Fz"/>
                         </connections>
                     </stepper>
-                    <textField focusRingType="none" verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="fdm-8z-Kee">
+                    <textField verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="fdm-8z-Kee">
                         <rect key="frame" x="378" y="401" width="26" height="14"/>
                         <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="sec." id="Mfw-r5-Zl2">
                             <font key="font" metaFont="smallSystem"/>
@@ -484,7 +484,7 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField focusRingType="none" verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="OxT-HK-I37">
+                    <textField verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="OxT-HK-I37">
                         <rect key="frame" x="321" y="399" width="32" height="19"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="32" id="3Tx-id-Ejg"/>
@@ -518,7 +518,7 @@
                             <outlet property="slider" destination="1265" id="9Ie-oY-VMU"/>
                         </connections>
                     </stepper>
-                    <textField focusRingType="none" verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="wAK-BZ-lBB">
+                    <textField verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="wAK-BZ-lBB">
                         <rect key="frame" x="18" y="484" width="128" height="14"/>
                         <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Evaporation, attractant:" id="sjo-9d-YDg">
                             <font key="font" metaFont="smallSystem"/>
@@ -526,7 +526,7 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField focusRingType="none" verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="NaJ-uy-SwR">
+                    <textField verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="NaJ-uy-SwR">
                         <rect key="frame" x="33" y="508" width="113" height="14"/>
                         <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Diffusion, attractant:" id="KJ5-cm-WoN">
                             <font key="font" metaFont="smallSystem"/>
@@ -540,7 +540,7 @@
                             <font key="font" metaFont="smallSystem"/>
                         </sliderCell>
                     </slider>
-                    <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="g9m-t3-fDc">
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="g9m-t3-fDc">
                         <rect key="frame" x="362" y="484" width="40" height="14"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="40" id="NOt-1N-Wtz"/>
@@ -565,7 +565,7 @@
                             <outlet property="slider" destination="mzo-kF-AWC" id="PnP-YX-Nsr"/>
                         </connections>
                     </stepper>
-                    <textField focusRingType="none" verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="awA-RM-5CJ">
+                    <textField verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="awA-RM-5CJ">
                         <rect key="frame" x="92" y="462" width="54" height="14"/>
                         <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="repellent:" id="wTR-Z4-AuT">
                             <font key="font" metaFont="smallSystem"/>
@@ -579,7 +579,7 @@
                             <font key="font" metaFont="smallSystem"/>
                         </sliderCell>
                     </slider>
-                    <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cIo-gb-vh6">
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cIo-gb-vh6">
                         <rect key="frame" x="362" y="462" width="40" height="14"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="40" id="0xu-2X-XbY"/>
@@ -628,7 +628,7 @@
                         <rect key="frame" x="98" y="559" width="237" height="28"/>
                         <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="2" doubleValue="1" tickMarkPosition="above" sliderType="linear" id="fyK-3G-7x0"/>
                     </slider>
-                    <textField focusRingType="none" verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="0Cb-vP-lJe">
+                    <textField verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="0Cb-vP-lJe">
                         <rect key="frame" x="41" y="568" width="53" height="16"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Y Scale:" id="ser-nV-Sc8">
                             <font key="font" metaFont="system"/>
@@ -636,7 +636,7 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vPY-dA-gdE">
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vPY-dA-gdE">
                         <rect key="frame" x="362" y="568" width="40" height="16"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="40" id="t7q-89-zsR"/>
@@ -681,7 +681,7 @@
                             <outlet property="slider" destination="1295" id="ph8-aC-abf"/>
                         </connections>
                     </stepper>
-                    <textField focusRingType="none" verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="LtS-3P-nXf">
+                    <textField verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="LtS-3P-nXf">
                         <rect key="frame" x="50" y="376" width="44" height="14"/>
                         <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Length:" id="C4K-xZ-h3G">
                             <font key="font" metaFont="smallSystem"/>
@@ -695,7 +695,7 @@
                             <font key="font" metaFont="smallSystem"/>
                         </sliderCell>
                     </slider>
-                    <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gSR-dN-0ZK">
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gSR-dN-0ZK">
                         <rect key="frame" x="362" y="376" width="40" height="14"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="40" id="Hog-1Y-632"/>
@@ -740,7 +740,7 @@
                             <outlet property="slider" destination="1605" id="NUG-8x-bb1"/>
                         </connections>
                     </stepper>
-                    <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="LHW-kO-vQi">
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="LHW-kO-vQi">
                         <rect key="frame" x="362" y="288" width="40" height="14"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="40" id="Yqx-sk-zri"/>
@@ -755,7 +755,7 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField focusRingType="none" verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="ISm-vq-P65">
+                    <textField verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="ISm-vq-P65">
                         <rect key="frame" x="18" y="288" width="97" height="14"/>
                         <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Opacity Gradient:" id="8St-gR-3PP">
                             <font key="font" metaFont="smallSystem"/>
@@ -813,7 +813,7 @@
                             <outlet property="slider" destination="3082" id="L6N-kZ-C4N"/>
                         </connections>
                     </stepper>
-                    <textField focusRingType="none" verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="3081">
+                    <textField verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="3081">
                         <rect key="frame" x="18" y="190" width="76" height="14"/>
                         <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Hi speed Th.:" id="3151">
                             <font key="font" metaFont="smallSystem"/>
@@ -827,7 +827,7 @@
                             <font key="font" metaFont="smallSystem"/>
                         </sliderCell>
                     </slider>
-                    <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3083">
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3083">
                         <rect key="frame" x="362" y="190" width="40" height="14"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="40" id="vQU-1F-lFd"/>
@@ -852,7 +852,7 @@
                             <outlet property="slider" destination="dcY-ma-bU0" id="0PG-BS-NVS"/>
                         </connections>
                     </stepper>
-                    <textField focusRingType="none" verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="nnE-Ng-H4T">
+                    <textField verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="nnE-Ng-H4T">
                         <rect key="frame" x="27" y="168" width="67" height="14"/>
                         <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="High speed:" id="CGg-Sx-53x">
                             <font key="font" metaFont="smallSystem"/>
@@ -866,7 +866,7 @@
                             <font key="font" metaFont="smallSystem"/>
                         </sliderCell>
                     </slider>
-                    <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xM0-nU-pLM">
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xM0-nU-pLM">
                         <rect key="frame" x="362" y="168" width="40" height="14"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="40" id="XsR-SV-Ene"/>
@@ -891,7 +891,7 @@
                             <outlet property="slider" destination="71Z-1R-TwA" id="xPy-rf-KEX"/>
                         </connections>
                     </stepper>
-                    <textField focusRingType="none" verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="mhV-VY-UkS">
+                    <textField verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="mhV-VY-UkS">
                         <rect key="frame" x="39" y="146" width="55" height="14"/>
                         <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Life span:" id="wog-MB-OaN">
                             <font key="font" metaFont="smallSystem"/>
@@ -905,7 +905,7 @@
                             <font key="font" metaFont="smallSystem"/>
                         </sliderCell>
                     </slider>
-                    <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7lD-za-blC">
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7lD-za-blC">
                         <rect key="frame" x="362" y="146" width="40" height="14"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="40" id="adw-y0-Lmg"/>
@@ -944,7 +944,7 @@
                     <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="1321">
                         <rect key="frame" x="0.0" y="135" width="422" height="5"/>
                     </box>
-                    <textField focusRingType="none" verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="t80-bL-bAH">
+                    <textField verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="t80-bL-bAH">
                         <rect key="frame" x="18" y="114" width="153" height="14"/>
                         <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Screen for full screen mode:" id="lAv-S4-9Oh">
                             <font key="font" metaFont="smallSystem"/>
@@ -982,7 +982,7 @@
                             <action selector="revertToUserDefaults:" target="206" id="2JQ-rT-GRd"/>
                         </connections>
                     </button>
-                    <textField focusRingType="none" verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="359">
+                    <textField verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="359">
                         <rect key="frame" x="35" y="47" width="44" height="14"/>
                         <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Agents:" id="3091">
                             <font key="font" metaFont="smallSystem"/>
@@ -990,7 +990,7 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField focusRingType="none" verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="356">
+                    <textField verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="356">
                         <rect key="frame" x="83" y="47" width="51" height="13"/>
                         <constraints>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="47" id="kMZ-p3-WJM"/>
@@ -1005,7 +1005,7 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField focusRingType="none" verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="361">
+                    <textField verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="361">
                         <rect key="frame" x="138" y="47" width="25" height="14"/>
                         <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="FPS" id="3092">
                             <font key="font" metaFont="smallSystem"/>
@@ -1013,7 +1013,7 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField focusRingType="none" verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="364">
+                    <textField verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="364">
                         <rect key="frame" x="138" y="69" width="25" height="14"/>
                         <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="FPS" id="3093">
                             <font key="font" metaFont="smallSystem"/>
@@ -1021,7 +1021,7 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField focusRingType="none" verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="365">
+                    <textField verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="365">
                         <rect key="frame" x="18" y="69" width="61" height="14"/>
                         <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Projection:" id="3094">
                             <font key="font" metaFont="smallSystem"/>
@@ -1029,7 +1029,7 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField focusRingType="none" verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="370">
+                    <textField verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="370">
                         <rect key="frame" x="83" y="69" width="51" height="13"/>
                         <constraints>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="47" id="S1b-kK-2c2"/>
@@ -1080,7 +1080,7 @@
                             <font key="font" metaFont="smallSystem"/>
                         </sliderCell>
                     </slider>
-                    <textField focusRingType="none" verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="0cA-Ne-hYt">
+                    <textField verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="0cA-Ne-hYt">
                         <rect key="frame" x="31" y="91" width="48" height="14"/>
                         <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Camera:" id="Bjo-wi-22T">
                             <font key="font" metaFont="smallSystem"/>
@@ -1088,7 +1088,7 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField focusRingType="none" verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="dmh-OR-bBB">
+                    <textField verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="dmh-OR-bBB">
                         <rect key="frame" x="83" y="91" width="51" height="13"/>
                         <constraints>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="47" id="4MN-vq-xfv"/>
@@ -1103,7 +1103,7 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField focusRingType="none" verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="rau-mb-xzf">
+                    <textField verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="rau-mb-xzf">
                         <rect key="frame" x="138" y="91" width="25" height="14"/>
                         <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="FPS" id="cdv-sS-geK">
                             <font key="font" metaFont="smallSystem"/>
@@ -1111,7 +1111,7 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField focusRingType="none" verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="fXd-Jc-KFQ">
+                    <textField verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="fXd-Jc-KFQ">
                         <rect key="frame" x="167" y="91" width="58" height="14"/>
                         <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="320 x 240" id="Ht5-JW-y3w">
                             <font key="font" metaFont="smallSystem"/>
@@ -1119,7 +1119,7 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField focusRingType="none" verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="uEA-Y8-EcY">
+                    <textField verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="uEA-Y8-EcY">
                         <rect key="frame" x="243" y="401" width="72" height="14"/>
                         <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Fade in time:" id="NNg-Zv-DAs">
                             <font key="font" metaFont="smallSystem"/>
@@ -1127,7 +1127,7 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField focusRingType="none" verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="w22-oy-dr1">
+                    <textField verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="w22-oy-dr1">
                         <rect key="frame" x="202" y="508" width="54" height="14"/>
                         <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="repellent:" id="wsI-H8-mO1">
                             <font key="font" metaFont="smallSystem"/>
@@ -1141,7 +1141,7 @@
                             <action selector="switchFullScreen:" target="206" id="el1-Pi-pNQ"/>
                         </connections>
                     </switch>
-                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nTs-nh-J7v">
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nTs-nh-J7v">
                         <rect key="frame" x="90" y="674" width="74" height="16"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Full screen:" id="Vtu-sB-UII">
                             <font key="font" metaFont="system"/>
@@ -1149,7 +1149,7 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField focusRingType="none" verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="yHW-FX-Eyv">
+                    <textField verticalHuggingPriority="750" tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="yHW-FX-Eyv">
                         <rect key="frame" x="167" y="69" width="58" height="14"/>
                         <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="320 x 240" id="jF2-MJ-diT">
                             <font key="font" metaFont="smallSystem"/>
@@ -1760,7 +1760,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="264" height="240"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Y7n-mg-6LD">
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Y7n-mg-6LD">
                         <rect key="frame" x="18" y="204" width="188" height="16"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Camera Processor Information" id="Grj-vN-BbJ">
                             <font key="font" usesAppearanceFont="YES"/>
@@ -1768,7 +1768,7 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OfY-Rg-h7V">
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OfY-Rg-h7V">
                         <rect key="frame" x="18" y="49" width="153" height="16"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Simulation steps interval" id="brU-Kk-mxm">
                             <font key="font" usesAppearanceFont="YES"/>
@@ -1776,7 +1776,7 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="P5M-oH-Jjo">
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="P5M-oH-Jjo">
                         <rect key="frame" x="18" y="178" width="152" height="16"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Receiver's Port Number:" id="2A1-YH-ule">
                             <font key="font" usesAppearanceFont="YES"/>
@@ -1784,7 +1784,7 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Acq-d5-k8Q">
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Acq-d5-k8Q">
                         <rect key="frame" x="18" y="151" width="80" height="16"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Bitmap Size:" id="fAH-Kh-kj9">
                             <font key="font" usesAppearanceFont="YES"/>
@@ -1792,7 +1792,7 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sib-Sf-CrI">
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sib-Sf-CrI">
                         <rect key="frame" x="176" y="175" width="52" height="21"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="52" id="nmr-8N-hCa"/>
@@ -1810,7 +1810,7 @@
                             <action selector="changePortNumber:" target="206" id="gLE-Eo-6pv"/>
                         </connections>
                     </textField>
-                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="M24-KL-Hea">
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="M24-KL-Hea">
                         <rect key="frame" x="28" y="125" width="46" height="16"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Width:" id="xLu-4c-x4A">
                             <font key="font" usesAppearanceFont="YES"/>
@@ -1818,7 +1818,7 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4oK-4m-J2g">
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4oK-4m-J2g">
                         <rect key="frame" x="80" y="122" width="52" height="21"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="52" id="Isy-W9-0lD"/>
@@ -1833,7 +1833,7 @@
                             <action selector="changeFrameWidth:" target="206" id="QXT-ab-05o"/>
                         </connections>
                     </textField>
-                    <textField focusRingType="none" horizontalHuggingPriority="252" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3AR-Ic-wRD">
+                    <textField horizontalHuggingPriority="252" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3AR-Ic-wRD">
                         <rect key="frame" x="138" y="125" width="48" height="16"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Height:" id="Oic-yg-ayR">
                             <font key="font" usesAppearanceFont="YES"/>
@@ -1841,7 +1841,7 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4ow-eh-nTF">
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4ow-eh-nTF">
                         <rect key="frame" x="192" y="122" width="52" height="21"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="52" id="IZS-xP-rcV"/>
@@ -1889,7 +1889,7 @@
                     <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="f3s-7s-4Ab">
                         <rect key="frame" x="0.0" y="71" width="264" height="5"/>
                     </box>
-                    <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kou-bX-Iri">
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kou-bX-Iri">
                         <rect key="frame" x="192" y="20" width="52" height="21"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="52" id="vcR-Su-ueB"/>
@@ -1995,7 +1995,7 @@
                         <action selector="noiseMask:" target="206" id="ka7-cT-wFM"/>
                     </connections>
                 </button>
-                <textField hidden="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qfK-AK-fHf">
+                <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qfK-AK-fHf">
                     <rect key="frame" x="388" y="23" width="42" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="Saved" id="6jx-Bl-ctm">
                         <font key="font" metaFont="system"/>
@@ -2003,7 +2003,7 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="keE-I4-HSO">
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="keE-I4-HSO">
                     <rect key="frame" x="511" y="20" width="32" height="21"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" title="999" drawsBackground="YES" id="9Jf-EM-Sht">
                         <numberFormatter key="formatter" formatterBehavior="custom10_4" numberStyle="decimal" allowsFloats="NO" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="3" id="QEx-AW-O89">
@@ -2023,7 +2023,7 @@
                         <outlet property="digits" destination="keE-I4-HSO" id="D0S-Lr-hW9"/>
                     </connections>
                 </stepper>
-                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CES-Xk-8lR">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CES-Xk-8lR">
                     <rect key="frame" x="434" y="23" width="71" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="Brush size:" id="cc6-KY-Zpm">
                         <font key="font" metaFont="system"/>
@@ -2031,7 +2031,7 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sIQ-LP-NA5">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sIQ-LP-NA5">
                     <rect key="frame" x="570" y="23" width="197" height="14"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="Option key turns the brush to eraser." id="Sbc-8u-SIi">
                         <font key="font" metaFont="smallSystem"/>
