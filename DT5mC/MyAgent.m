@@ -111,14 +111,15 @@ static void exocrine_agent(MyAgent *a) {
 }
 static float elapsedSec = 0.;
 static void move_agent(MyAgent *a) {
-	if (lifeSpan > 0. && (a->leftLife -= elapsedSec) <= 0.) warp_agent(a);
+	float atrct = get_chemical(AtrctWrkMap, a->p);
+	if (lifeSpan > 0. && atrct < thLoSpeed)
+		if ((a->leftLife -= elapsedSec) <= 0.) warp_agent(a);
 	float bVelocity = InitV * (drand48() * 1.2 + .3);
-	float atrct = get_chemical(AtrctSrcMap, a->p);
-	if (atrct > thHiSpeed) bVelocity *= agentSpeed;
+	if (atrct > thLoSpeed) bVelocity *= agentSpeed;
 	else if (thHiSpeed <= 0.) bVelocity *= maxSpeed;
-	else if (atrct > thHiSpeed / 2) bVelocity *=
-		1. + (thHiSpeed / 2 - atrct) / thHiSpeed * 2 * (1. - agentSpeed);
-	else bVelocity *= atrct / thHiSpeed * 2 + (1. - atrct / thHiSpeed * 2) * maxSpeed;
+	else if (atrct > thHiSpeed) bVelocity *=
+		1. + (thHiSpeed - atrct) / thHiSpeed * (1. - agentSpeed);
+	else bVelocity *= atrct / thHiSpeed + (1. - atrct / thHiSpeed) * maxSpeed;
 	if (bVelocity <= 0.) return;
 
 	float bAngle = agentTurnAngle * TurnAngle * (drand48() + .5);
@@ -127,7 +128,7 @@ static void move_agent(MyAgent *a) {
 	for (int i = 0; i < NNextCandidates; i ++) {
 		float phi = th + (i / (NNextCandidates - 1.) * 2. - 1.) * bAngle;
 		simd_float2 sp = candidate[i] = a->p + bVelocity * (simd_float2){cos(phi), sin(phi)};
-		ph[i] = get_chemical(AtrctSrcMap, sp) * (1. - avoidance)
+		ph[i] = get_chemical(AtrctWrkMap, sp) * (1. - avoidance)
 			- avoidance * get_chemical(RplntSrcMap, sp);
 	}
 	int bests[NNextCandidates] = {0}, nBests = 1;
@@ -199,9 +200,10 @@ static NSInteger agent_vector(MyAgent *a, simd_float2 *vx, float *op) {
 	for (NSInteger i = 1; i < a->trailCount - 1; i ++)
 		vxJoint(vx + i * 2, p + i - 1, size);
 	vxEnd(vx + (a->trailCount - 1) * 2, p[a->trailCount - 2], p[a->trailCount - 1], size);
-	float z = pow(1./64., agentOpcGrad);
+	float z = pow(1./64., agentOpcGrad),
+		v = fmax(0., (maxSpeed - simd_length(a->v) / InitV) / (maxSpeed - agentSpeed));
 	for (NSInteger i = 0; i < a->trailCount; i ++) {
-		float c = get_chemical(AtrctSrcMap, p[i]);
+		float c = get_chemical(AtrctSrcMap, p[i]) * v;
 		op[i] = z * c / ((z - 1) * c + 1);
 	}
 	return a->trailCount * 2;

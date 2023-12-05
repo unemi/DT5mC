@@ -83,6 +83,7 @@
 		2312B20E2AE1008400385131 /* 70Settings.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = 70Settings.html; path = DT5mCHelp/70Settings.html; sourceTree = "<group>"; };
 		231D5B2C2AA1925D00D0AC48 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		231D5B2D2AA2168300D0AC48 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
+		232F1A5E2B142674007BA1D8 /* DT5mPack.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = DT5mPack.sh; sourceTree = "<group>"; };
 		2347F8312AB455C100BEFF25 /* CrsrImgEraser.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = CrsrImgEraser.pdf; sourceTree = "<group>"; };
 		2347F8332AB45CCA00BEFF25 /* CrsrImgBrush.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = CrsrImgBrush.pdf; sourceTree = "<group>"; };
 		23488E182A6A78390065C127 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu2.xib; sourceTree = "<group>"; };
@@ -181,6 +182,7 @@
 			isa = PBXGroup;
 			children = (
 				230F183E2AB57B9C00ABB10E /* README.md */,
+				232F1A5E2B142674007BA1D8 /* DT5mPack.sh */,
 				230B0C612AEC92F800AEB888 /* CommonFunc.h */,
 				230B0C622AEC92F800AEB888 /* CommonFunc.m */,
 				23BDFC4E2AD682AD00F97004 /* DT5mCHelp */,
@@ -527,7 +529,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = 726X5Z9867;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -562,7 +564,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = 726X5Z9867;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;

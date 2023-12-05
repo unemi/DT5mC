@@ -13,7 +13,7 @@
 
 static int soc = -1; 
 static struct sockaddr_in name;
-static NSString *keyCameraName = @"cameraName", *keyExpoDur = @"exposureDuration",
+static NSString *keyCameraName = @"cameraName",
 	*keyTargetHSB = @"targetHSB", *keyRanges = @"ranges",
 	*keyBlurWinSz = @"blurWindowSize", *keyErodeWinSz = @"erodeWindowSize",
 	*keyMirror = @"mirror", *keySourceType = @"sourceType", *keyMovieBookmark = @"movieBookmark",
@@ -147,28 +147,9 @@ NSAttributedString *info_string(NSString *str) {
 		maxExp = cam.activeVideoMaxFrameDuration;
 	CGFloat minExDr = (CGFloat)minExp.value/minExp.timescale*1000.,
 		maxExDr = (CGFloat)maxExp.value/maxExp.timescale*1000.;
-	BOOL expAdjustable = NO;
 	if (isnormal(minExDr) && minExDr > 0) [expDurStr appendFormat:@"%.2f", minExDr];
-	if (isnormal(maxExDr) && maxExDr > minExDr) {
-		[expDurStr appendFormat:@"-%.2f", maxExDr];
-		sldExpDur.minValue = minExDr; sldExpDur.maxValue = maxExDr;
-//		cam.exposureDuration = clamp(exposureDur, minExDr, maxExDr);	// not available on maxOS
-		exposureDur = (minExDr + maxExDr) / 2.;
-		sldExpDur.doubleValue = dgtExpDur.doubleValue = exposureDur;
-		NSNumberFormatter *fmt = dgtExpDur.formatter;
-		fmt.minimum = @(minExDr); fmt.maximum = @(maxExDr);
-		expAdjustable = YES;
-		if (expoMode != AVCaptureExposureModeLocked
-		 && expoMode != AVCaptureExposureModeCustom) {
-			if ([cam isExposureModeSupported:AVCaptureExposureModeCustom])
-				expoMode = cam.exposureMode = AVCaptureExposureModeCustom;
-			else if ([cam isExposureModeSupported:AVCaptureExposureModeLocked])
-				expoMode = cam.exposureMode = AVCaptureExposureModeLocked;
-			else expAdjustable = NO;
-		}
-	}
+	if (isnormal(maxExDr) && maxExDr > minExDr) [expDurStr appendFormat:@"-%.2f", maxExDr];
 	if (expDurStr.length > 0) [expDurStr appendString:@" ms"];
-	sldExpDur.enabled = NO; //expAdjustable;
 	AVCaptureAutoFocusSystem autoFocus = format.autoFocusSystem;
 	camInfoStr = info_string([NSString stringWithFormat:@"Camera device:\n"
 		@" Manufacturer: %@\n Model: %@\n ID:%@\n Name: %@\n Size: %d x %d\n"
@@ -402,10 +383,6 @@ static void show_color_hex(NSColor *col, NSTextField *hex) {
 			dgts[i].doubleValue = sliders[i].doubleValue = arr[i].doubleValue * 100.;
 	} else for (NSSlider *sld in sliders) [self changeRanges:sld];
 	NSNumber *num;
-	if ((num = [ud objectForKey:keyExpoDur]))
-		sldExpDur.doubleValue = exposureDur = num.doubleValue;
-	else exposureDur = sldExpDur.doubleValue;
-	dgtExpDur.doubleValue = exposureDur;
 	if ((num = [ud objectForKey:keyBlurWinSz]))
 		sldBlur.doubleValue = blurWinSz = num.floatValue;
 	else blurWinSz = sldBlur.doubleValue;
@@ -531,16 +508,6 @@ static void show_color_hex(NSColor *col, NSTextField *hex) {
 	AVCaptureDevice *newCam = cameras[cameraPopUp.indexOfSelectedItem];
 	if (newCam == camera) return;
 	[self setupCamera:newCam];
-}
-- (IBAction)changeExposureDur:(id)sender {
-	dgtExpDur.doubleValue = exposureDur = sldExpDur.doubleValue;
-	// not supported on macOS
-//	NSError *error;
-//	if (![camera lockForConfiguration:&error]) { err_msg(error, NO); return; }
-//	CMTime dur = CMTimeMake(exposureDur / 1000, 1000000L);
-//	[camera setExposureModeCustomWithDuration:dur
-//		ISO:AVCaptureISOCurrent completionHandler:nil];
-//	[camera unlockForConfiguration];
 }
 // AVCaptureVideoDataOutputSampleBufferDelegate
 - (void)captureOutput:(AVCaptureOutput *)output

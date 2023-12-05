@@ -165,6 +165,94 @@ typedef struct { int width, height, index, bpr; } MaskUndoData;
 }
 - (IBAction)changeBrushSize:(DgtAndStepper *)stp {
 	brushSize = (int)stp.integerValue;
-	[window invalidateCursorRectsForView:prjctView];
+	[prjctView.window invalidateCursorRectsForView:prjctView];
+}
+static unsigned char bit[8] = {1, 2, 4, 8, 16, 32, 64, 128},
+	bitsL[8] = {0x01,0x03,0x07,0x0f,0x1f,0x3f,0x7f,0xff},
+	bitsR[8] = {0xff,0xfe,0xfc,0xf8,0xf0,0xe0,0xc0,0x80};
+static void scan_h_right(unsigned char *buf, simd_int2 ixy, int edgeR, int flag, int dd) {
+	int bpr = FrameWidth / 8, k = ixy.x / 8, ip = ixy.x % 8, x = ixy.x;
+//for (int i = 0; i < dd; i ++) printf(" ");
+//printf("R %d %d %d\n", ixy.x, ixy.y, flag);
+//if (dd > FrameHeight) exit(0);
+	unsigned char *b = buf + ixy.y * bpr;
+	while (x < edgeR) {
+		unsigned char bm = bitsR[ip];
+		if (b[k] & bit[ip]) {
+			for (; k < FrameWidth / 8 && (b[k] & bm) == bm; k ++) bm = 0xff;
+			if (k >= FrameWidth / 8) return;
+			for (ip = 0; ip < 8 && (b[k] & bit[ip]) != 0; ip ++) ;
+			x = k * 8 + ip;
+		} else {
+			for (; k < FrameWidth / 8 && (b[k] & bm) == 0; k ++)
+				{ b[k] |= bm; bm = 0xff; ip = -1; }
+			if (k < FrameWidth / 8) {
+				for (int i = ip + 1; i < 8 && (b[k] & bit[i]) == 0; i ++) ip = i;
+				if (ip >= 0) b[k] |= bitsL[ip];
+				else { k --; ip = 7; }
+				x = k * 8 + ip;
+			} else x = FrameWidth - 1;
+			if (ixy.y > 0 && ((flag & 2) || x >= edgeR)) {
+				simd_int2 jxy = {x, ixy.y - 1};
+				scan_h_left(buf, jxy, ixy.x, 2, dd+1);
+				if ((b[k - bpr] & bit[ip]) == 0)
+					scan_h_right(buf, jxy, x + 1, 3, dd+1);
+			}
+			if (ixy.y < FrameHeight - 1 && ((flag & 1) || x >= edgeR)) {
+				simd_int2 jxy = {x, ixy.y + 1};
+				scan_h_left(buf, jxy, ixy.x, 1, dd+1);
+				if ((b[k + bpr] & bit[ip]) == 0)
+					scan_h_right(buf, jxy, x + 1, 3, dd+1);
+			}
+		}
+	}
+}
+static void scan_h_left(unsigned char *buf, simd_int2 ixy, int edgeL, int flag, int dd) {
+	int bpr = FrameWidth / 8, k = ixy.x / 8, ip = ixy.x % 8, x = ixy.x;
+//for (int i = 0; i < dd; i ++) printf(" ");
+//printf("L %d %d %d\n", ixy.x, ixy.y, flag);
+//if (dd > FrameHeight) exit(0);
+	unsigned char *b = buf + ixy.y * bpr;
+	while (x >= edgeL) {
+		unsigned char bm = bitsL[ip];
+		if (b[k] & bit[ip]) {
+			for (; k >= 0 && (b[k] & bm) == bm; k --) bm = 0xff;
+			if (k < 0) return;
+			for (ip = 7; ip >= 0 && (b[k] & bit[ip]) != 0; ip --) ;
+			x = k * 8 + ip;
+		} else {
+			for (; k >= 0 && (b[k] & bm) == 0; k --)
+				{ b[k] |= bm; bm = 0xff; ip = 8; }
+			if (k >= 0) {
+				for (int i = ip - 1; i >= 0 && (b[k] & bit[i]) == 0; i --) ip = i;
+				if (ip < 8) b[k] |= bitsR[ip];
+				else { k ++; ip = 0; }
+				x = k * 8 + ip;
+			} else x = 0;
+			if (ixy.y > 0 && ((flag & 2) || x < edgeL)) {
+				simd_int2 jxy = {x, ixy.y - 1};
+				scan_h_right(buf, jxy, ixy.x + 1, 2, dd+1);
+				if ((b[k - bpr] & bit[ip]) == 0)
+					scan_h_left(buf, jxy, x, 3, dd+1);
+			}
+			if (ixy.y < FrameHeight - 1 && ((flag & 1) || x < edgeL)) {
+				simd_int2 jxy = {x, ixy.y + 1};
+				scan_h_right(buf, jxy, ixy.x + 1, 1, dd+1);
+				if ((b[k + bpr] & bit[ip]) == 0)
+					scan_h_left(buf, jxy, x, 3, dd+1);
+			}
+		}
+	}
+}
+- (IBAction)areaErase:(id)sender {
+	[self beginMaskEdit];
+	unsigned char *buf = ((Display *)prjctView.delegate).maskBytes;
+	simd_int2 ixy = prjctView.menuPt;
+	scan_h_right(buf, ixy, ixy.x + 1, 1, 0);
+	if (ixy.x > 0) {
+		ixy.x --;
+		scan_h_left(buf, ixy, ixy.x, 2, 0);
+	}
+	[self endMaskEdit];
 }
 @end

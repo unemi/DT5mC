@@ -1,8 +1,9 @@
 #! /bin/zsh
 setopt nonomatch
+SD=~/Program/MediaArt/DT5mC_stuffs
 cd /Volumes
 if [ ! -d DT5mC* ]
-then open ~/Program/MediaArt/DT5mC_stuffs/DT5mC-x.dmg; sleep 1
+then open $SD/DT5mC-x.dmg; sleep 1
 	if [ ! -d DT5mC* ]; then echo "Could not mount the disk image.";  exit; fi
 fi
 A=`echo DT5mC*`
@@ -34,7 +35,7 @@ end tell'
 #
 copyApp C 70
 copyApp S 220
-cd ~/Program/MediaArt/DT5mC_stuffs
+cd $SD
 sleep 1
 diskutil eject $B
 sleep 1

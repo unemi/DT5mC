@@ -15,13 +15,13 @@ extern EmnProjectionType ProjectionType;
 extern CGFloat agentRGBA[3], fadeInTime, fadingAlpha;
 extern unsigned char *SrcBitmap;
 extern NSLock *SrcBmLock;
-extern float *AtrctSrcMap, *AtrctDstMap, *RplntSrcMap, *RplntDstMap;
+extern float *AtrctSrcMap, *AtrctWrkMap, *AtrctDstMap, *RplntSrcMap, *RplntDstMap;
 extern NSString *screenName;
 extern CGFloat xOffset, yOffset, xScale, yScale, keystone;
 extern NSInteger atrDifSz, rplDifSz;
 extern CGFloat atrEvprt, rplEvprt;
 extern CGFloat agentLength, agentWeight, agentMaxOpacity, agentMinOpacity, agentOpcGrad,
-	agentSpeed, agentTurnAngle, avoidance, thHiSpeed, maxSpeed, lifeSpan;
+	agentSpeed, agentTurnAngle, avoidance, thLoSpeed, thHiSpeed, maxSpeed, lifeSpan;
 extern int brushSize;
 
 @class MyMTKView, Display;

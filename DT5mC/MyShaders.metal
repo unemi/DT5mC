@@ -41,13 +41,16 @@ float tracked_value(constant uchar *src, uint2 size, float2 p) {
 	SumValue(d2, i2);
 	return sum / sumw;
 }
-kernel void expandBitmap(constant uchar *src, device float *result,
+kernel void expandBitmap(constant uchar *src, device float *atrctSrc,
+	device float *result [[buffer(IndexAtrctWrkMap)]],
 	constant uint2 *size [[buffer(IndexImageSize)]],	// width, height
 	constant float3x3 *keystoneMx [[buffer(IndexKeystoneMx)]],
 	uint index [[thread_position_in_grid]]) {
 	uint2 ixy = {index % size->x, index / size->x};
 	float3 p = float3((float2(ixy) + .5) / float2(*size) * 2. - 1., 1.) * *keystoneMx;
-	result[index] = max(result[index], tracked_value(src, *size, p.xy / p.z));
+	float v = tracked_value(src, *size, p.xy / p.z);
+	result[index] += (1. - result[index]) * v * .2;
+	atrctSrc[index] += (v - atrctSrc[index]) * .2;
 }
 kernel void defuseAndEvaporate(device const float *src, device float *result,
 	constant int3 *size [[buffer(IndexImageSize)]],	// width, height and window
@@ -142,7 +145,8 @@ fragment float4 fragmentShaderM(RasterizerDataD in [[stage_in]],
 	uchar m = msk[index % 8];
 	bool2 b = (uchar2(src[i], mask[i]) & uchar2(m, m)) != 0;
     return (b.x && b.y)? float4(1., 1., .5, 1.)	:
-		(!b.x && b.y)? float4(.1, .1, .6, 1.) :
+//		(!b.x && b.y)? float4(.1, .1, .6, 1.) :
+		(!b.x && b.y)? float4(.1, .1, 1., 1.) :
 		(b.x && !b.y)? float4(.3, .3, .1, 1.) : float4(0., 0., .2, 1.);
 }
 // Distribution image

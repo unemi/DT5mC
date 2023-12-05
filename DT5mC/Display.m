@@ -29,8 +29,8 @@ static void set_color(RCE rce, simd_float4 rgba) {
 	id<MTLCommandQueue> commandQueue;
 	id<MTLComputePipelineState> maskingPSO, expandBmPSO, defuseBmPSO;
 	id<MTLRenderPipelineState> agentsPSO, trackedPSO, shapePSO, maskPSO, imagePSO;
-	id<MTLBuffer> agentVxBuf, agentIdxBuf, agentOpBuf,
-		srcBm, mskBm, maskedBm, atrctSrcMap, atrctDstMap, rplntSrcMap, rplntDstMap;
+	id<MTLBuffer> agentVxBuf, agentIdxBuf, agentOpBuf, srcBm, mskBm, maskedBm,
+		atrctSrcMap, atrctWrkMap, atrctDstMap, rplntSrcMap, rplntDstMap;
 	simd_uint2 viewportSize;
 	simd_float3x3 keystoneMx, adjustMx;
 	unsigned long time_ms, dispCnt;
@@ -43,9 +43,9 @@ static void set_color(RCE rce, simd_float4 rgba) {
 }
 - (void)encodeCompute:(id<MTLComputeCommandEncoder>)cce pl:(id<MTLComputePipelineState>)pso
 	nElements:(NSUInteger)nElements arg0:(id<MTLBuffer>)arg0 arg1:(id<MTLBuffer>)arg1 {
-	[cce setComputePipelineState:pso];
 	[cce setBuffer:arg0 offset:0 atIndex:0];
 	[cce setBuffer:arg1 offset:0 atIndex:1];
+	[cce setComputePipelineState:pso];
 	NSUInteger threadGrpSz = pso.maxTotalThreadsPerThreadgroup;
 	if (threadGrpSz > nElements) threadGrpSz = nElements;
 	[cce dispatchThreads:MTLSizeMake(nElements, 1, 1)
@@ -168,7 +168,7 @@ static void set_color(RCE rce, simd_float4 rgba) {
 	id<MTLCommandBuffer> cmdBuf = commandQueue.commandBuffer;
 	cmdBuf.label = @"MyCommand";
 	MTLRenderPassDescriptor *rndrPasDesc = view.currentRenderPassDescriptor;
-	if(rndrPasDesc == nil) return;
+	if (rndrPasDesc == nil) return;
 	RCE rce = [cmdBuf renderCommandEncoderWithDescriptor:rndrPasDesc];
 	rce.label = @"MyRenderEncoder";
 	[rce setViewport:(MTLViewport){0., 0., viewportSize.x, viewportSize.y, 0., 1. }];
@@ -179,7 +179,7 @@ static void set_color(RCE rce, simd_float4 rgba) {
 		case ProjectionAdjust: [self drawTrackedImage:rce];
 		[self drawMeshAndCross:rce]; break;
 		case ProjectionMasking: [self drawMaskedImage:rce]; break;
-		case ProjectionAtrctImage: [self drawImage:rce pso:imagePSO buf:atrctSrcMap]; break;
+		case ProjectionAtrctImage: [self drawImage:rce pso:imagePSO buf:atrctWrkMap]; break;
 		case ProjectionRplntImage: [self drawImage:rce pso:imagePSO buf:rplntSrcMap]; break;
 	}
 	[rce endEncoding];
@@ -275,6 +275,7 @@ static id<MTLFunction> function_named(NSString *name, id<MTLLibrary> dfltLib) {
 	mskBm = [self makeBitmapBuffer:0xff];
 	maskedBm = [self makeBitmapBuffer:0];
 	MAKE_MAPBUF(atrctSrcMap, AtrctSrcMap)
+	MAKE_MAPBUF(atrctWrkMap, AtrctWrkMap)
 	MAKE_MAPBUF(atrctDstMap, AtrctDstMap)
 	MAKE_MAPBUF(rplntSrcMap, RplntSrcMap)
 	MAKE_MAPBUF(rplntDstMap, RplntDstMap)
@@ -358,6 +359,7 @@ static id<MTLFunction> function_named(NSString *name, id<MTLLibrary> dfltLib) {
 		}
 		[view enterFullScreenMode:screen withOptions:
 			@{NSFullScreenModeAllScreens:@NO}];
+		view.window.delegate = controller;
 	} else [view exitFullScreenModeWithOptions:nil];
 }
 - (void)oneStep {
@@ -367,7 +369,7 @@ static id<MTLFunction> function_named(NSString *name, id<MTLLibrary> dfltLib) {
 	id<MTLComputeCommandEncoder> cce = cmdBuf.computeCommandEncoder;
 	NSAssert(cce, @"Could not get command buffer for compute shader.");
 	[imgBufLock lock];
-	memcpy(AtrctSrcMap, AtrctDstMap, MapByteCount);
+	memcpy(AtrctWrkMap, AtrctDstMap, MapByteCount);
 	memcpy(RplntSrcMap, RplntDstMap, MapByteCount);
 	[SrcBmLock lock];
 	MaskOperation mskOpe = _maskingOption;
@@ -379,14 +381,16 @@ static id<MTLFunction> function_named(NSString *name, id<MTLLibrary> dfltLib) {
 	simd_uint2 size = {FrameWidth, FrameHeight};
 	[cce setBytes:&size length:sizeof(size) atIndex:IndexImageSize];
 	[cce setBytes:&keystoneMx length:sizeof(keystoneMx) atIndex:IndexKeystoneMx];
-	[self encodeCompute:cce pl:expandBmPSO nElements:MapPixelCount arg0:maskedBm arg1:atrctSrcMap];
+	[cce setBuffer:atrctWrkMap offset:0 atIndex:IndexAtrctWrkMap];
+	[self encodeCompute:cce pl:expandBmPSO nElements:MapPixelCount
+		arg0:maskedBm arg1:atrctSrcMap];
 	[stepLock lock];
 	exocrine_agents();
 	[SrcBmLock unlock];
 	move_agents();
 	[stepLock unlock];
 	simd_int3 szs = {FrameWidth, FrameHeight, (int)atrDifSz};
-	[self difuseAndEvaporate:cce sizes:szs evprtRate:atrEvprt src:atrctSrcMap dst:atrctDstMap];
+	[self difuseAndEvaporate:cce sizes:szs evprtRate:atrEvprt src:atrctWrkMap dst:atrctDstMap];
 	szs.z = (int)rplDifSz;
 	[self difuseAndEvaporate:cce sizes:szs evprtRate:atrEvprt src:rplntSrcMap dst:rplntDstMap];
 	[cce endEncoding];
@@ -400,6 +404,7 @@ static id<MTLFunction> function_named(NSString *name, id<MTLLibrary> dfltLib) {
 
 @implementation MyMTKView {
 	NSCursor *brushCursor, *eraserCursor;
+	NSMenu *maskingMenu;
 	simd_int2 prevXY;
 }
 - (void)awakeFromNib {
@@ -408,6 +413,8 @@ static id<MTLFunction> function_named(NSString *name, id<MTLLibrary> dfltLib) {
 	brushCursor = [NSCursor.alloc initWithImage:img hotSpot:(NSPoint){0, 31.}];
 	img = [NSImage imageNamed:@"CrsrImgEraser"]; img.size = (NSSize){32,32};
 	eraserCursor = [NSCursor.alloc initWithImage:img hotSpot:(NSPoint){0, 31.}];
+	maskingMenu = self.menu;
+	self.menu = nil;
 }
 - (void)resetCursorRects {
 	if (ProjectionType != ProjectionMasking) return;
@@ -421,8 +428,10 @@ static id<MTLFunction> function_named(NSString *name, id<MTLLibrary> dfltLib) {
 		(NSEvent.modifierFlags & NSEventModifierFlagOption)? eraserCursor : brushCursor];
 }
 - (void)projectionModeDidChangeFrom:(EmnProjectionType)orgMode to:(EmnProjectionType)newMode {
-	if (orgMode == ProjectionMasking || newMode == ProjectionMasking)
+	if (orgMode == ProjectionMasking || newMode == ProjectionMasking) {
 		[self.window invalidateCursorRectsForView:self];
+		self.menu = (newMode == ProjectionMasking)? maskingMenu : nil;
+	}
 }
 - (void)flagsChanged:(NSEvent *)event {
 	if (ProjectionType == ProjectionMasking)
@@ -501,6 +510,20 @@ static void fill_bm_line(BByte *bm, simd_int2 xx, void (^ope)(BByte *, BByte)) {
 - (void)mouseUp:(NSEvent *)event {
 	if (ProjectionType != ProjectionMasking) return;
 	[controller endMaskEdit];
+}
+- (void)willOpenMenu:(NSMenu *)menu withEvent:(NSEvent *)event {
+	static BByte bit[] = {1, 2, 4, 8, 16, 32, 64, 128};
+	NSPoint pt = [self convertPoint:
+		[self.window convertPointFromScreen:NSEvent.mouseLocation] fromView:nil];
+	NSSize vSz = self.bounds.size;
+	simd_int2 ixy = (simd_int2){pt.x / vSz.width * FrameWidth,
+		(1. - pt.y / vSz.height) * FrameHeight};
+	if (!simd_equal(simd_max(0, simd_min(
+		(simd_int2){FrameWidth - 1, FrameHeight - 1}, ixy)), ixy))
+		{ _menuPt = -1; return; }
+	BByte *bitmap = ((Display *)self.delegate).maskBytes;
+	_menuPt = (bitmap[ixy.y * FrameWidth / 8 + ixy.x / 8] & bit[ixy.x % 8])?
+		(simd_int2){-1, -1} : ixy;
 }
 - (void)keyDown:(NSEvent *)event {
 	if (event.keyCode == 53 && self.isInFullScreenMode)

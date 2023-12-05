@@ -21,7 +21,7 @@ EmnProjectionType ProjectionType = ProjectionNormal;
 CGFloat agentRGBA[3] = {1, 1, 1}, fadeInTime = 2., fadingAlpha = 1.;
 unsigned char *SrcBitmap;
 NSLock *SrcBmLock = nil;
-float *AtrctSrcMap = NULL, *AtrctDstMap, *RplntSrcMap, *RplntDstMap;
+float *AtrctSrcMap = NULL, *AtrctWrkMap, *AtrctDstMap, *RplntSrcMap, *RplntDstMap;
 //
 static NSString *keyProjectionType = @"projection type";
 static NSString *keyAgentColor = @"agent color";
@@ -34,7 +34,7 @@ CGFloat atrEvprt = .1, rplEvprt = .05;
 CGFloat agentLength = 1., agentWeight = 0.5;
 CGFloat agentMaxOpacity = .7, agentMinOpacity = 0., agentOpcGrad = 0.;
 CGFloat agentSpeed = 1., agentTurnAngle = .5;
-CGFloat avoidance = .7, thHiSpeed = .4, maxSpeed = 8., lifeSpan = 10.;
+CGFloat avoidance = .7, thLoSpeed = .5, thHiSpeed = .3, maxSpeed = 8., lifeSpan = 10.;
 static struct IntParamRec {
 	NSString *key;
 	NSInteger *var, min, max;
@@ -70,6 +70,7 @@ static struct ParamRec {
 	{ @"agent speed", &agentSpeed, 0., 4., PrmTypeMovement },
 	{ @"agent turn angle", &agentTurnAngle, 0., 1., PrmTypeMovement },
 	{ @"agent avoidance", &avoidance, 0., 1., PrmTypeMovement }, 
+	{ @"attractant threshold for low-speed", &thLoSpeed, 0., .9, PrmTypeMovement },
 	{ @"attractant threshold for hi-speed", &thHiSpeed, 0., .9, PrmTypeMovement },
 	{ @"max speed", &maxSpeed, 1., 10., PrmTypeMovement }, 
 	{ @"life span", &lifeSpan, 0., 20., PrmTypeMovement }, 
@@ -706,7 +707,13 @@ static void displayReconfigCB(CGDirectDisplayID display,
 	 || action == @selector(revertToSaved:)) {
 		NSString *path = window.representedFilename;
 		return (path != nil && path.length > 0 && window.documentEdited);
-	} else if (action == @selector(startThreads:)) return startBtn.enabled;
+	}
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundeclared-selector"
+	else if (action == @selector(undo:)) return undoManager.canUndo;
+	else if (action == @selector(redo:)) return undoManager.canRedo;
+#pragma clang diagnostic pop
+	else if (action == @selector(startThreads:)) return startBtn.enabled;
 	else if (action == @selector(stopThreads:)) return stopBtn.enabled;
 	else if (action == @selector(changeProjection:))
 		return menuItem.menu == projectionPopUp.menu
@@ -716,6 +723,8 @@ static void displayReconfigCB(CGDirectDisplayID display,
 	else if (action == @selector(switchFullScreen:))
 		menuItem.title = prjctView.inFullScreenMode?
 			@"Exit Full Screen" : @"Enter Full Screen";
+	else if (menuItem.menu == prjctView.menu)
+		return prjctView.menuPt.x >= 0;
 	return YES;
 }
 @end

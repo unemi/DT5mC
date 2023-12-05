@@ -26,5 +26,6 @@ extern NSInteger NAgents, trailSteps;
 @end
 
 @interface MyMTKView : MTKView
+@property simd_int2 menuPt;
 - (void)projectionModeDidChangeFrom:(EmnProjectionType)orgMode to:(EmnProjectionType)newMode;
 @end

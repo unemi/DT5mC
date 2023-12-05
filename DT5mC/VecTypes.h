@@ -19,6 +19,7 @@ typedef unsigned char MaskOperation;
 enum {
 	IndexImageSize = 2,
 	IndexEvaporation,
+	IndexAtrctWrkMap,
 	IndexKeystoneMx = IndexEvaporation
 };
 // Input data indices for vertex shader
