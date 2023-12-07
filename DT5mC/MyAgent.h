@@ -30,6 +30,6 @@ extern void setup_agents(void);
 extern void change_n_agents(void);
 extern void reset_agents(void);
 extern void exocrine_agents(void);
-extern void move_agents(void);
+extern void move_agents(float elapsed);
 extern void agent_vectors(simd_float2 *vx, uint16 *idx, float *op,
 	void (^set_metal_com)(NSInteger, NSInteger, NSInteger));

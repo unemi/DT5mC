@@ -45,4 +45,9 @@ enum {
 	IndexImageMap,
 	IndexMapSize
 };
+// erosion parameters
+typedef struct {
+	int x, y;	// width and height
+	float f;	// erosion speed
+} ErosionParam;
 #endif /* VecTypes_h */

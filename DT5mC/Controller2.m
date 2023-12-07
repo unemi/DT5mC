@@ -29,6 +29,7 @@ static NSString *keyScreenName = @"screen name";
 NSString *screenName = nil;
 // Agent parameters
 CGFloat xOffset = 0., yOffset = 0., xScale = 1., yScale = 1., keystone = 0.;
+CGFloat targetDecay = .1;
 NSInteger atrDifSz = 2, rplDifSz = 10;
 CGFloat atrEvprt = .1, rplEvprt = .05;
 CGFloat agentLength = 1., agentWeight = 0.5;
@@ -59,6 +60,7 @@ static struct ParamRec {
 	{ @"X Scale", &xScale, .2, 2., PrmTypeGeometry },
 	{ @"Y Scale", &yScale, .2, 2., PrmTypeGeometry },
 	{ @"keystone", &keystone, 0., .8, PrmTypeGeometry },
+	{ @"target decay", &targetDecay, .01, 1., PrmTypeMovement },
 	{ @"attractant evaporation", &atrEvprt, 0., .2, PrmTypeMovement },
 	{ @"repellent evaporation", &rplEvprt, 0., .2, PrmTypeMovement },
 	{ @"fade-in time", &fadeInTime, 0., 99.9, PrmTypeMovement },
@@ -264,8 +266,9 @@ static NSString *keyPortNumber = @"port number",
 #define AGENTS_SIM_INTERVAL (1e6/60.)
 - (void)myExecThread:(id)dummy {
 	unsigned long time, currentTime, previousTime = current_time_us();
+	float elapsedSec = 1./60.;
 	while (running) {
-		@autoreleasepool { [display oneStep]; }
+		@autoreleasepool { [display oneStep:elapsedSec]; }
 		CGFloat interval = AGENTS_SIM_INTERVAL * simStpIntvl;
 		time = (currentTime = current_time_us()) - previousTime;
 		if (time < interval) {
@@ -273,6 +276,7 @@ static NSString *keyPortNumber = @"port number",
 			time = (currentTime = current_time_us()) - previousTime;
 		}
 		if (time > 0) agentsFPS += (1e6 / time - agentsFPS) * .05;
+		elapsedSec = time * 1e-6;
 		previousTime = currentTime;
 		if (soc < 0) running = NO;
 	}
@@ -603,6 +607,12 @@ static void displayReconfigCB(CGDirectDisplayID display,
 	} else fullScrSwitch.state = !prjctView.inFullScreenMode;
 	[display fullScreenSwitch];
 }
+- (IBAction)switchTarget:(id)sender {
+	if (sender == targetSwitch) {
+		if (targetSwitch.state == target) return;
+	} else targetSwitch.state = !target;
+	target = !target;
+}
 - (void)setAgentColor:(NSArray<NSNumber *> *)colorArray {
 	[agentColorWell setColor:[NSColor colorWithCalibratedRed:
 		colorArray[0].doubleValue
@@ -723,6 +733,8 @@ static void displayReconfigCB(CGDirectDisplayID display,
 	else if (action == @selector(switchFullScreen:))
 		menuItem.title = prjctView.inFullScreenMode?
 			@"Exit Full Screen" : @"Enter Full Screen";
+	else if (action == @selector(switchTarget:))
+		menuItem.title = target? @"Target Off" : @"Target On";
 	else if (menuItem.menu == prjctView.menu)
 		return prjctView.menuPt.x >= 0;
 	return YES;

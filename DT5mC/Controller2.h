@@ -18,6 +18,7 @@ extern NSLock *SrcBmLock;
 extern float *AtrctSrcMap, *AtrctWrkMap, *AtrctDstMap, *RplntSrcMap, *RplntDstMap;
 extern NSString *screenName;
 extern CGFloat xOffset, yOffset, xScale, yScale, keystone;
+extern CGFloat targetDecay;
 extern NSInteger atrDifSz, rplDifSz;
 extern CGFloat atrEvprt, rplEvprt;
 extern CGFloat agentLength, agentWeight, agentMaxOpacity, agentMinOpacity, agentOpcGrad,
@@ -34,7 +35,7 @@ extern int brushSize;
 	IBOutlet NSTextField *camBitmapSizeTxt, *drawableSizeTxt;
 	IBOutlet NSColorWell *agentColorWell;
 	IBOutlet NSButton *startBtn, *stopBtn;
-	IBOutlet NSSwitch *fullScrSwitch;
+	IBOutlet NSSwitch *fullScrSwitch, *targetSwitch;
 	IBOutlet NSButton *saveAsDfltBtn, *rvtToFDBtn, *rvtToUDBtn;
 	IBOutlet MyMTKView *prjctView;
 	Display *display;

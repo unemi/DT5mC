@@ -241,11 +241,8 @@ static void do_parallel(void (*proc)(MyAgent *)) {
 void exocrine_agents(void) {
 	do_parallel(exocrine_agent);
 }
-void move_agents(void) {
-	static unsigned long prev_time_us = 0;
-	unsigned long now_us = current_time_us();
-	elapsedSec = (prev_time_us == 0)? 1./60. : (now_us - prev_time_us) * 1e-6;
-	prev_time_us = now_us;
+void move_agents(float elapsed) {
+	elapsedSec = elapsed;
 	[AgentTrailLock lock];
 	do_parallel(move_agent);
 	[AgentTrailLock unlock];

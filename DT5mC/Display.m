@@ -10,6 +10,7 @@ typedef unsigned char BByte;
 float camXMax = (float)DfltFrameWidth/DfltFrameHeight;
 float dispXMax = 16./9.;
 NSInteger NAgents, trailSteps;
+BOOL target = YES;
 
 static simd_float2 mtl_coord_of_cursor(NSView *view) {
 	NSPoint loc = [view convertPoint:
@@ -27,10 +28,10 @@ static void set_color(RCE rce, simd_float4 rgba) {
 	MTKView *view;
 	NSWindow *window;
 	id<MTLCommandQueue> commandQueue;
-	id<MTLComputePipelineState> maskingPSO, expandBmPSO, defuseBmPSO;
+	id<MTLComputePipelineState> maskingPSO, expandBmPSO, defuseBmPSO, erodePSO, bufCopyPSO;
 	id<MTLRenderPipelineState> agentsPSO, trackedPSO, shapePSO, maskPSO, imagePSO;
 	id<MTLBuffer> agentVxBuf, agentIdxBuf, agentOpBuf, srcBm, mskBm, maskedBm,
-		atrctSrcMap, atrctWrkMap, atrctDstMap, rplntSrcMap, rplntDstMap;
+		atrctSrcMap, atrctErdMap, atrctWrkMap, atrctDstMap, rplntSrcMap, rplntDstMap;
 	simd_uint2 viewportSize;
 	simd_float3x3 keystoneMx, adjustMx;
 	unsigned long time_ms, dispCnt;
@@ -312,6 +313,8 @@ static id<MTLFunction> function_named(NSString *name, id<MTLLibrary> dfltLib) {
 	maskingPSO = makeCompPSO(@"maskSourceBitmap");
 	expandBmPSO = makeCompPSO(@"expandBitmap");
 	defuseBmPSO = makeCompPSO(@"defuseAndEvaporate");
+	erodePSO = makeCompPSO(@"erode");
+	bufCopyPSO = makeCompPSO(@"bufCopy");
 	NSMutableDictionary<NSString *, id<MTLFunction>> *fnDict = NSMutableDictionary.new;
 	NSArray<NSString *> *fnNames = @[
 		@"vertexShaderA", @"fragmentShaderA", @"vertexShaderL", @"fragmentShaderL",
@@ -362,7 +365,7 @@ static id<MTLFunction> function_named(NSString *name, id<MTLLibrary> dfltLib) {
 		view.window.delegate = controller;
 	} else [view exitFullScreenModeWithOptions:nil];
 }
-- (void)oneStep {
+- (void)oneStep:(float)elapsedSec {
 	if (commandQueue == nil || AtrctSrcMap == NULL) return;
 	id<MTLCommandBuffer> cmdBuf = commandQueue.commandBuffer;
 	NSAssert(cmdBuf, @"Could not get command buffer for compute shader.");
@@ -372,24 +375,38 @@ static id<MTLFunction> function_named(NSString *name, id<MTLLibrary> dfltLib) {
 	memcpy(AtrctWrkMap, AtrctDstMap, MapByteCount);
 	memcpy(RplntSrcMap, RplntDstMap, MapByteCount);
 	[SrcBmLock lock];
-	MaskOperation mskOpe = _maskingOption;
-	[cce setBuffer:maskedBm offset:0 atIndex:2];
-	[cce setBytes:&mskOpe length:sizeof(mskOpe) atIndex:3];
-	[self encodeCompute:cce pl:maskingPSO nElements:BitmapByteCount arg0:srcBm arg1:mskBm];
-	BOOL maskCleared = (_maskingOption & MaskClear) != 0;
-	if (maskCleared) _maskingOption &= ~ MaskClear;
-	simd_uint2 size = {FrameWidth, FrameHeight};
-	[cce setBytes:&size length:sizeof(size) atIndex:IndexImageSize];
-	[cce setBytes:&keystoneMx length:sizeof(keystoneMx) atIndex:IndexKeystoneMx];
-	[cce setBuffer:atrctWrkMap offset:0 atIndex:IndexAtrctWrkMap];
-	[self encodeCompute:cce pl:expandBmPSO nElements:MapPixelCount
-		arg0:maskedBm arg1:atrctSrcMap];
+	BOOL maskCleared = NO, erosionModeOff = target ||
+		ProjectionType == ProjectionMasking || ProjectionType == ProjectionAdjust;
+	if (erosionModeOff) {
+		MaskOperation mskOpe = _maskingOption;
+		[cce setBuffer:maskedBm offset:0 atIndex:2];
+		[cce setBytes:&mskOpe length:sizeof(mskOpe) atIndex:3];
+		[self encodeCompute:cce pl:maskingPSO nElements:BitmapByteCount arg0:srcBm arg1:mskBm];
+		maskCleared = (_maskingOption & MaskClear) != 0;
+		if (maskCleared) _maskingOption &= ~ MaskClear;
+		simd_uint2 size = {FrameWidth, FrameHeight};
+		[cce setBytes:&size length:sizeof(size) atIndex:IndexImageSize];
+		[cce setBytes:&keystoneMx length:sizeof(keystoneMx) atIndex:IndexKeystoneMx];
+		[cce setBuffer:atrctWrkMap offset:0 atIndex:IndexAtrctWrkMap];
+		[self encodeCompute:cce pl:expandBmPSO nElements:MapPixelCount
+			arg0:maskedBm arg1:atrctSrcMap];
+	} else {
+		if (atrctErdMap == nil) atrctErdMap = [view.device
+			newBufferWithLength:MapByteCount options:MTLResourceStorageModePrivate];
+		struct { int x, y; float f; } prm = {FrameWidth, FrameHeight, targetDecay};
+		[cce setBytes:&prm length:sizeof(prm) atIndex:IndexImageSize];
+		[cce setBuffer:atrctWrkMap offset:0 atIndex:IndexAtrctWrkMap];
+		[self encodeCompute:cce pl:erodePSO nElements:MapPixelCount
+			arg0:atrctSrcMap arg1:atrctErdMap];
+		[self encodeCompute:cce pl:bufCopyPSO nElements:MapPixelCount
+			arg0:atrctErdMap arg1:atrctSrcMap];
+	}
 	[stepLock lock];
 	exocrine_agents();
 	[SrcBmLock unlock];
-	move_agents();
+	move_agents(elapsedSec);
 	[stepLock unlock];
-	simd_int3 szs = {FrameWidth, FrameHeight, (int)atrDifSz};
+	simd_int3 szs = {FrameWidth, FrameHeight, erosionModeOff? (int)atrDifSz : 2};
 	[self difuseAndEvaporate:cce sizes:szs evprtRate:atrEvprt src:atrctWrkMap dst:atrctDstMap];
 	szs.z = (int)rplDifSz;
 	[self difuseAndEvaporate:cce sizes:szs evprtRate:atrEvprt src:rplntSrcMap dst:rplntDstMap];

@@ -52,14 +52,32 @@ kernel void expandBitmap(constant uchar *src, device float *atrctSrc,
 	result[index] += (1. - result[index]) * v * .2;
 	atrctSrc[index] += (v - atrctSrc[index]) * .2;
 }
+kernel void bufCopy(device float *src, device float *dst,
+	uint index [[thread_position_in_grid]]) {
+	dst[index] = src[index];
+}
+int4 range(const int3 size, const uint index) {
+	int idx = int(index);
+	int2 a = {idx % size.x, idx / size.x};
+	return int4(max(0, a.x - size.z), min(size.x, a.x + size.z + 1),
+		max(0, a.y - size.z), min(size.y, a.y + size.z + 1));
+}
+kernel void erode(device float *src, device float *atrctSrc,
+	device float *result [[buffer(IndexAtrctWrkMap)]],
+	constant ErosionParam *prm [[buffer(IndexImageSize)]],	// width, height and speed
+	uint index [[thread_position_in_grid]]) {
+	int4 b = range(int3(prm->x, prm->y, 1), index);
+	float p = 1e6;
+	for (int i = b.z; i < b.w; i ++) for (int j = b.x; j < b.y; j ++)
+		p = min(p, src[i * prm->x + j]);
+	float v = atrctSrc[index] = src[index] * (1. - prm->f) + p * prm->f;
+	result[index] += (1. - result[index]) * v * .2;
+}
 kernel void defuseAndEvaporate(device const float *src, device float *result,
 	constant int3 *size [[buffer(IndexImageSize)]],	// width, height and window
 	constant float *evaporation [[buffer(IndexEvaporation)]],
 	uint index [[thread_position_in_grid]]) {
-	int idx = int(index);
-	int2 a = {idx % size->x, idx / size->x};
-	int4 b = int4(max(0, a.x - size->z), min(size->x, a.x + size->z + 1),
-		max(0, a.y - size->z), min(size->y, a.y + size->z + 1));
+	int4 b = range(*size, index);
 	float p = 0.;
 	for (int i = b.z; i < b.w; i ++) for (int j = b.x; j < b.y; j ++)
 		p += src[i * size->x + j];

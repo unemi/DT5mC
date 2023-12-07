@@ -12,6 +12,7 @@ typedef id<MTLComputeCommandEncoder> CCE;
 typedef id<MTLRenderCommandEncoder> RCE;
 extern float camXMax, dispXMax;
 extern NSInteger NAgents, trailSteps;
+extern BOOL target;
 
 @interface Display : NSObject<MTKViewDelegate>
 @property (readonly) CGFloat estimatedFPS;
@@ -22,7 +23,7 @@ extern NSInteger NAgents, trailSteps;
 - (void *)maskBytes;
 - (instancetype)initWithView:(MTKView *)mtkView;
 - (void)fullScreenSwitch;
-- (void)oneStep;
+- (void)oneStep:(float)elapsedSec;
 @end
 
 @interface MyMTKView : MTKView
