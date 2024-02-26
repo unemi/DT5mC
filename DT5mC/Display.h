@@ -26,7 +26,7 @@ extern BOOL target;
 - (void)oneStep:(float)elapsedSec;
 @end
 
-@interface MyMTKView : MTKView
+@interface MyMTKView : MTKView <NSMenuItemValidation>
 @property simd_int2 menuPt;
 - (void)projectionModeDidChangeFrom:(EmnProjectionType)orgMode to:(EmnProjectionType)newMode;
 @end

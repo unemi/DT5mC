@@ -36,6 +36,8 @@ static void set_color(RCE rce, simd_float4 rgba) {
 	simd_float3x3 keystoneMx, adjustMx;
 	unsigned long time_ms, dispCnt;
 }
+- (void)lockImgBuf { [imgBufLock lock]; }
+- (void)unlockImgBuf { [imgBufLock unlock]; }
 - (void)mtkView:(nonnull MTKView *)view drawableSizeWillChange:(CGSize)size {
 	viewportSize.x = size.width;
 	viewportSize.y = size.height;
@@ -164,6 +166,13 @@ static void set_color(RCE rce, simd_float4 rgba) {
 		indexType:MTLIndexTypeUInt16 indexBuffer:iBuf
 		indexBufferOffset:idxOffset * sizeof(uint16)];
 	});
+}
+- (void)drawAgentsInCGRect:(NSRect)rect {
+	[NSColor.whiteColor setFill];
+	[NSBezierPath fillRect:rect];
+	[stepLock lock];
+	
+	[stepLock unlock];
 }
 - (void)drawInMTKView:(nonnull MTKView *)view {
 	id<MTLCommandBuffer> cmdBuf = commandQueue.commandBuffer;
@@ -432,6 +441,39 @@ static id<MTLFunction> function_named(NSString *name, id<MTLLibrary> dfltLib) {
 	eraserCursor = [NSCursor.alloc initWithImage:img hotSpot:(NSPoint){0, 31.}];
 	maskingMenu = self.menu;
 	self.menu = nil;
+}
+- (void)copyBufImage:(float *)fBuf {
+	NSBitmapImageRep *bm = [NSBitmapImageRep.alloc initWithBitmapDataPlanes:NULL
+		pixelsWide:FrameWidth pixelsHigh:FrameHeight bitsPerSample:8 samplesPerPixel:1
+		hasAlpha:NO isPlanar:NO colorSpaceName:NSCalibratedWhiteColorSpace
+		bytesPerRow:FrameWidth bitsPerPixel:8];
+	unsigned char *bBuf = bm.bitmapData;
+	[(Display *)self.delegate lockImgBuf];
+	for (NSInteger j = 0; j < FrameHeight; j ++) {
+		float *f = fBuf + j * FrameWidth;
+		unsigned char *b = bBuf + (FrameHeight - 1 - j) * FrameWidth;
+		for (NSInteger i = 0; i < FrameWidth; i ++)
+			b[i] = fmin(255., floor((1. - f[i]) * 256.));
+	}
+	[(Display *)self.delegate unlockImgBuf];
+	NSPasteboard *pb = NSPasteboard.generalPasteboard;
+	[pb declareTypes:@[NSPasteboardTypeTIFF] owner:NSApp];
+	[pb setData:[bm TIFFRepresentation] forType:NSPasteboardTypeTIFF];
+}
+- (void)copy:(id)sender {
+	switch (ProjectionType) {
+		case ProjectionNormal: copy_swarm_in_PDF(); break;
+		case ProjectionAtrctImage: [self copyBufImage:AtrctWrkMap]; break;
+		case ProjectionRplntImage: [self copyBufImage:RplntSrcMap]; break;
+		default: break;
+	}
+}
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem {
+	if (menuItem.action == @selector(copy:))
+		return ProjectionType == ProjectionNormal
+			|| ProjectionType == ProjectionAtrctImage
+			|| ProjectionType == ProjectionRplntImage;
+	else return YES;
 }
 - (void)resetCursorRects {
 	if (ProjectionType != ProjectionMasking) return;

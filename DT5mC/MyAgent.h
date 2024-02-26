@@ -4,6 +4,7 @@
 
 @import Cocoa;
 @import simd;
+#define AgentWeight .004
 
 typedef struct TrailCell {
 	struct TrailCell *prev, *post;
@@ -16,6 +17,7 @@ typedef struct  {
 	TrailCell *head, *tail;
 	float leftLife, length;
 	uint32 trailCount;
+	float atrct;
 } MyAgent;
 
 typedef struct {
@@ -33,3 +35,4 @@ extern void exocrine_agents(void);
 extern void move_agents(float elapsed);
 extern void agent_vectors(simd_float2 *vx, uint16 *idx, float *op,
 	void (^set_metal_com)(NSInteger, NSInteger, NSInteger));
+extern void copy_swarm_in_PDF(void);

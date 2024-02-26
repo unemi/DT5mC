@@ -6,9 +6,9 @@
 #import "MyAgent.h"
 #import "Controller2.h"
 #import "Display.h"
+#import "CGView.h"
 #define InitV .002
 #define AttractantTh3 0.05f
-#define AgentWeight .004
 #define AgentLength .0333
 #define TurnAngle (M_PI/2)
 #define NNextCandidates 5
@@ -56,7 +56,7 @@ static void discardTrailCells(TrailCell *head, TrailCell *tail) {
 }
 
 #define Dist2(x, y) ((x) * (x) + (y) * (y))
-#define SumValue(u, v) { sumw += (ww = (cos(sqrt(ww) / M_PI) + 1.) / 2.);\
+#define SumValue(u, v) { sumw += (ww = (cos(sqrt(ww) * M_PI) + 1.) / 2.);\
 	sum += ww * map[v * FrameWidth + u]; }
 static float get_chem(float *map, simd_float2 q) {
 	simd_int2 ij = simd_int_rte(floor(q));
@@ -67,7 +67,8 @@ static float get_chem(float *map, simd_float2 q) {
 	simd_int2 ii = simd_clamp(ij + dij,
 		(simd_int2){0, 0}, (simd_int2){FrameWidth-1, FrameHeight-1});
 	float ww, sumw, sum;
-	sum = (sumw = 1 - simd_length_squared(d)) * map[ij.y * FrameWidth + ij.x];
+//	sum = (sumw = 1 - simd_length_squared(d)) * map[ij.y * FrameWidth + ij.x];
+	sum = (sumw = (cos(simd_length(d) * M_PI) + 1.) / 2.) * map[ij.y * FrameWidth + ij.x];
 	if ((ww = Dist2(d.x, dd.y)) < 1) SumValue(ij.x, ii.y)
 	if ((ww = Dist2(dd.x, d.y)) < 1) SumValue(ii.x, ij.y)
 	if ((ww = Dist2(dd.x, dd.y)) < 1) SumValue(ii.x, ii.y)
@@ -111,7 +112,7 @@ static void exocrine_agent(MyAgent *a) {
 }
 static float elapsedSec = 0.;
 static void move_agent(MyAgent *a) {
-	float atrct = get_chemical(AtrctWrkMap, a->p);
+	float atrct = a->atrct = get_chemical(AtrctWrkMap, a->p);
 	if (lifeSpan > 0. && atrct < thLoSpeed)
 		if ((a->leftLife -= elapsedSec) <= 0.) warp_agent(a);
 	float bVelocity = InitV * (drand48() * 1.2 + .3);
@@ -245,6 +246,78 @@ void move_agents(float elapsed) {
 	elapsedSec = elapsed;
 	[AgentTrailLock lock];
 	do_parallel(move_agent);
+//#define STATISTICS
+#ifdef STATISTICS
+#define N_ALPHAS 11
+#define STP_ALPHA .1
+#define N_DIFSZ 10
+#define STP_DIFSZ 1
+	static NSInteger stpCnt = 0, phaseCnt = 0;
+	static CGFloat sumN = 0., sumM = 0., sumS = 0.,
+		stRecN[N_DIFSZ], stRecM[N_DIFSZ], stRecS[N_DIFSZ];
+	static CGFloat tgtArea = 0;
+	static FILE *outFd = NULL;
+	if (outFd == NULL) {
+		outFd = fopen("dens.txt", "w");
+		if (outFd == NULL)
+			in_main_thread( ^(){ printf("Could not open log file.\n"); [NSApp terminate:nil]; } );
+	}
+	avoidance = (phaseCnt / N_DIFSZ) * STP_ALPHA;
+	rplDifSz = (phaseCnt % N_DIFSZ) * STP_DIFSZ + 1;
+	stpCnt ++;
+	if (stpCnt > 600 && stpCnt <= 1200) {
+		if (tgtArea <= 0.) {
+			NSInteger n = 0;
+			for (NSInteger i = 0; i < MapPixelCount; i ++)
+				if (AtrctWrkMap[i] > thLoSpeed) n ++;
+			tgtArea = 16. / 9. * n / MapPixelCount;
+			printf("target area = %.3f%%\n", (CGFloat)n / MapPixelCount * 100.);
+		}
+		NSInteger N = 0;
+		simd_float2 P[NAgents];
+		for (NSInteger i = 0; i < NAgents; i ++) {
+			MyAgent *a = theAgents + i;
+			simd_float2 p = a->p;
+			if (!(isnan(p.x) || isnan(p.y)) && a->atrct > thLoSpeed) P[N ++] = p;
+		}
+		sumN += (CGFloat)N / NAgents;
+		float D2 = tgtArea / N;
+		NSInteger nn[N];
+		memset(nn, 0, sizeof(nn));
+		for (NSInteger i = 1; i < N; i ++) for (NSInteger j = 0; j < i; j ++)
+			if (simd_distance_squared(P[i], P[j]) < D2) { nn[i] ++; nn[j] ++; }
+		CGFloat sum = 0., sum2 = 0.;
+		for (NSInteger i = 0; i < N; i ++) {
+			CGFloat v = (CGFloat)nn[i] / N;
+			sum += v; sum2 += v * v;
+		}
+		sumM += sum / N;
+		sumS += sqrt((sum2 - sum * sum / N) / N);
+		if (stpCnt >= 1200) {
+			stRecN[rplDifSz - 1] = sumN / 600;
+			stRecM[rplDifSz - 1] = sumM / 600;
+			stRecS[rplDifSz - 1] = sumS / 600;
+			if (rplDifSz >= 10) {
+				fprintf(outFd, "%.2f", avoidance);
+				for (NSInteger i = 0; i < N_DIFSZ; i ++) fprintf(outFd, " %.4f", stRecN[i]*100.);
+				for (NSInteger i = 0; i < N_DIFSZ; i ++) fprintf(outFd, " %.4f", stRecM[i]*100.);
+				for (NSInteger i = 0; i < N_DIFSZ; i ++) fprintf(outFd, " %.4f", stRecS[i]*100.);
+				fprintf(outFd, "\n");
+				fflush(outFd);
+			}
+			printf("phaseCnt = %ld, DifSz=%ld, avoid=%.2f, N=%.2f, M=%.2f, S=%.2f\n",
+				phaseCnt, rplDifSz, avoidance,
+				stRecN[rplDifSz - 1]*100., stRecM[rplDifSz - 1]*100., stRecS[rplDifSz - 1]*100.);
+			if (++ phaseCnt >= N_ALPHAS * N_DIFSZ) {
+				fclose(outFd);
+				in_main_thread( ^(){ [NSApp terminate:nil]; } );
+			}
+			stpCnt = 0;
+			sumN = sumM = sumS = 0.;
+			reset_agents();
+		}
+	}
+#endif
 	[AgentTrailLock unlock];
 }
 static NSInteger agents_vecs(AgentVecInfo info) {
@@ -276,4 +349,21 @@ void agent_vectors(simd_float2 *vx, uint16 *idx, float *op,
 	[AgentTrailLock unlock];
 	for (NSInteger i = 0; i < nThreads; i ++)
 		set_metal_com(nidx[i], i * ni, i * np);
+}
+void copy_swarm_in_PDF(void) {
+	[AgentTrailLock lock];
+	CGView *cgView = [CGView.alloc initWithAgents:theAgents nAgents:NAgents pred:
+	^BOOL(MyAgent * _Nonnull a) {
+		return a->atrct > thLoSpeed;
+	} fg:NSColor.blackColor bg:NSColor.whiteColor];
+	[AgentTrailLock unlock];
+	NSPasteboard *pb = NSPasteboard.generalPasteboard;
+	[pb declareTypes:@[NSPasteboardTypePDF] owner:NSApp];
+	NSRect rect = cgView.bounds;
+// for figures of paper
+	rect.origin.x += rect.size.width * .375;
+	rect.size.width *= .29;
+	rect.origin.y += rect.size.height * .05;
+	rect.size.height *= .7;
+	[cgView writePDFInsideRect:rect toPasteboard:pb];
 }

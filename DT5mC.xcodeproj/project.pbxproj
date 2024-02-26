@@ -17,6 +17,7 @@
 		2312B20F2AE1008400385131 /* 70Settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 2312B20D2AE1008400385131 /* 70Settings.png */; };
 		2312B2102AE1008400385131 /* 70Settings.html in Resources */ = {isa = PBXBuildFile; fileRef = 2312B20E2AE1008400385131 /* 70Settings.html */; };
 		231D5B2E2AA2168300D0AC48 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 231D5B2D2AA2168300D0AC48 /* Credits.rtf */; };
+		231F91BD2B84BDA300BB194A /* CGView.m in Sources */ = {isa = PBXBuildFile; fileRef = 231F91BC2B84BDA300BB194A /* CGView.m */; };
 		2347F8322AB455C100BEFF25 /* CrsrImgEraser.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 2347F8312AB455C100BEFF25 /* CrsrImgEraser.pdf */; };
 		2347F8342AB45CCA00BEFF25 /* CrsrImgBrush.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 2347F8332AB45CCA00BEFF25 /* CrsrImgBrush.pdf */; };
 		23488E192A6A78390065C127 /* MainMenu2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23488E172A6A78390065C127 /* MainMenu2.xib */; };
@@ -83,6 +84,8 @@
 		2312B20E2AE1008400385131 /* 70Settings.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = 70Settings.html; path = DT5mCHelp/70Settings.html; sourceTree = "<group>"; };
 		231D5B2C2AA1925D00D0AC48 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		231D5B2D2AA2168300D0AC48 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
+		231F91BB2B84BDA300BB194A /* CGView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CGView.h; sourceTree = "<group>"; };
+		231F91BC2B84BDA300BB194A /* CGView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CGView.m; sourceTree = "<group>"; };
 		232F1A5E2B142674007BA1D8 /* DT5mPack.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = DT5mPack.sh; sourceTree = "<group>"; };
 		2347F8312AB455C100BEFF25 /* CrsrImgEraser.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = CrsrImgEraser.pdf; sourceTree = "<group>"; };
 		2347F8332AB45CCA00BEFF25 /* CrsrImgBrush.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = CrsrImgBrush.pdf; sourceTree = "<group>"; };
@@ -229,6 +232,8 @@
 				231D5B2D2AA2168300D0AC48 /* Credits.rtf */,
 				2379C5F12A6A652700884B2A /* main.m */,
 				2379C5F32A6A652700884B2A /* DT5mC.entitlements */,
+				231F91BB2B84BDA300BB194A /* CGView.h */,
+				231F91BC2B84BDA300BB194A /* CGView.m */,
 			);
 			path = DT5mC;
 			sourceTree = "<group>";
@@ -474,6 +479,7 @@
 				2379C5F22A6A652700884B2A /* main.m in Sources */,
 				23EE02502AB94F1200F223CA /* Controller2+Mask.m in Sources */,
 				230B0C632AEC92F800AEB888 /* CommonFunc.m in Sources */,
+				231F91BD2B84BDA300BB194A /* CGView.m in Sources */,
 				2379C6072A6A65F000884B2A /* SldAndStepper.m in Sources */,
 				23D974BA2A8F3C9800E81570 /* Display.m in Sources */,
 				2379C6082A6A65F000884B2A /* Controller2.m in Sources */,
@@ -710,7 +716,7 @@
 				CODE_SIGN_ENTITLEMENTS = DT5mC/DT5mC.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 726X5Z9867;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -741,7 +747,7 @@
 				CODE_SIGN_ENTITLEMENTS = DT5mC/DT5mC.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 726X5Z9867;
 				ENABLE_HARDENED_RUNTIME = YES;

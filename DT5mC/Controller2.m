@@ -88,21 +88,21 @@ static BOOL infer_bitmap_size(ssize_t size, int aw, int ah, int *w, int *h) {
 	*h = (int)(ah * b);
 	return YES;
 }
-static int soc = -1; 
+static int socBmUDP = -1; 
 static struct sockaddr_in name;
 
 static BOOL setup_receiver(void) {
-	soc = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-	if (soc < 0) { unix_error_msg(@"socket"); return NO; }
+	socBmUDP = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+	if (socBmUDP < 0) { unix_error_msg(@"socket"); return NO; }
 	struct timeval tm = {1, 0};
-	int error = setsockopt(soc, SOL_SOCKET, SO_RCVTIMEO, &tm, sizeof(tm));
-	if (error) { unix_error_msg(@"setsockopt"); close(soc); return NO; }
+	int error = setsockopt(socBmUDP, SOL_SOCKET, SO_RCVTIMEO, &tm, sizeof(tm));
+	if (error) { unix_error_msg(@"setsockopt"); close(socBmUDP); return NO; }
 	name.sin_len = sizeof(name);
 	name.sin_family = AF_INET;
 	name.sin_port = EndianU16_NtoB(PortNumber);
 	name.sin_addr.s_addr = INADDR_ANY;
-	error = bind(soc, (struct sockaddr *)&name, sizeof(name));
-	if (error) { unix_error_msg(@"bind"); close(soc); return NO; }
+	error = bind(socBmUDP, (struct sockaddr *)&name, sizeof(name));
+	if (error) { unix_error_msg(@"bind"); close(socBmUDP); return NO; }
 	return YES;
 }
 typedef enum { RcvSuccess, RcvTimeout, RcvClosed, RcvError } RcvResult;
@@ -110,7 +110,7 @@ typedef enum { RcvSuccess, RcvTimeout, RcvClosed, RcvError } RcvResult;
 static RcvResult receive_frame(Display *display) {
 	static unsigned char *buffer = NULL;
 	if (buffer == NULL) buffer = malloc(MAX_PACKET_SIZE);
-	ssize_t size = recvfrom(soc, buffer, MAX_PACKET_SIZE, 0, NULL, NULL);
+	ssize_t size = recvfrom(socBmUDP, buffer, MAX_PACKET_SIZE, 0, NULL, NULL);
 	if (size < 0) switch (errno) {
 		case EWOULDBLOCK: return RcvTimeout;
 		case EBADF: return RcvClosed;
@@ -222,7 +222,7 @@ static NSString *keyPortNumber = @"port number",
 	if (running) { wasRunning = YES; [self stopThreads:nil]; }
 	NSUserDefaults *ud = NSUserDefaults.standardUserDefaults;
 	if (PortNumber != newPortNumber) {
-		if (soc >= 0) { close(soc); soc = -1; }
+		if (socBmUDP >= 0) { close(socBmUDP); socBmUDP = -1; }
 		if (!setup_receiver()) wasRunning = NO;
 		[ud setInteger:(PortNumber = newPortNumber) forKey:keyPortNumber];
 	}
@@ -257,7 +257,7 @@ static NSString *keyPortNumber = @"port number",
 		previousTime = currentTime;
 		break;
 		case RcvTimeout: cameraFPS = 0.; break;
-		case RcvError: close(soc); soc = -1;
+		case RcvError: close(socBmUDP); socBmUDP = -1;
 		case RcvClosed: running = NO; break;
 	}
 	[stopCondLock lock];
@@ -278,7 +278,7 @@ static NSString *keyPortNumber = @"port number",
 		if (time > 0) agentsFPS += (1e6 / time - agentsFPS) * .05;
 		elapsedSec = time * 1e-6;
 		previousTime = currentTime;
-		if (soc < 0) running = NO;
+		if (socBmUDP < 0) running = NO;
 	}
 	[stopCondLock lock];
 	[stopCondLock unlockWithCondition:stopCondLock.condition | 2];
@@ -361,7 +361,7 @@ static NSString *keyPortNumber = @"port number",
 	return NSTerminateNow;
 }
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
-	if (soc >= 0) { close(soc); soc = -1; }
+	if (socBmUDP >= 0) { close(socBmUDP); socBmUDP = -1; }
 	[NSUserDefaults.standardUserDefaults setDouble:simStpIntvl forKey:keySimStepInterval];
 }
 - (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename {
